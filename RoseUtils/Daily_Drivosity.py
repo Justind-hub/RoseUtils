@@ -4,11 +4,11 @@ import openpyxl
 from xlsxwriter.workbook import Workbook
 
 
-def run():
+def run(downloadsfolder, database, output):
     ######### USER CONFIG SECTION ############
-    DOWNLOADS_FOLDER = "C:\\Users\\justi\\Downloads\\"
-    DATABASE_FILE = "C:\\Users\\justi\\OneDrive - Rose City Pizza\\Shared Documents\\Store_Data_Database\\Store_Data.db"
-    OUTPUT_FILE = "C:\\Users\\justi\\OneDrive - Rose City Pizza\\Shared Documents\\Store_Data_Database\\Drivosity.xlsx"
+    DOWNLOADS_FOLDER = downloadsfolder
+    DATABASE_FILE = database
+    OUTPUT_FILE = output + "Drivosity.xlsx"
     ######### END USER CONFIG   ##############
 
 

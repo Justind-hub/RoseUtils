@@ -53,6 +53,12 @@ class MyGUI(QMainWindow):
         else:
             with open("Settings/Zocdownload", "r") as f: self.zocdownloadfolder = f.readline()
 
+        if not exists("Settings/Downloadfolder"):
+            with open("Settings/Downloadfolder", "w") as f:
+                f.write(self.downloadfolderfunc())
+        else:
+            with open("Settings/Downloadfolder", "r") as f: self.downloadfolder = f.readline()
+
 
 
     def initui(self):
@@ -67,8 +73,13 @@ class MyGUI(QMainWindow):
         self.actionZocDownload_Folder.triggered.connect(self.zocdownloadfolderfunc)
         self.actionRCP_Database_Folder.triggered.connect(self.rcpdatabasefunc)
         self.actionCCD_Database_File.triggered.connect(self.ccddatabasefunc)
-        self.btn_targetrcp.clicked.connect(lambda: Target_Inventory.run(self.zocdownloadfolder, self.outputfolder))
+        self.actionDownloads_Folder.triggered.connect(self.downloadfolderfunc)
+        self.btn_targetrcp.clicked.connect(lambda: Target_Inventory.run(self.zocdownloadfolder, self.outputfolder, "RCP"))
         self.btn_breaksrcp.clicked.connect(lambda: Daily_DOR_Breaks.run(self.zocdownloadfolder, self.rcpdatabase, "RCP"))
+        self.btn_new_hirercp.clicked.connect(lambda: New_Hire.run(self.zocdownloadfolder, self.rcpdatabase, self.outputfolder))
+        self.btn_drivosity.clicked.connect(lambda: Daily_Drivosity.run(self.downloadfolder, self.rcpdatabase, self.outputfolder))
+        self.btn_weekly_comprcp.clicked.connect(lambda: Weeklycompfull.run(self.zocdownloadfolder, self.outputfolder, "RCP"))
+        self.btn_weekly_dor.clicked.connect(lambda: Weekly_DOR_CSC.run(self.zocdownloadfolder, self.outputfolder))
                
     
     def popup(self, text, icon, title):
@@ -99,6 +110,9 @@ class MyGUI(QMainWindow):
         self.ccddatabase = self.ccddatabase[0]
         return self.ccddatabase
 
+    def downloadfolderfunc(self):
+        self.downloadfolder = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Downloads Folder') +"/"
+        return self.downloadfolder
     
             
 def main ():

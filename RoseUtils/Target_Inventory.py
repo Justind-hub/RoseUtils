@@ -10,10 +10,13 @@ from openpyxl.styles import Alignment, Font
 from datetime import datetime
 
 
-def run(zocdownload, outputfolder):
+def run(zocdownload, outputfolder, fran):
     wb= Workbook()
     ws = wb.create_sheet('Sheet', 0)
-    STORECOL = {"1740":1,"1743":2,"2172":3,"2174":4,"2236":5,"2272":6,"2457":7,"2549":8,"2603":9,"2953":10,"3498":11,"4778":12}
+    if fran == "RCP":
+        STORECOL = {"1740":1,"1743":2,"2172":3,"2174":4,"2236":5,"2272":6,"2457":7,"2549":8,"2603":9,"2953":10,"3498":11,"4778":12}
+    else:
+        STORECOL = {"2208":1,"2306":2,"2325":3,"2478":4,"2612":5,"2618":6,"2687":7,"2921":8,"3015":9,"3130":10,"3479":11,"4405":12}
     VARIANCEAMOUNT = 10
 
 
@@ -113,8 +116,10 @@ def run(zocdownload, outputfolder):
 
     ws.cell(row = 1, column = 1, value = date).alignment = Alignment(horizontal="center")
     ws.merge_cells("A1:L1")
-
-    wb.save(outputfolder+"\\Inventory Target "+datetime.now().strftime("%m.%d.%y")+".xlsx")
+    if fran == "RCP":
+        wb.save(outputfolder+"Inventory Target "+datetime.now().strftime("%m.%d.%y")+".xlsx")
+    else:
+        wb.save(outputfolder+"CCDInventory Target "+datetime.now().strftime("%m.%d.%y")+".xlsx")
 
 if __name__ == '__main__':
     run()

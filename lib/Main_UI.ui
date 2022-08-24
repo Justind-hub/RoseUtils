@@ -13,7 +13,7 @@
     <x>0</x>
     <y>0</y>
     <width>428</width>
-    <height>363</height>
+    <height>374</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,7 @@
       <x>0</x>
       <y>0</y>
       <width>431</width>
-      <height>321</height>
+      <height>371</height>
      </rect>
     </property>
     <property name="font">
@@ -61,7 +61,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>30</y>
+        <y>10</y>
         <width>121</width>
         <height>31</height>
        </rect>
@@ -74,7 +74,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>70</y>
+        <y>50</y>
         <width>121</width>
         <height>31</height>
        </rect>
@@ -102,7 +102,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>110</y>
+        <y>90</y>
         <width>121</width>
         <height>31</height>
        </rect>
@@ -115,9 +115,9 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>150</y>
+        <y>130</y>
         <width>121</width>
-        <height>71</height>
+        <height>51</height>
        </rect>
       </property>
       <property name="text">
@@ -128,7 +128,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>230</y>
+        <y>190</y>
         <width>121</width>
         <height>31</height>
        </rect>
@@ -141,9 +141,9 @@
       <property name="geometry">
        <rect>
         <x>140</x>
-        <y>61</y>
+        <y>30</y>
         <width>281</width>
-        <height>201</height>
+        <height>271</height>
        </rect>
       </property>
       <property name="html">
@@ -154,30 +154,11 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Output feature coming soon, use the console window for now&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label">
-      <property name="geometry">
-       <rect>
-        <x>370</x>
-        <y>0</y>
-        <width>51</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>Logo.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_3">
       <property name="geometry">
        <rect>
         <x>140</x>
-        <y>30</y>
+        <y>0</y>
         <width>91</width>
         <height>31</height>
        </rect>
@@ -186,31 +167,57 @@ p, li { white-space: pre-wrap; }
        <string>Output:</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="btn_drivosity">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>230</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Drivosity Report</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_weekly_dor">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>270</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Wkly DOR CSC</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="ccd">
      <attribute name="title">
       <string>Cascade Dining</string>
      </attribute>
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>370</x>
-        <y>0</y>
-        <width>51</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>Logo.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
     </widget>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>0</y>
+      <width>51</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>Logo.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -230,6 +237,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionZocDownload_Folder"/>
     <addaction name="actionRCP_Database_Folder"/>
     <addaction name="actionCCD_Database_File"/>
+    <addaction name="actionDownloads_Folder"/>
    </widget>
    <addaction name="menuSettings"/>
   </widget>
@@ -255,6 +263,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionCCD_Database_File">
    <property name="text">
     <string>CCD Database File</string>
+   </property>
+  </action>
+  <action name="actionDownloads_Folder">
+   <property name="text">
+    <string>Downloads Folder</string>
    </property>
   </action>
  </widget>

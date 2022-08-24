@@ -24,8 +24,7 @@ def run(zocdownload, databasefile, franchise):
     MAXSHIFTOR = 6.15
     ZOCDOWNLOAD_FOLDER = zocdownload   
     DATABASE_FILE = databasefile
-    EXPORT_EXCEL_FILE = databasefile[databasefile.rfdin("/"):]+"Breaks.xlsx"
-    
+    EXPORT_EXCEL_FILE = databasefile[:databasefile.rfind("/")]+"/Breaks.xlsx"
     WASHINGTON_STORES = ["2236","3498","2953"]
     
     ###### End of user setup section

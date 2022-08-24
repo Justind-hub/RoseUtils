@@ -1,17 +1,16 @@
 from striprtf.striprtf import rtf_to_text
 import os
 from os.path import exists
-import ctypes   
-from tkinter import Tk, filedialog
+
 import pandas as pd
 
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, Border, Side, PatternFill
 from datetime import datetime
 
-import numpy as np
 
-def run():
+
+def run(zocdownload, output, fran):
         
 
     #print('Enter lowercase 3 letter day of the week, leave blank to run previous day')
@@ -31,36 +30,21 @@ def run():
 
     wb= Workbook()
     ws = wb.create_sheet('Weekly Comp', index = 0)
-    STORECOL = {"1740":0,"1743":28,"2172":4,"2174":32,"2236":8,"2272":12,"2457":36,"2549":16,"2603":40,"3498":44,"4778":24,"2953":20}
-
+    if fran == "RCP":
+        STORECOL = {"1740":0,"1743":28,"2172":4,"2174":32,"2236":8,"2272":12,"2457":36,"2549":16,"2603":40,"3498":44,"4778":24,"2953":20}
+        stores = [1740,1743,2172, 2174, 2236, 2272, 2457, 2549, 2603, 2953, 3498, 4778]
+    else:
+        STORECOL = {"2208":0,"2306":4,"2325":8,"2478":12,"2612":16,"2618":20,"2687":24,"2921":28,"3015":32,"3130":36,"3479":40,"4405":44}
+        stores = [2208,2306,2325,2478,2612,2618,2687,2921,3015,3130,3479,4405]
 
     weekday = [0,17,34,51,68,85,102]
 
     #set headers at each store
-    stores = [1740,1743,2172, 2174, 2236, 2272, 2457, 2549, 2603, 2953, 3498, 4778]
+    
     worksheets = [ws]
 
 
-    ##Folder setup
-    appdata = os.getenv('APPDATA')
-    appdata = appdata + '\Justin\\'
-    desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Onedrive','Desktop') 
-    if os.path.isdir(desktop):
-        pass
-    else:
-        desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-    zocdownload = appdata + 'Daily DOR\path.txt'
-    if exists(zocdownload):
-        with open(zocdownload,'r') as f:
-            dir = f.readline()
-    else:    
-        ctypes.windll.user32.MessageBoxW(0, "Please select your ZocDownload folder", "First Time Set-up", 0)
-        root = Tk() 
-        root.withdraw() 
-        root.attributes('-topmost', True) 
-        dir = filedialog.askdirectory() 
-        with open(zocdownload,'w') as f:
-            f.write(dir+'\\')
+    
 
     #openrtf file
     def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
@@ -75,7 +59,7 @@ def run():
         return s[:amount]
 
     filelist = [] #create list of files to loop through -> filelist
-    for file in os.listdir(dir):
+    for file in os.listdir(zocdownload):
         if file.startswith("DSHWKC"):
             filelist.append(file)
             
@@ -230,12 +214,6 @@ def run():
         for i,day in enumerate(days):
             printall(weekday[i],day)
 
-        #for i,day in enumerate(days):        
-        #    for col in ws.columns:
-        #        column = col[0].column_letter # Get the column name
-        #        ws.column_dimensions[column].width = 5
-        #        for cell in col:
-        #            cell.alignment = Alignment(horizontal="center")
 
 
 
@@ -326,7 +304,9 @@ def run():
     ws.cell(row=103, column = 1,value = "Sunday").font = Font(bold=True, size = 30)
 
 
-
-    wb.save(desktop+"\\Weekly Comp "+datetime.now().strftime("%m.%d.%y")+".xlsx")
+    if fran =="RCP":
+        wb.save(output+"Weekly Comp "+datetime.now().strftime("%m.%d.%y")+".xlsx")
+    else:
+        wb.save(output+"CCDWeekly Comp "+datetime.now().strftime("%m.%d.%y")+".xlsx")
 if __name__ == '__main__':
     run()

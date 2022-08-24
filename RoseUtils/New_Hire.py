@@ -3,12 +3,12 @@ from striprtf.striprtf import rtf_to_text #RTF Reader
 import sqlite3 #Save to database
 from xlsxwriter.workbook import Workbook #to export the database into an excel file
 
-def run():
+def run(zocdownload, database, export):
 
     ####### Change the 3 variables below. Inlude double "\\"s, including 2 at the end of paths
-    ZOCDOWNLOAD_FOLDER = "C:\\ZocDownload\\"   
-    DATABASE_FILE = "C:\\Users\\justi\\OneDrive - Rose City Pizza\\Shared Documents\\Store_Data_Database\\Store_Data.db"
-    EXPORT_EXCEL_FILE = "C:\\Users\\justi\\OneDrive\\Desktop\\New_Hires.xlsx"
+    ZOCDOWNLOAD_FOLDER = zocdownload  
+    DATABASE_FILE = database
+    EXPORT_EXCEL_FILE = export + "New_Hires.xlsx"
     ###### End of user setup section
     FILENAME = "ODMNHR"
 

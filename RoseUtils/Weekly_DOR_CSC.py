@@ -1,65 +1,29 @@
-from os import system, name
-from os.path import exists
 import os
-import ctypes  
-
-import re
-from datetime import datetime as dt
-import datetime
 from openpyxl import Workbook
-from openpyxl.styles import Alignment, Font
-from tkinter import Tk, filedialog
+from openpyxl.styles import Alignment
 from striprtf.striprtf import rtf_to_text 
 
-def run():
+def run(zocdownload, output):
         
 
-    appdata = os.getenv('APPDATA')
-    appdata = appdata + '\Justin\\'
-
-    if exists(appdata):
-        pass
-    else:
-        os.mkdir(appdata)
-
-    appdatajustin = os.path.join(appdata, "Daily DOR")
-
-    if exists(appdatajustin):
-        pass
-    else:
-        os.mkdir(appdatajustin)
+   
 
 
 
     wb = Workbook()
 
     #get desktop folder to save to
-    desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Onedrive','Desktop') 
-    if os.path.isdir(desktop):
-        pass
-    else:
-        desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-    print(desktop)
+    
 
     storecol = {"1740":2,"1743":3,"2172":4,"2174":5,"2236":6,"2272":7,"2457":8,"2549":9,"2603":10,"2953":11,"3498":12,"0477":13}
-    zocdownload = appdata + 'Daily DOR\path.txt'
 
-    if exists(zocdownload):
-        with open(zocdownload,'r') as f:
-            dir1 = f.readline()
-    else:    
-        ctypes.windll.user32.MessageBoxW(0, "Please select your ZocDownload folder", "First Time Set-up", 0)
-        root = Tk() 
-        root.withdraw() 
-        root.attributes('-topmost', True) 
-        dir1 = filedialog.askdirectory() 
-        with open(zocdownload,'x') as f:
-            f.write(dir1+'\\')
+
+    
 
 
 
 
-    #dir = "E:\ZocDownload\\"
+
 
     def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
                         #Will return a list of strings for each line of the file
@@ -89,7 +53,7 @@ def run():
 
 
     filelist = [] #create list of files to loop through -> filelist
-    for file in os.listdir(dir1):
+    for file in os.listdir(zocdownload):
         if file.startswith("ODMDOR"):
             filelist.append(file)
 
@@ -98,7 +62,7 @@ def run():
     f = 0
     for each in filelist:
         missedbreaks = 0
-        textlist = openrtf(dir1 + filelist[f])
+        textlist = openrtf(zocdownload + filelist[f])
         lunch = daypart("Lunch")
         afternoon = daypart("Afternoon")
         dinner = daypart("Dinner")
@@ -180,7 +144,7 @@ def run():
     ws.cell(row = 2, column = 12, value = 4778)
     ws.cell(row=1, column = 1, value = date)
     ws.merge_cells("A1:"+column+"1")
-    wb.save(desktop+"\\"+date.replace("/",".")+".xlsx")
+    wb.save(output+date.replace("/",".")+".xlsx")
 
 
 if __name__ == '__main__':
