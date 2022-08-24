@@ -1,0 +1,1 @@
+pip install pyqt5, striprtf, pandas, openpyxl, sqlite3, xlsxwriter

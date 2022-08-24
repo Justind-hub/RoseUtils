@@ -1,8 +1,7 @@
 from striprtf.striprtf import rtf_to_text
 import os
 from os.path import exists
-import ctypes   
-from tkinter import Tk, filedialog
+
 import pandas as pd
 
 from openpyxl import Workbook
