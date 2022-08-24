@@ -10,32 +10,12 @@ from openpyxl.styles import Alignment, Font
 from datetime import datetime
 
 
-def run():
+def run(zocdownload, outputfolder):
     wb= Workbook()
     ws = wb.create_sheet('Sheet', 0)
     STORECOL = {"1740":1,"1743":2,"2172":3,"2174":4,"2236":5,"2272":6,"2457":7,"2549":8,"2603":9,"2953":10,"3498":11,"4778":12}
     VARIANCEAMOUNT = 10
 
-    ##Folder setup
-    appdata = os.getenv('APPDATA')
-    appdata = appdata + '\Justin\\'
-    desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Onedrive','Desktop') 
-    if os.path.isdir(desktop):
-        pass
-    else:
-        desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-    zocdownload = appdata + 'Daily DOR\path.txt'
-    if exists(zocdownload):
-        with open(zocdownload,'r') as f:
-            dir = f.readline()
-    else:    
-        ctypes.windll.user32.MessageBoxW(0, "Please select your ZocDownload folder", "First Time Set-up", 0)
-        root = Tk() 
-        root.withdraw() 
-        root.attributes('-topmost', True) 
-        dir = filedialog.askdirectory() 
-        with open(zocdownload,'w') as f:
-            f.write(dir+'\\')
 
     #openrtf file
     def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
@@ -50,14 +30,14 @@ def run():
         return s[:amount]
 
     filelist = [] #create list of files to loop through -> filelist
-    for file in os.listdir(dir):
+    for file in os.listdir(zocdownload):
         if file.startswith("INVTAR"):
             filelist.append(file)
     f = 0
     for each in filelist:
             
         #clean the file
-        textlist = openrtf(dir+"\\"+each)
+        textlist = openrtf(zocdownload+each)
         headerstart = left(textlist[1],10)
         i = 10
         while i < len(textlist):
@@ -134,7 +114,7 @@ def run():
     ws.cell(row = 1, column = 1, value = date).alignment = Alignment(horizontal="center")
     ws.merge_cells("A1:L1")
 
-    wb.save(desktop+"\\Inventory Target "+datetime.now().strftime("%m.%d.%y")+".xlsx")
+    wb.save(outputfolder+"\\Inventory Target "+datetime.now().strftime("%m.%d.%y")+".xlsx")
 
 if __name__ == '__main__':
     run()
