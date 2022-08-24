@@ -12,7 +12,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>428</width>
+    <width>565</width>
     <height>374</height>
    </rect>
   </property>
@@ -32,7 +32,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>431</width>
+      <width>561</width>
       <height>371</height>
      </rect>
     </property>
@@ -137,23 +137,6 @@
        <string>NewHire Report</string>
       </property>
      </widget>
-     <widget class="QTextBrowser" name="outputbox_rcp">
-      <property name="geometry">
-       <rect>
-        <x>140</x>
-        <y>30</y>
-        <width>281</width>
-        <height>271</height>
-       </rect>
-      </property>
-      <property name="html">
-       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Output feature coming soon, use the console window for now&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_3">
       <property name="geometry">
        <rect>
@@ -193,6 +176,21 @@ p, li { white-space: pre-wrap; }
        <string>Wkly DOR CSC</string>
       </property>
      </widget>
+     <widget class="QTextEdit" name="outputbox">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>30</y>
+        <width>421</width>
+        <height>261</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="ccd">
      <attribute name="title">
@@ -203,7 +201,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>370</x>
+      <x>500</x>
       <y>0</y>
       <width>51</width>
       <height>51</height>
@@ -225,7 +223,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>428</width>
+     <width>565</width>
      <height>21</height>
     </rect>
    </property>
