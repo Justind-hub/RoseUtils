@@ -292,7 +292,7 @@ def run(self, zocdownload, databasefile, franchise):
             cursor.executemany("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", database)
 
             
-        #con.commit()
+        con.commit()
 
         #### Export database to excel file
         workbook = Workbook(EXPORT_EXCEL_FILE)
