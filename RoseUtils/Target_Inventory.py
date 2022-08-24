@@ -121,6 +121,7 @@ def run(self, zocdownload, outputfolder, fran):
             wb.save(outputfolder+"Inventory Target "+datetime.now().strftime("%m.%d.%y")+".xlsx")
         else:
             wb.save(outputfolder+"CCDInventory Target "+datetime.now().strftime("%m.%d.%y")+".xlsx")
+        self.outputbox.append("Done!")
     except:
         self.outputbox.append("ENCOUNTERED ERROR")
         self.outputbox.append("Please send the contents of this box to Justin")

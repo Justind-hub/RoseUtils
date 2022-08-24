@@ -158,7 +158,7 @@ def run(self, zocdownload, output, fran):
 
         for file in filelist:
 
-            textlist = openrtf(dir+"\\"+file)
+            textlist = openrtf(zocdownload+file)
 
             #set store number and date range, and save  
             store = textlist[1]

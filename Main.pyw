@@ -96,11 +96,13 @@ class MyGUI(QMainWindow):
 
 
     def all3rcp(self):
+        self.outputbox.setText("Running Reports...")
         Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.rcpdatabase, "RCP")
         Target_Inventory.run(self, self.zocdownloadfolder, self.outputfolder, "RCP")
         Weeklycompfull.run(self, self.zocdownloadfolder, self.outputfolder, "RCP")
 
     def all3ccd(self):
+        self.outputbox.setText("Running Reports...")
         Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.ccddatabase, "CCD")
         Target_Inventory.run(self, self.zocdownloadfolder, self.outputfolder, "CCD")
         Weeklycompfull.run(self, self.zocdownloadfolder, self.outputfolder, "CCD")
