@@ -1,7 +1,4 @@
-from inspect import Attribute
-from operator import attrgetter
 from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory, Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
-
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic, QtGui
