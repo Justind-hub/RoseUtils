@@ -84,6 +84,10 @@ class MyGUI(QMainWindow):
         self.btn_drivosity.clicked.connect(lambda: Daily_Drivosity.run(self, self.downloadfolder, self.rcpdatabase, self.outputfolder))
         self.btn_weekly_comprcp.clicked.connect(lambda: Weeklycompfull.run(self, self.zocdownloadfolder, self.outputfolder, "RCP"))
         self.btn_weekly_dor.clicked.connect(lambda: Weekly_DOR_CSC.run(self, self.zocdownloadfolder, self.outputfolder))
+        self.btn_all3rcp.clicked.connect(self.all3rcp)
+        self.btn_weekly_compccd.clicked.connect(lambda: Weeklycompfull.run(self, self.zocdownloadfolder, self.outputfolder, "CCD"))
+        self.btn_targetccd.clicked.connect(lambda: Target_Inventory.run(self, self.zocdownloadfolder, self.outputfolder, "CCD"))
+        self.btn_breaksccd.clicked.connect(lambda: Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.ccddatabase, "CCD"))
                
     
     def popup(self, text, icon, title):
@@ -94,6 +98,15 @@ class MyGUI(QMainWindow):
         x = msg.exec_()
 
 
+    def all3rcp(self):
+        Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.rcpdatabase, "RCP")
+        Target_Inventory.run(self, self.zocdownloadfolder, self.outputfolder, "RCP")
+        Weeklycompfull.run(self, self.zocdownloadfolder, self.outputfolder, "RCP")
+
+    def all3ccd(self):
+        Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.ccddatabase, "CCD")
+        Target_Inventory.run(self, self.zocdownloadfolder, self.outputfolder, "CCD")
+        Weeklycompfull.run(self, self.zocdownloadfolder, self.outputfolder, "CCD")
 
 
     def outputfolderfunc(self):

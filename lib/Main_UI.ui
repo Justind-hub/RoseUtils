@@ -13,11 +13,11 @@
     <x>0</x>
     <y>0</y>
     <width>565</width>
-    <height>374</height>
+    <height>403</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>RoseUtils Daily DM Reports BETA V0.1</string>
+   <string>RoseUtils Daily DM Reports BETA V0.9</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -33,7 +33,7 @@
       <x>0</x>
       <y>0</y>
       <width>561</width>
-      <height>371</height>
+      <height>341</height>
      </rect>
     </property>
     <property name="font">
@@ -176,26 +176,91 @@
        <string>Wkly DOR CSC</string>
       </property>
      </widget>
-     <widget class="QTextEdit" name="outputbox">
-      <property name="geometry">
-       <rect>
-        <x>140</x>
-        <y>30</y>
-        <width>421</width>
-        <height>261</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>8</pointsize>
-       </font>
-      </property>
-     </widget>
     </widget>
     <widget class="QWidget" name="ccd">
      <attribute name="title">
       <string>Cascade Dining</string>
      </attribute>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>0</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Output:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_weekly_compccd">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="mouseTracking">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Weekly Comp</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <property name="default">
+       <bool>false</bool>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_all3ccd">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>130</y>
+        <width>121</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>All 3 Reports</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_targetccd">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>90</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Inv Variances</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_breaksccd">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Breaks Report</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QLabel" name="label">
@@ -215,6 +280,34 @@
     </property>
     <property name="scaledContents">
      <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>340</y>
+      <width>131</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>© Justin Druet 2022</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="outputbox">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>60</y>
+      <width>421</width>
+      <height>261</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+     </font>
     </property>
    </widget>
   </widget>

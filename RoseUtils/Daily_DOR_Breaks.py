@@ -23,6 +23,8 @@ def run(self, zocdownload, databasefile, franchise):
             RCP = False
             MAXSHIFTWA = 5.15
             MAXSHIFTOR = 5.15
+            GM_ID_LIST = ("10165861","10039358","10162686","10162376","10177223","10161583","10165345","10039345",
+                        "10162343","10039243","10039305","10039312","10161595","10171661","10173335")
         MAXSHIFTWA = 5.15
         MAXSHIFTOR = 6.15
         ZOCDOWNLOAD_FOLDER = zocdownload   
