@@ -9,7 +9,7 @@ def run(self, downloadsfolder, database, output):
         ######### USER CONFIG SECTION ############
         DOWNLOADS_FOLDER = downloadsfolder
         DATABASE_FILE = database
-        OUTPUT_FILE = output + "Drivosity.xlsx"
+        OUTPUT_FILE = database[:database.rfind("/")]+"/Drivosity.xlsx"
         ######### END USER CONFIG   ##############
 
         self.outputbox.setText("Running Daily Drivosity")
