@@ -13,7 +13,7 @@
     <x>0</x>
     <y>0</y>
     <width>565</width>
-    <height>403</height>
+    <height>446</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,7 @@
       <x>0</x>
       <y>0</y>
       <width>561</width>
-      <height>341</height>
+      <height>381</height>
      </rect>
     </property>
     <property name="font">
@@ -176,6 +176,19 @@
        <string>Wkly DOR CSC</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="btn_epp">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>310</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>EPP</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="ccd">
      <attribute name="title">
@@ -286,7 +299,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>340</y>
+      <y>380</y>
       <width>131</width>
       <height>16</height>
      </rect>
@@ -301,7 +314,7 @@
       <x>140</x>
       <y>60</y>
       <width>421</width>
-      <height>261</height>
+      <height>311</height>
      </rect>
     </property>
     <property name="font">
