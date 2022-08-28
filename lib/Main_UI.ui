@@ -17,7 +17,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>RoseUtils Daily DM Reports BETA V1.1</string>
+   <string>RoseUtils Daily DM Reports BETA V1.2</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -200,6 +200,19 @@
       </property>
       <property name="text">
        <string>Reports:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_compliments">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>200</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Compliments</string>
       </property>
      </widget>
     </widget>
@@ -709,7 +722,15 @@
     <addaction name="actionCCD_Database_File"/>
     <addaction name="actionDownloads_Folder"/>
    </widget>
+   <widget class="QMenu" name="menuRelease_Notes">
+    <property name="title">
+     <string>Release Notes</string>
+    </property>
+    <addaction name="actionBETA_V1_2"/>
+    <addaction name="actionBETA_V1_1"/>
+   </widget>
    <addaction name="menuSettings"/>
+   <addaction name="menuRelease_Notes"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOutput_Folder">
@@ -738,6 +759,16 @@
   <action name="actionDownloads_Folder">
    <property name="text">
     <string>Downloads Folder</string>
+   </property>
+  </action>
+  <action name="actionBETA_V1_2">
+   <property name="text">
+    <string>BETA V1.2</string>
+   </property>
+  </action>
+  <action name="actionBETA_V1_1">
+   <property name="text">
+    <string>BETA V1.1</string>
    </property>
   </action>
  </widget>
