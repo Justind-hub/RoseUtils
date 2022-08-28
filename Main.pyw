@@ -1,4 +1,4 @@
-from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory, Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity, Epp, Comments
+from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory, Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity, Epp, Comments, Release
 import sys
 from PyQt5.QtWidgets import QTabWidget, QPushButton, QLabel, QLineEdit, QMenuBar, QMenu, QMainWindow, QApplication, QMessageBox # Change to * if you get an error
 from PyQt5 import uic
@@ -73,8 +73,9 @@ class MyGUI(QMainWindow):
         self.actionRCP_Database_Folder.triggered.connect(self.rcpdatabasefunc)
         self.actionCCD_Database_File.triggered.connect(self.ccddatabasefunc)
         self.actionDownloads_Folder.triggered.connect(self.downloadfolderfunc) 
-        self.actionBETA_V1_2.triggered.connect(lambda: self.release.r12(self, self)) 
-        self.actionBETA_V1_1.triggered.connect(lambda: self.release.r11(self, self)) 
+        self.actionBETA_V1_2.triggered.connect(lambda: Release.r12(self)) 
+        self.actionBETA_V1_1.triggered.connect(lambda: Release.r11(self)) 
+        self.actionBETA_V1_25.triggered.connect(lambda: Release.r125(self)) 
 
         self.btn_targetrcp.clicked.connect(lambda: Target_Inventory.run(self, self.zocdownloadfolder, self.outputfolder, "RCP"))
         self.btn_breaksrcp.clicked.connect(lambda: Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.rcpdatabase, "RCP"))
@@ -206,21 +207,7 @@ class MyGUI(QMainWindow):
         self.downloadfolder = self.downloads_edit.text()
         self.refreshfolders()
 
-    class release(QtWidgets.QMainWindow):
 
-        def r12(self, gui):
-            gui.outputbox.setText('''Release Version 1.2
-            Added the Comments Functionality.
-               1. Download some compliments from SMG
-               2. Click the "Compliments" Button
-               3. Select the comments file you downloaded
-            Report will output as an html file to your specificied output folder''')
-        def r11(self, gui):
-            gui.outputbox.setText('''Release Version 1.1
-            Added the EPP Functionality
-               1. Download Yields and Value reports from ZOC
-               2. Click the "EPP" Button
-            Report will output to "EPP.xlsx" in your output directory''')        
             
 def main ():
     app = QApplication(sys.argv)
