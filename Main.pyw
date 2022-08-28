@@ -32,7 +32,7 @@ class MyGUI(QMainWindow):
             with open("Settings/CCDDatabase", "r") as f: self.ccddatabase = f.readline()
 
         if not exists("Settings/export"):
-            self.outputfolderunc()
+            self.outputfolderfunc()
         else:
             with open("Settings/export", "r") as f: self.outputfolder = f.readline()
             
@@ -42,7 +42,7 @@ class MyGUI(QMainWindow):
             with open("Settings/RCPDatabase", "r") as f: self.rcpdatabase = f.readline()
 
         if not exists("Settings/Zocdownload"):
-            self.zocdownloadfolderunc()
+            self.zocdownloadfolderfunc()
         else:
             with open("Settings/Zocdownload", "r") as f: self.zocdownloadfolder = f.readline()
 
