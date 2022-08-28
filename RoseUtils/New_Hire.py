@@ -3,6 +3,7 @@ from striprtf.striprtf import rtf_to_text #RTF Reader
 import sqlite3 #Save to database
 from xlsxwriter.workbook import Workbook #to export the database into an excel file
 import traceback
+from datetime import datetime
 
 def run(self, zocdownload, database, export):
     try:
@@ -10,7 +11,7 @@ def run(self, zocdownload, database, export):
         ####### Change the 3 variables below. Inlude double "\\"s, including 2 at the end of paths
         ZOCDOWNLOAD_FOLDER = zocdownload  
         DATABASE_FILE = database
-        EXPORT_EXCEL_FILE = export + "New_Hires.xlsx"
+        EXPORT_EXCEL_FILE = export + "New_Hires "+datetime.now().strftime("%m.%d.%y")+".xlsx"
         ###### End of user setup section
         FILENAME = "ODMNHR"
         
