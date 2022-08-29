@@ -75,6 +75,21 @@ def r13(gui,x):
 
     r125(gui, False)
 
+
+def r135(gui,x):  
+    text = '''Release Version 1.3.5
+    Rewrote Schedule History Report to generate entire export file instead of a file to be referenced by another excel file.
+    Should be the last update before final version
+
+    '''
+    if x:
+        gui.outputbox.setText(text)
+    else:
+        gui.outputbox.append(text) 
+
+    r13(gui, False)
+
+
 def r14(gui,x):  
     text = '''Release Version 1.4.0
 First NON-BETA Release!!

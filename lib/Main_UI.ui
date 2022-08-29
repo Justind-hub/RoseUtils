@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui version="4.0"> 
+<ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
   <property name="windowModality">
@@ -50,7 +50,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <property name="iconSize">
      <size>
@@ -917,7 +917,7 @@
      <x>0</x>
      <y>0</y>
      <width>1023</width>
-     <height>27</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -934,6 +934,7 @@
     <property name="title">
      <string>Release Notes</string>
     </property>
+    <addaction name="actionBETA_V1_3_5"/>
     <addaction name="actionBETA_V1_3"/>
     <addaction name="actionBETA_V1_25"/>
     <addaction name="actionBETA_V1_2"/>
@@ -989,6 +990,11 @@
   <action name="actionBETA_V1_3">
    <property name="text">
     <string>BETA V1.3.0</string>
+   </property>
+  </action>
+  <action name="actionBETA_V1_3_5">
+   <property name="text">
+    <string>BETA V1.3.5</string>
    </property>
   </action>
  </widget>

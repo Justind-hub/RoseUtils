@@ -18,7 +18,7 @@ class MyGUI(QMainWindow):
         self.show()
         self.buttons()
         self.setFixedSize(self.size())
-
+        
 
     
     def initvars(self):
@@ -77,7 +77,8 @@ class MyGUI(QMainWindow):
         self.configtab = 1
         self.tabWidget.setCurrentIndex(0)   #Set the RCP tab to be default
         self.outputbox.setText("Click on a report to get started")
-
+        self.btn_gm_history.setDisabled(True)
+        self.btn_gm_yields.setDisabled(True)
 
 
     def buttons(self):
@@ -92,6 +93,7 @@ class MyGUI(QMainWindow):
         self.actionBETA_V1_1.triggered.connect(lambda: Release.r11(self, True)) 
         self.actionBETA_V1_25.triggered.connect(lambda: Release.r125(self, True)) 
         self.actionBETA_V1_3.triggered.connect(lambda: Release.r13(self, True)) 
+        self.actionBETA_V1_3_5.triggered.connect(lambda: Release.r135(self, True)) 
 
         self.btn_targetrcp.clicked.connect(lambda: Target_Inventory.run(self, self.zocdownloadfolder, self.outputfolder, "RCP"))
         self.btn_breaksrcp.clicked.connect(lambda: Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.rcpdatabase, "RCP"))
@@ -147,6 +149,12 @@ class MyGUI(QMainWindow):
                 self.file_listbox.insertItem(i,file[file.rfind("/")+1:])
             self.weeklycompslist = filelist
             self.numitems_label.setText(str(len(filelist)))
+        if len(filelist) == 1:
+            self.btn_gm_yields.setDisabled(False)
+        else:
+            self.btn_gm_yields.setDisabled(True)
+        if len(filelist) >= 1:
+            self.btn_gm_history.setDisabled(False)
 
 
 
@@ -166,6 +174,8 @@ class MyGUI(QMainWindow):
         self.weeklycomplist = []
         self.file_listbox.clear()
         self.numitems_label.setText("0")
+        self.btn_gm_history.setDisabled(True)
+        self.btn_gm_yields.setDisabled(True)
 
     
     def comments(self):

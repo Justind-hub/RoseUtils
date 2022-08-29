@@ -1,175 +1,190 @@
-from striprtf.striprtf import rtf_to_text
-import pandas as pd
 from openpyxl import Workbook
+from openpyxl.styles import Alignment, Font, Border, Side, PatternFill, Color
+import os
 import traceback
+from striprtf.striprtf import rtf_to_text
+
+def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
+                    #Will return a list of strings for each line of the file
+    with open(file, 'r') as file:
+        text = file.read()
+    text = rtf_to_text(text)
+    textlist = text.splitlines()
+    return textlist #returns a list containing entire RTF file
 
 
 
 
 
-
-
-
-
-
-def run(self, filelist: list) -> None:
+def run(self, filelist):
     try:
+        self.outputbox.setText("Running Schedule History....")
+        #Variables
+        wb = Workbook()
+        ws = wb.active
+        HOURS = ['10-11','11-12','12-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9','9-10']
+        HOURSCOLS = [1,10,19,28,37,1,10,19,28,37,1,10,19,28,1,10,19,28]
+        HOURSROWS = [5,5,5,5,5,19,19,19,19,19,35,35,35,35,49,49,49,49]
+        DFORMROWS = [5,5,5,5,35,35,35,35]
+        IFORMROWS = [19,19,19,19,49,49,49]
+        FORMCOLS = [7,16,25,34,7,16,25]
+        DAYROWS = [3,3,3,3,33,33,33]
+        COLWIDTHS = [48,28,28,28,28,30,25,25,25,48,28,28,28,28,30,25,25,25,48,28,28,28,28,30,25,25,25,48,28,28,28,28,30,25,25,25,48,28,28,28,28,30,25,25,25,48,28,28,28,28,30,25,25,25,48,28,28,28,28,30,25,25,25,48,28,28,28,28,30,25,25,25]
+        DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+        DFORMS = ['=ROUNDUP(LARGE(INDIRECT("RC[-5]",0):INDIRECT("RC[-2]",0),1)/$A$1,0)','=ROUNDUP(SMALL(INDIRECT("RC[-6]",0):INDIRECT("RC[-3]",0),1)/$A$1,0)','=ROUNDUP(AVERAGE(INDIRECT("RC[-7]",0):INDIRECT("RC[-4]",0))/$A$1,0)']
+        IFORMS = ['=ROUNDUP(LARGE(INDIRECT("RC[-5]",0):INDIRECT("RC[-2]",0),1)/$B$1,0)','=ROUNDUP(SMALL(INDIRECT("RC[-6]",0):INDIRECT("RC[-3]",0),1)/$B$1,0)','=ROUNDUP(AVERAGE(INDIRECT("RC[-7]",0):INDIRECT("RC[-4]",0))/$B$1,0)']
+        COLORROWS = [7,21,37,51]
+        GREENFILL = PatternFill(start_color='E2EFDA', end_color='E2EFDA', fill_type='solid')
+        BLUEFILL = PatternFill(start_color='D9E1F2', end_color='D9E1F2', fill_type='solid')
+        ORANGEFILL = PatternFill(start_color='FCE4D6', end_color='FCE4D6', fill_type='solid')
+        LEFTBORDER = Border(left=Side(border_style='medium',color='FF000000'))
+        TOPBORDER = Border(top=Side(border_style='medium',color='FF000000'))
+        TOPLEFTBORDER = Border(top=Side(border_style='medium',color='FF000000'),
+                                left=Side(border_style='medium',color='FF000000'))
+        LEFTCELLS = ['b2','t2','ac2','b3','k3','t3','ac3','b33','k33','t33','b34','k34','t34','b4','k4','t4','ac4']    
+        HISTORYCELLS1 = ['b4','k4','t4','ac4','b34','k34','t34']
+        HISTORYCELLS2 = ['c4','l4','u4','ad4','c34','l34','u34']
+        HISTORYCELLS3 = ['d4','m4','v4','ae4','d34','m34','v34']
+        HISTORYCELLS4 = ['e4','n4','w4','af4','e34','n34','w34']
 
-
-        def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
-                            #Will return a list of strings for each line of the file
-            with open(file, 'r') as file:
-                text = file.read()
-            text = rtf_to_text(text)
-            textlist = text.splitlines()
-            return textlist #returns a list containing entire RTF file
-
-        def getday(text, a): #send text file and starting line for the day of the week, returns dataframe
-            drivers = []
-            starthour = []
-            instores = []
-            deliveries = []
-            products = []
-            for i,line in enumerate(text):
-                products.append(int(line[a+22:a+25].strip()))
-                deliveries.append(int(line[a:a+2].strip()))
-                starthour.append(int(line[:2]))
-            return(pd.DataFrame({"Time":starthour,'Deliveries':deliveries,'Products':products}))
-
-
-
-
-        wb= Workbook()
-        mon = wb.create_sheet('Monday', index = 0)
-        tue = wb.create_sheet('Tuesday', index = 0)
-        wed = wb.create_sheet('Wednesday', index = 0)
-        thu = wb.create_sheet('Thursday', index = 0)
-        fri = wb.create_sheet('Friday', index = 0)
-        sat = wb.create_sheet('Saturday', index = 0)
-        sun = wb.create_sheet('Sunday', index = 0)
-        f = 1
-        for file in filelist:
+        #Set-up
+        ws['a1'] = 3
+        ws['b1'] = 15
+        ws.sheet_view.showGridLines = False
+        for i in range (0,18): #Paste Hours
+            for o, hour in enumerate(HOURS):
+                ws.cell(row = HOURSROWS[i] + o, column = HOURSCOLS[i], value = hour)
             
+        for i in range(0,7):#Paste formulas for high low and average and day names
             
-            #*********************Start loop here**************
-            textlist = openrtf(file)
+            ws.merge_cells(start_row=DAYROWS[i],end_row = DAYROWS[i],start_column = FORMCOLS[i]-5, end_column = FORMCOLS[i]+2)
+            ws.cell(row = DAYROWS[i], column = FORMCOLS[i]-5, value = DAYS[i])
+            ws.cell(row=DFORMROWS[i]-1, column = FORMCOLS[i], value = "H").font = Font(bold=True)
+            ws.cell(row=DFORMROWS[i]-1, column = FORMCOLS[i]+1, value = "L").font = Font(bold=True)
+            ws.cell(row=DFORMROWS[i]-1, column = FORMCOLS[i]+2, value = "A").font = Font(bold=True)
+            ws.cell(row=DFORMROWS[i]+13, column = FORMCOLS[i], value = "H").font = Font(bold=True)
+            ws.cell(row=DFORMROWS[i]+13, column = FORMCOLS[i]+1, value = "L").font = Font(bold=True)
+            ws.cell(row=DFORMROWS[i]+13, column = FORMCOLS[i]+2, value = "A").font = Font(bold=True)
+            #DFORMROWS-1
+            #FORMCOLS
+            for o in range(0,12):
+                for p in range(0,3):
+                    ws.cell(row = DFORMROWS[i]+o, column = FORMCOLS[i]+p, value = DFORMS[p]).font = Font(bold=True)
+                    ws.cell(row = IFORMROWS[i]+o, column = FORMCOLS[i]+p, value = IFORMS[p]).font = Font(bold=True)
 
 
-            #set store number and date range, and save  
-            store = textlist[1]
-            store = store[82:90].strip()
-            store = store[-4:]
-            date = textlist[3]
-            date = date.strip()
-            col = f+1
+        #Set column widths
+        for i, col in enumerate(['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p',
+                        'q','r','s','t','u','v','w','x','y','z','aa','ab','ac','ad','ae',
+                        'af','ag','ah','ai','aj','ak','al','am','an','ao','ap','aq','ar','st']):
+            ws.column_dimensions[col].width = COLWIDTHS[i]/7
 
-            #clean up the file
-            del textlist[50:]
-            x = []
-            for i, line in enumerate(textlist):
-                if line[:5] == "     ":
-                    x.append(i)
-            x.reverse()
-
-                #Delete useless lines, leaving data starting in row 5
-            for y in x:
-                del textlist[y]
-            del textlist[:4]
-
-            #create text1 and text2 for weekdays and weekend
-            for i, x in enumerate(textlist):
-                if len(x) == 0:
-                    stoppoint = i
-                    break
-
-            text1 = textlist[:stoppoint]
-            del textlist[:stoppoint+1]
-            for i, x in enumerate(textlist):
-                if len(x) == 0:
-                    stoppoint = i
-                    break
-            text2 = textlist[:stoppoint]
-            del textlist[:]
-            #get each day as a df
-            monday = getday(text1, 22)
-            tuesday = getday(text1, 22+29)
-            wednesday = getday(text1, 22+29+29)
-            thursday = getday(text1, 22+29+29+29)
-            friday = getday(text2, 22)
-            saturday = getday(text2, 22+29)
-            sunday = getday(text2, 22+29+29)
+        #center all cells
+        for row in range(1,65):
+            for col in range(1,55):
+                ws.cell(row = row, column = col).alignment = Alignment(horizontal='center')
 
 
-            for row in range(0,13):
-                mon.cell(row = row+2, column = col, value = monday.loc[row]['Deliveries'])
-                mon.cell(row = row+2+14, column = col, value = monday.loc[row]['Products'])
-                mon.cell(row = 1, column = col, value = f"History{f}")
+        for i in range(1,38):
+            for row in COLORROWS:
+                ws.cell(row = row, column = i).fill = BLUEFILL
+                ws.cell(row = row+3, column = i).fill = GREENFILL
+                ws.cell(row = row+7, column = i).fill = ORANGEFILL
 
-                tue.cell(row = row+2, column = col, value = tuesday.loc[row]['Deliveries'])
-                tue.cell(row = row+2+14, column = col, value = tuesday.loc[row]['Products'])
-                tue.cell(row = 1, column = col, value = f"History{f}")
-                
-                wed.cell(row = row+2, column = col, value = wednesday.loc[row]['Deliveries'])
-                wed.cell(row = row+2+14, column = col, value = wednesday.loc[row]['Products'])
-                wed.cell(row = 1, column = col, value = f"History{f}")
+        #set font size
+        ws['b2'].font = Font(size = 24)
+        ws['t2'].font = Font(size = 24)
+        ws['ac2'].font = Font(size = 24)
+        ws['ac2'] = "Week _"
+        ws['t2'] = "Period _"
 
-                thu.cell(row = row+2, column = col, value = thursday.loc[row]['Deliveries'])
-                thu.cell(row = row+2+14, column = col, value = thursday.loc[row]['Products'])
-                thu.cell(row = 1, column = col, value = f"History{f}")
+        #Merge cells
+        ws.merge_cells('b2:r2')
+        ws.merge_cells('t2:aa2')
+        ws.merge_cells('ac2:aj2')
+        ws.row_dimensions[2].height = 40.5
+        
+        #Borders
+        for row in range(2,31):
+            for col in [2, 10, 11, 19, 20, 28, 29, 37]:
+                ws.cell(row = row, column = col).border = LEFTBORDER
+        for row in range(33,61):
+            for col in [2,10,11,19,20,28]:
+                ws.cell(row = row, column = col).border = LEFTBORDER
+        
+        for row in [2,3,4,31]:
+            for col in [2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,20,21,22,23,24,25,26,27,29,30,31,32,33,34,35,36]:
+                ws.cell(row = row, column = col).border = TOPBORDER
+        
+        for row in [33,34,61]:
+            for col in [2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,20,21,22,23,24,25,26,27]:
+                ws.cell(row = row, column = col).border = TOPBORDER
 
-                fri.cell(row = row+2, column = col, value = friday.loc[row]['Deliveries'])
-                fri.cell(row = row+2+14, column = col, value = friday.loc[row]['Products'])
-                fri.cell(row = 1, column = col, value = f"History{f}")
+        ws['j2'].border = TOPBORDER
+        ws['j3'].border = TOPBORDER
+        for cell in LEFTCELLS:
+            ws[cell].border = TOPLEFTBORDER
+        ws['i1'] = "Histories Used:"
+        ws['k1'] = "w1"
+        ws['l1'] = "w2"
+        ws['m1'] = "w3"
+        ws['n1'] = "w4"
 
-                sat.cell(row = row+2, column = col, value = saturday.loc[row]['Deliveries'])
-                sat.cell(row = row+2+14, column = col, value = saturday.loc[row]['Products'])
-                sat.cell(row = 1, column = col, value = f"History{f}")
+        for cel1, cel2, cel3, cel4 in zip(HISTORYCELLS1, HISTORYCELLS2, HISTORYCELLS3, HISTORYCELLS4):
+            ws[cel1] = "=k1"
+            ws[cel2] = "=l1"
+            ws[cel3] = "=m1"
+            ws[cel4] = "=n1"
 
-                sun.cell(row = row+2, column = col, value = sunday.loc[row]['Deliveries'])
-                sun.cell(row = row+2+14, column = col, value = sunday.loc[row]['Products'])
-                sun.cell(row = 1, column = col, value = f"History{f}")
-
-
-
-            #at end of loop:
-            worksheets = [mon,tue,wed,thu,fri,sat,sun]
-            for sheet in worksheets:
-                sheet.cell(row = 2, column = 1, value = "10-11")
-                sheet.cell(row = 3, column = 1, value = "11-12")
-                sheet.cell(row = 4, column = 1, value = "12-1")
-                sheet.cell(row = 5, column = 1, value = "1-2")
-                sheet.cell(row = 6, column = 1, value = "2-3")
-                sheet.cell(row = 7, column = 1, value = "3-4")
-                sheet.cell(row = 8, column = 1, value = "4-5")
-                sheet.cell(row = 9, column = 1, value = "5-6")
-                sheet.cell(row = 10, column = 1, value = "6-7")
-                sheet.cell(row = 11, column = 1, value = "7-8")
-                sheet.cell(row = 12, column = 1, value = "8-9")
-                sheet.cell(row = 13, column = 1, value = "9-10")
-                sheet.cell(row = 2+14, column = 1, value = "10-11")
-                sheet.cell(row = 3+14, column = 1, value = "11-12")
-                sheet.cell(row = 4+14, column = 1, value = "12-1")
-                sheet.cell(row = 5+14, column = 1, value = "1-2")
-                sheet.cell(row = 6+14, column = 1, value = "2-3")
-                sheet.cell(row = 7+14, column = 1, value = "3-4")
-                sheet.cell(row = 8+14, column = 1, value = "4-5")
-                sheet.cell(row = 9+14, column = 1, value = "5-6")
-                sheet.cell(row = 10+14, column = 1, value = "6-7")
-                sheet.cell(row = 11+14, column = 1, value = "7-8")
-                sheet.cell(row = 12+14, column = 1, value = "8-9")
-                sheet.cell(row = 13+14, column = 1, value = "9-10")
+        
 
 
 
-            f +=1
+
+        del(cell,col,cel1,cel2,cel3,cel4,i,o,p,row,HOURS,HOURSCOLS,HOURSROWS,DFORMROWS,IFORMROWS,FORMCOLS,DAYROWS,COLWIDTHS,DAYS,DFORMS,IFORMS,COLORROWS,GREENFILL,BLUEFILL,ORANGEFILL,LEFTBORDER,TOPBORDER,TOPLEFTBORDER,LEFTCELLS,HISTORYCELLS1,HISTORYCELLS2,HISTORYCELLS3,HISTORYCELLS4)
 
 
 
- 
+        for i, file in enumerate(filelist):
+            file = openrtf(file)
 
-        wb.save(self.outputfolder+"Export.xlsx")
-        self.outputbox.setText(f"Weekly Comp export successful, \nfile saved to {self.outputfolder}Export.xlsx")
+            ws['b2'] = int(file[1][83:87])
+            for row in range(5,17): #Deliveries
+                ws.cell(row = row, column = 2+i, value = int(file[row+4][21:25].strip()))#Mon 
+                ws.cell(row = row, column = 11+i, value = int(file[row+4][50:54].strip()))#Tue 
+                ws.cell(row = row, column = 20+i, value = int(file[row+4][79:83].strip()))#Wed 
+                ws.cell(row = row, column = 29+i, value = int(file[row+4][108:112].strip()))#Thur 
+                ws.cell(row = row+30, column = 2+i, value = int(file[row+25][21:25].strip()))#Fri
+                ws.cell(row = row+30, column = 11+i, value = int(file[row+25][50:54].strip()))#Sat 
+                ws.cell(row = row+30, column = 20+i, value = int(file[row+25][79:83].strip()))#Sun 
+
+            for row in range(19,31): #Products
+                ws.cell(row = row, column = 2+i, value = int(file[row-10][21+23:25+23].strip()))#Mon 
+                ws.cell(row = row, column = 11+i, value = int(file[row-10][50+23:54+23].strip()))#Tue 
+                ws.cell(row = row, column = 20+i, value = int(file[row-10][79+23:83+23].strip()))#Wed 
+                ws.cell(row = row, column = 29+i, value = int(file[row-10][108+23:112+23].strip()))#Thur 
+                ws.cell(row = row+30, column = 2+i, value = int(file[row+11][21+23:25+23].strip()))#Fri
+                ws.cell(row = row+30, column = 11+i, value = int(file[row+11][50+23:54+23].strip()))#Sat 
+                ws.cell(row = row+30, column = 20+i, value = int(file[row+11][79+23:83+23].strip()))#Sun 
+
+    #:00 am - 10:59 am   10   1   1.70   1.00    2     2   0   0.98   1.00    6     0   3   1.47   1.00    5     1   0   1.78   1.00    1'
+
+
+
+        wb.save(self.outputfolder+"Schedule History.xlsx")
+        os.startfile(self.outputfolder+"Schedule History.xlsx")
+        self.outputbox.setText("History Report ran successfully, opening output file now")
     except:
         self.outputbox.append("ENCOUNTERED ERROR")
         self.outputbox.append("Please send the contents of this box to Justin")
         self.outputbox.append(traceback.format_exc())
+    
+
+
+if __name__ == '__main__':
+    filelist = []
+    for file in os.listdir("c:/zocdownload/"):
+        if file.startswith("DSHWKC"):
+            filelist.append(file)
+    filelist = ["c:/zocdownload/"+file for file in filelist]
+    run(filelist)
