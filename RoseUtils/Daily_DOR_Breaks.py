@@ -2,7 +2,8 @@
 import os #To search the folder
 from striprtf.striprtf import rtf_to_text #RTF Reader
 import sqlite3 #Save to database
-from xlsxwriter.workbook import Workbook #to export the database into an excel file
+#from xlsxwriter.workbook import Workbook #to export the database into an excel file
+from openpyxl import Workbook as wb
 import time #just for timing the script
 import traceback
 
@@ -295,15 +296,20 @@ def run(self, zocdownload, databasefile, franchise):
         con.commit()
 
         #### Export database to excel file
-        workbook = Workbook(EXPORT_EXCEL_FILE)
-        worksheet = workbook.add_worksheet()
+       # workbook = Workbook(EXPORT_EXCEL_FILE)
+        #worksheet = workbook.add_worksheet()
+        WB = wb()
+        ws = WB.active
+        #worksheet.write()
         cursor.execute("select * from breaks")
         mysel=cursor.execute("select * from breaks")
         for i, row in enumerate(mysel):
             for j, value in enumerate(row):
-                worksheet.write(i, j, row[j])
+                #worksheet.write(i, j, row[j])
+                ws.cell(row = i, column = j, value = row(j))
 
-        workbook.close()
+        #workbook.close()
+        WB.save(EXPORT_EXCEL_FILE)
         con.close()
         end_time = time.perf_counter()
         #print(f"Completed {len(fileList)} stores in {end_time - start_time} seconds")
