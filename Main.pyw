@@ -78,7 +78,9 @@ class MyGUI(QMainWindow):
         self.tabWidget.setCurrentIndex(0)   #Set the RCP tab to be default
         self.outputbox.setText("Click on a report to get started")
         self.btn_gm_history.setDisabled(True)
+        self.gm_history_label.show()
         self.btn_gm_yields.setDisabled(True)
+        self.gm_yields_label.show()
 
 
     def buttons(self):
@@ -151,10 +153,13 @@ class MyGUI(QMainWindow):
             self.numitems_label.setText(str(len(filelist)))
         if len(filelist) == 1:
             self.btn_gm_yields.setDisabled(False)
+            self.gm_yields_label.hide()
         else:
             self.btn_gm_yields.setDisabled(True)
-        if len(filelist) >= 1:
+            self.gm_yields_label.show()
+        if len(filelist) >= 1 and len(filelist) <=4:
             self.btn_gm_history.setDisabled(False)
+            self.gm_history_label.hide()
 
 
 
@@ -162,12 +167,26 @@ class MyGUI(QMainWindow):
         if len(filelist) == 0:
             self.popup("Click on 'Browse' and select at least one weekly comparison file before clicking submit!",QMessageBox.Warning,"Error")
             return
+        for file in filelist:
+            if "DSHWKC" not in file:
+                self.outputbox.setText("Select ONLY weekly comparrison reports and try again.\nYou selected:")
+                self.outputbox.append(file)
+                self.filelist = []
+                self.file_listbox.clear()
+                return
         gm_weeklycomp.run(self, filelist)
 
     def targetbutton(self,filelist):
         if len(filelist) != 1:
             self.popup("Click on 'Browse' and select exactly ONE target inentory cost report!",QMessageBox.Warning,"Error")
             return
+        for file in filelist:
+            if "INVTAR" not in file:
+                self.outputbox.setText("Must select a target inventory cost report. Please try again.\nYou selected:")
+                self.outputbox.append(file)
+                self.filelist = []
+                self.file_listbox.clear()
+                return
         gm_Target_inv.run(self, filelist[0])
 
     def historyClearButton(self): #clears the list box showing files selected
@@ -175,7 +194,9 @@ class MyGUI(QMainWindow):
         self.file_listbox.clear()
         self.numitems_label.setText("0")
         self.btn_gm_history.setDisabled(True)
+        self.gm_history_label.show()
         self.btn_gm_yields.setDisabled(True)
+        self.gm_yields_label.show()
 
     
     def comments(self):
