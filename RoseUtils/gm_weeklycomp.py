@@ -165,7 +165,7 @@ def run(self, filelist: list) -> None:
 
 
 
-
+ 
 
         wb.save(self.outputfolder+"Export.xlsx")
         self.outputbox.setText(f"Weekly Comp export successful, \nfile saved to {self.outputfolder}Export.xlsx")

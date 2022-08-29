@@ -53,7 +53,7 @@ Release Version 1.2
 
 
 
-
+ 
 
 def r13(gui,x):  
     text = '''Release Version 1.3.0

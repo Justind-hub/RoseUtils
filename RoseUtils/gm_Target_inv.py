@@ -48,7 +48,7 @@ def run(self, file: str) -> None:
             ws.cell(row = i+1, column = 1, value = num)
             ws.cell(row = i+1, column = 2, value = items[index])
             ws.cell(row = i+1, column = 3, value = yields[index])
-        
+         
         wb.save(self.outputfolder+"yields.xlsx")
         os.startfile(self.outputfolder+"yields.xlsx")
         self.outputbox.setText("Yields report Successful, opening output file now")
