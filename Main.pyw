@@ -1,8 +1,7 @@
-from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory, Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity, Epp, Comments, Release
+from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory, Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity, Epp, Comments, Release, gm_Target_inv, gm_weeklycomp
 import sys
-from PyQt5.QtWidgets import QTabWidget, QPushButton, QLabel, QLineEdit, QMenuBar, QMenu, QMainWindow, QApplication, QMessageBox # Change to * if you get an error
-from PyQt5 import uic
-from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QTabWidget, QPushButton, QLabel, QLineEdit, QMenuBar, QMenu, QMainWindow, QApplication, QMessageBox, QFileDialog, QCheckBox # Change to * if you get an error
+from PyQt5 import uic,QtWidgets,QtCore
 import os
 from os.path import exists
 
@@ -12,45 +11,58 @@ class MyGUI(QMainWindow):
     def __init__(self):
         super(MyGUI, self).__init__()
         uic.loadUi("lib/Main_UI.ui",self)
-
-
-        self.initvars()
+        filelist = []
         self.initui()
+        self.initvars()
+        self.refreshfolders()
         self.show()
         self.buttons()
         self.setFixedSize(self.size())
-        
 
 
+    
     def initvars(self):
         
         if not exists("Settings/"):
             os.mkdir("Settings")
-        if not exists("Settings/CCDDatabase"):
-            self.ccddatabasefunc()
+            self.popup("Please set your folders and files on the Configuration tab",QMessageBox.Information,"First time set-up")
+            self.tabWidget.setCurrentIndex(1)
+        if exists("Settings/GM"): 
+            self.tabWidget.setTabVisible(0, False)
+            self.hider.show()
+            self.checkbox_GM.setChecked(True)
+            self.tabWidget.setCurrentIndex(2)
         else:
+            self.tabWidget.setTabVisible(0, True)
+            self.hider.hide()
+        if exists("Settings/CCDDatabase"): 
             with open("Settings/CCDDatabase", "r") as f: self.ccddatabase = f.readline()
-
-        if not exists("Settings/export"):
-            self.outputfolderfunc()
         else:
+            self.ccddatabase = ""
+        if exists("Settings/export"): 
             with open("Settings/export", "r") as f: self.outputfolder = f.readline()
-            
-        if not exists("Settings/RCPDatabase"):
-            self.rcpdatabasefunc()
         else:
+            self.outputfolder = ""
+        if exists("Settings/RCPDatabase"): 
             with open("Settings/RCPDatabase", "r") as f: self.rcpdatabase = f.readline()
-
-        if not exists("Settings/Zocdownload"):
-            self.zocdownloadfolderfunc()
         else:
+            self.rcpdatabase = ""
+        if exists("Settings/Zocdownload"): 
             with open("Settings/Zocdownload", "r") as f: self.zocdownloadfolder = f.readline()
-
-        if not exists("Settings/Downloadfolder"):
-            self.downloadfolderfunc()
         else:
+            self.zocdownloadfolder = ""
+        if exists("Settings/Downloadfolder"): 
             with open("Settings/Downloadfolder", "r") as f: self.downloadfolder = f.readline()
-        
+        else:
+            self.downloadfolder = ""
+
+
+    def wizzard(self):
+        if not exists("Settings/CCDDatabase"): self.ccddatabasefunc()
+        if not exists("Settings/export"): self.outputfolderfunc()    
+        if not exists("Settings/RCPDatabase"): self.rcpdatabasefunc()
+        if not exists("Settings/Zocdownload"): self.zocdownloadfolderfunc()
+        if not exists("Settings/Downloadfolder"): self.downloadfolderfunc()
         self.savefolders()
         self.refreshfolders()
 
@@ -62,8 +74,11 @@ class MyGUI(QMainWindow):
     def initui(self):
         
         #self.logoframe.pixmap.scaledToWidth(20)
+        self.configtab = 1
         self.tabWidget.setCurrentIndex(0)   #Set the RCP tab to be default
         self.outputbox.setText("Click on a report to get started")
+
+
 
     def buttons(self):
         #connect button clicks
@@ -73,9 +88,10 @@ class MyGUI(QMainWindow):
         self.actionRCP_Database_Folder.triggered.connect(self.rcpdatabasefunc)
         self.actionCCD_Database_File.triggered.connect(self.ccddatabasefunc)
         self.actionDownloads_Folder.triggered.connect(self.downloadfolderfunc) 
-        self.actionBETA_V1_2.triggered.connect(lambda: Release.r12(self)) 
-        self.actionBETA_V1_1.triggered.connect(lambda: Release.r11(self)) 
-        self.actionBETA_V1_25.triggered.connect(lambda: Release.r125(self)) 
+        self.actionBETA_V1_2.triggered.connect(lambda: Release.r12(self, True)) 
+        self.actionBETA_V1_1.triggered.connect(lambda: Release.r11(self, True)) 
+        self.actionBETA_V1_25.triggered.connect(lambda: Release.r125(self, True)) 
+        self.actionBETA_V1_3.triggered.connect(lambda: Release.r13(self, True)) 
 
         self.btn_targetrcp.clicked.connect(lambda: Target_Inventory.run(self, self.zocdownloadfolder, self.outputfolder, "RCP"))
         self.btn_breaksrcp.clicked.connect(lambda: Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.rcpdatabase, "RCP"))
@@ -102,6 +118,54 @@ class MyGUI(QMainWindow):
         self.btn_output_set.clicked.connect(self.savefolders)
         self.btn_downloads_set.clicked.connect(self.savefolders)
         self.btn_compliments.clicked.connect(self.comments)
+        self.btn_wizzard.clicked.connect(self.wizzard)
+
+        self.btn_browse.clicked.connect(self.filepicker)
+        self.btn_clear.clicked.connect(self.historyClearButton)
+        self.btn_gm_history.clicked.connect(lambda: self.historybutton(self.weeklycompslist))
+        self.btn_gm_yields.clicked.connect(lambda: self.targetbutton(self.weeklycompslist))
+
+        self.checkbox_GM.stateChanged.connect(self.gmbox)
+
+
+    def gmbox(self, state):
+        if state == QtCore.Qt.Checked:
+            with open("Settings/GM", "w") as f:
+                f.write("Hello")
+            self.tabWidget.setTabVisible(0, False)
+            self.hider.show()
+        if state != QtCore.Qt.Checked:
+            os.remove("Settings/GM")
+            self.hider.hide()
+            self.tabWidget.setTabVisible(0, True)
+
+    def filepicker(self): #Opens file picker to select weekly comp files
+        filelist , check = QFileDialog.getOpenFileNames(None, "QFileDialog.getOpenFileName()",
+                        self.zocdownloadfolder,"RTF Files (*.rtf)")
+        if check:
+            for i, file in enumerate(filelist):
+                self.file_listbox.insertItem(i,file[file.rfind("/")+1:])
+            self.weeklycompslist = filelist
+            self.numitems_label.setText(str(len(filelist)))
+
+
+
+    def historybutton(self,filelist):
+        if len(filelist) == 0:
+            self.popup("Click on 'Browse' and select at least one weekly comparison file before clicking submit!",QMessageBox.Warning,"Error")
+            return
+        gm_weeklycomp.run(self, filelist)
+
+    def targetbutton(self,filelist):
+        if len(filelist) != 1:
+            self.popup("Click on 'Browse' and select exactly ONE target inentory cost report!",QMessageBox.Warning,"Error")
+            return
+        gm_Target_inv.run(self, filelist[0])
+
+    def historyClearButton(self): #clears the list box showing files selected
+        self.weeklycomplist = []
+        self.file_listbox.clear()
+        self.numitems_label.setText("0")
 
     
     def comments(self):
@@ -125,7 +189,7 @@ class MyGUI(QMainWindow):
         x = msg.exec_()
 
     def tabchange(self, i):
-        if i == 2:
+        if i == self.configtab:
             self.outputbox.hide()
         else:
             self.outputbox.show()
@@ -146,22 +210,26 @@ class MyGUI(QMainWindow):
     def outputfolderfunc(self):
         self.outputfolder = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Output Folder') + "/"
         self.refreshfolders()
+        self.outputbox.append("Output Folder Saved")
         return self.outputfolder
 
     def zocdownloadfolderfunc(self):
         self.zocdownloadfolder = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Zoc Download Folder') +"/"
         self.refreshfolders()
+        self.outputbox.append("ZocDownload Folder Saved")
         return self.zocdownloadfolder
 
     def rcpdatabasefunc(self):
         self.rcpdatabase = QtWidgets.QFileDialog.getOpenFileName(self, 'Select the RCP Database File')
         self.rcpdatabase = self.rcpdatabase[0]
+        self.outputbox.append("RCP Database File Saved")
         self.refreshfolders()
         return self.rcpdatabase
 
     def ccddatabasefunc(self):
         self.ccddatabase = QtWidgets.QFileDialog.getOpenFileName(self, 'Select the CCD Database File')
         self.ccddatabase = self.ccddatabase[0]
+        self.outputbox.append("CCD Database File Saved")
         self.refreshfolders()
         return self.ccddatabase
 
@@ -182,9 +250,11 @@ class MyGUI(QMainWindow):
 
         with open("Settings/Downloadfolder", "w") as f:
             f.write(self.downloadfolder)
+        self.outputbox.append("All Folders/Files Saved in configuration")
 
     def downloadfolderfunc(self):
         self.downloadfolder = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Downloads Folder') +"/"
+        self.outputbox.append("Downloads Folder Saved")
         self.refreshfolders()
 
     def outputfolderfunc2(self):
@@ -213,6 +283,6 @@ def main ():
     app = QApplication(sys.argv)
     window = MyGUI()
     app.exec_()
-
+    
 if __name__ == '__main__':
     main()
