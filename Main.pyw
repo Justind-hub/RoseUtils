@@ -27,7 +27,6 @@ class MyGUI(QMainWindow):
     def update(self):
         process = Popen(['git', 'pull', str('https://github.com/Justind-hub/RoseUtils')],stdout=PIPE, stderr=PIPE)
         stdout, stderr = process.communicate()
-        print(stdout)
         if "Already up to date" not in str(stdout):
             self.popup("Update Downloaded!\nPlease quit the program and re-open to apply",QMessageBox.Information,"New Update Downloaded!")
 
