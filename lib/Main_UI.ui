@@ -22,7 +22,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>RoseUtils Daily DM Reports BETA V1.3.6.6</string>
+   <string>RoseUtils Daily DM Reports V1.4</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -50,7 +50,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="iconSize">
      <size>
@@ -965,6 +965,7 @@
     <addaction name="actionBETA_V1_25"/>
     <addaction name="actionBETA_V1_2"/>
     <addaction name="actionBETA_V1_1"/>
+    <addaction name="actionVersion_1_4"/>
    </widget>
    <addaction name="menuSettings"/>
    <addaction name="menuRelease_Notes"/>
@@ -1021,6 +1022,11 @@
   <action name="actionBETA_V1_3_5">
    <property name="text">
     <string>BETA V1.3.5</string>
+   </property>
+  </action>
+  <action name="actionVersion_1_4">
+   <property name="text">
+    <string>Version 1.4</string>
    </property>
   </action>
  </widget>

@@ -113,7 +113,7 @@ class MyGUI(QMainWindow):
         self.actionBETA_V1_25.triggered.connect(lambda: Release.r125(self, True)) 
         self.actionBETA_V1_3.triggered.connect(lambda: Release.r13(self, True)) 
         self.actionBETA_V1_3_5.triggered.connect(lambda: Release.r135(self, True)) 
-
+        self.actionVersion_1_4.triggered.connect(lambda: Release.r14(self, True)) 
         #Buttons
         self.btn_targetrcp.clicked.connect(lambda: Target_Inventory.run(self, self.zocdownloadfolder, self.outputfolder, "RCP"))
         self.btn_breaksrcp.clicked.connect(lambda: Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.rcpdatabase, "RCP"))
