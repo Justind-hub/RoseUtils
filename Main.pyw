@@ -9,8 +9,7 @@ from subprocess import Popen, PIPE
 import logging
 
 log = logging.getLogger("Justin")
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s:%(name)s:%(message)s',filename='RoseUtils.log')
-print("Finished imports")
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s:%(name)s:%(message)s',filename='RoseUtils.log')
 log.debug("Finished imports")
 
 
@@ -29,16 +28,21 @@ class MyGUI(QMainWindow):
         try:
             self.update()
         except Exception:
-            log.error(Exception)
-        
+            log.error("UNABLE TO RUN UPDATER")
+        log.debug("Finished __init__")
 
     def update(self):
+        log.debug("Update function called")
         process = Popen(['git', 'pull', str('https://github.com/Justind-hub/RoseUtils')],stdout=PIPE, stderr=PIPE)
         stdout, stderr = process.communicate()
+        log.debug(f"stdout = {stdout}")
+        log.debug(f"stderr = {stderr}")
         if "Already up to date" not in str(stdout):
             self.popup("Update Downloaded!\nPlease quit the program and re-open to apply",QMessageBox.Information,"New Update Downloaded!")
+        log.debug("Update function ran")
 
     def initvars(self):
+        log.debug("initvars function called")
         if not exists("Settings\\"):
             os.mkdir("Settings")
             self.popup("Please set your folders and files on the Configuration tab",QMessageBox.Information,"First time set-up")
@@ -71,9 +75,11 @@ class MyGUI(QMainWindow):
             with open("Settings\\Downloadfolder", "r") as f: self.downloadfolder = f.readline()
         else:
             self.downloadfolder = ""
-
+        log.debug("initvars function ran")
+        
 
     def wizzard(self):
+        log.debug("wizzard function called")
         if not exists("Settings\\CCDDatabase"): self.ccddatabasefunc()
         if not exists("Settings\\export"): self.outputfolderfunc()    
         if not exists("Settings\\RCPDatabase"): self.rcpdatabasefunc()
@@ -81,9 +87,9 @@ class MyGUI(QMainWindow):
         if not exists("Settings\\Downloadfolder"): self.downloadfolderfunc()
         self.savefolders()
         self.refreshfolders()
-
+        log.debug("wizzard function ran")
     def initui(self):
-        
+        log.debug("initui function called")
         #self.logoframe.pixmap.scaledToWidth(20)
         self.configtab = 1
         self.tabWidget.setCurrentIndex(0)   #Set the RCP tab to be default
@@ -92,8 +98,10 @@ class MyGUI(QMainWindow):
         self.gm_history_label.show()
         self.btn_gm_yields.setDisabled(True)
         self.gm_yields_label.show()
+        log.debug("initui function ran")
 
     def buttons(self):
+        log.debug("buttons function called")
         # Actions (Menu items)
         self.actionOutput_Folder.triggered.connect(self.outputfolderfunc)
         self.actionZocDownload_Folder.triggered.connect(self.zocdownloadfolderfunc)
@@ -140,9 +148,10 @@ class MyGUI(QMainWindow):
         self.btn_gm_history.clicked.connect(lambda: self.historybutton(self.weeklycompslist))
         self.btn_gm_yields.clicked.connect(lambda: self.targetbutton(self.weeklycompslist))
         self.checkbox_GM.stateChanged.connect(self.gmbox)
-
+        log.debug("buttons function ran")
 
     def gmbox(self, state):
+        log.debug("gmbox function called")
         if state == QtCore.Qt.Checked:
             with open("Settings\\GM", "w") as f:
                 f.write("Hello")
@@ -152,8 +161,10 @@ class MyGUI(QMainWindow):
             os.remove("Settings\\GM")
             self.hider.hide()
             self.tabWidget.setTabVisible(0, True)
+        log.debug("gmbox function ran")
 
     def filepicker(self): #Opens file picker to select weekly comp files
+        log.debug("filepicker function called")
         filelist , check = QFileDialog.getOpenFileNames(None, "QFileDialog.getOpenFileName()",
                         self.zocdownloadfolder,"RTF Files (*.rtf)")
         if check:
@@ -170,8 +181,10 @@ class MyGUI(QMainWindow):
         if len(filelist) >= 1 and len(filelist) <=4:
             self.btn_gm_history.setDisabled(False)
             self.gm_history_label.hide()
+        log.debug("filepicker function ran, returning "+self.filelist)
 
     def historybutton(self,filelist):
+        log.debug("historybutton function called with filelist "+self.filelist)
         if len(filelist) == 0:
             self.popup("Click on 'Browse' and select at least one weekly comparison file before clicking submit!",QMessageBox.Warning,"Error")
             return
@@ -183,8 +196,9 @@ class MyGUI(QMainWindow):
                 self.file_listbox.clear()
                 return
         gm_weeklycomp.run(self, filelist)
-
+        log.debug("historybutton function ran")
     def targetbutton(self,filelist):
+        log.debug("targetbutton function called with filelist "+self.filelist)
         if len(filelist) != 1:
             self.popup("Click on 'Browse' and select exactly ONE target inentory cost report!",QMessageBox.Warning,"Error")
             return
@@ -196,8 +210,9 @@ class MyGUI(QMainWindow):
                 self.file_listbox.clear()
                 return
         gm_Target_inv.run(self, filelist[0])
-
+        log.debug("targetbutton function ran")
     def historyClearButton(self): #clears the list box showing files selected
+        log.debug("historyclearbutton function called")
         self.weeklycomplist = []
         self.file_listbox.clear()
         self.numitems_label.setText("0")
@@ -205,38 +220,48 @@ class MyGUI(QMainWindow):
         self.gm_history_label.show()
         self.btn_gm_yields.setDisabled(True)
         self.gm_yields_label.show()
-
+        log.debug("historyclearbutton function ran")
     
     def comments(self):
+        log.debug("comments function called")
         self.commentsfile = QtWidgets.QFileDialog.getOpenFileName(self, 'Select the Comments File')
         self.commentsfile = self.commentsfile[0]
         Comments.run(self, self.outputfolder, self.commentsfile)
-        
+        log.debug("comments function ran")
+
     def refreshfolders(self):
+        log.debug("refreshfolders function ran")
         self.output_edit.setText(self.outputfolder)
         self.zocdownload_edit.setText(self.zocdownloadfolder)
         self.rcpdatabase_edit.setText(self.rcpdatabase)
         self.ccddatabase_edit.setText(self.ccddatabase)
         self.downloads_edit.setText(self.downloadfolder)        
+        log.debug("refreshfolders function ran")
     
     def popup(self, text, icon, title):
+        log.debug(f"popup function called with text {text}, icon {icon} and title {title}")
         msg = QMessageBox()
         msg.setWindowTitle(title)
         msg.setText(text)
         msg.setIcon(icon)
         x = msg.exec_()
+        log.debug("popup function ran")
 
     def tabchange(self, i):
+        log.debug("tabchange function called")
         if i == self.configtab:
             self.outputbox.hide()
         else:
             self.outputbox.show()
+        log.debug("tabchange function ran")
 
     def all3rcp(self):
+        log.debug("all3rcp function called")
         self.outputbox.setText("Running Reports...")
         Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.rcpdatabase, "RCP")
         Target_Inventory.run(self, self.zocdownloadfolder, self.outputfolder, "RCP")
         Weeklycompfull.run(self, self.zocdownloadfolder, self.outputfolder, "RCP")
+        log.debug("all3rcp function ran")
 
     def all3ccd(self):
         self.outputbox.setText("Running Reports...")
@@ -273,7 +298,7 @@ class MyGUI(QMainWindow):
 
 
     def savefolders(self):
-
+        log.debug("savefolder function called")
         with open("Settings\\CCDDatabase", "w") as f:
             f.write(self.ccddatabase)
 
@@ -289,6 +314,7 @@ class MyGUI(QMainWindow):
         with open("Settings\\Downloadfolder", "w") as f:
             f.write(self.downloadfolder)
         self.outputbox.append("All Folders/Files Saved in configuration")
+        log.debug("savefolders function ran")
 
     def downloadfolderfunc(self):
         self.downloadfolder = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Downloads Folder') +"/"
