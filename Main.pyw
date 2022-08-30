@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+from msilib.schema import CheckBox
 from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory, Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity, Epp, Comments, Release, gm_Target_inv, gm_weeklycomp
 import sys
-from PyQt5.QtWidgets import QTabWidget, QPushButton, QLabel, QLineEdit, QMenuBar, QMenu, QMainWindow, QApplication, QMessageBox, QFileDialog, QCheckBox # Change to * if you get an error
-from PyQt5 import uic,QtWidgets,QtCore
+from PyQt5.QtWidgets import QTabWidget, QPushButton, QLabel, QLineEdit, QMenuBar, QMenu, QMainWindow, QApplication, QMessageBox, QFileDialog, QCheckBox, QLineEdit # Change to * if you get an error
+from PyQt5 import uic,QtWidgets,QtCore, QtGui
 import os
 from os.path import exists
 from subprocess import Popen, PIPE
@@ -50,12 +51,18 @@ class MyGUI(QMainWindow):
         if exists("Settings\\GM"): 
             self.tabWidget.setTabVisible(0, False)
             self.hider.show()
+            self.pwd_submit.show()
+            self.pwd_box.show()
+            self.pwd_lbl.show()
             self.checkbox_GM.setChecked(True)
             self.checkbox_GM.setEnabled(False)
             self.tabWidget.setCurrentIndex(2)
         else:
             self.tabWidget.setTabVisible(0, True)
             self.hider.hide()
+            self.pwd_submit.hide()
+            self.pwd_box.hide()
+            self.pwd_lbl.hide()
         if exists("Settings\\CCDDatabase"): 
             with open("Settings\\CCDDatabase", "r") as f: self.ccddatabase = f.readline()
         else:
@@ -100,6 +107,7 @@ class MyGUI(QMainWindow):
         self.gm_history_label.show()
         self.btn_gm_yields.setDisabled(True)
         self.gm_yields_label.show()
+        self.pwd_box.setEchoMode(QtWidgets.QLineEdit.Password)
         log.debug("initui function ran")
 
     def buttons(self):
@@ -151,7 +159,18 @@ class MyGUI(QMainWindow):
         self.btn_gm_history.clicked.connect(lambda: self.historybutton(self.weeklycompslist))
         self.btn_gm_yields.clicked.connect(lambda: self.targetbutton(self.weeklycompslist))
         self.checkbox_GM.stateChanged.connect(self.gmbox)
+        self.pwd_submit.clicked.connect(self.pwd_submitfunc)
+        self.pwd_box.returnPressed.connect(self.pwd_submitfunc)
         log.debug("buttons function ran")
+
+    def pwd_submitfunc(self):
+        pwd = str(self.pwd_box.text())
+        self.pwd_box.setText("")
+        if pwd == "24bo":
+            self.checkbox_GM.setChecked(False)
+            self.checkbox_GM.setEnabled(True)
+
+        
 
     def gmbox(self, state):
         log.debug("gmbox function called")
@@ -160,10 +179,16 @@ class MyGUI(QMainWindow):
                 f.write("Hello")
             self.tabWidget.setTabVisible(0, False)
             self.hider.show()
+            self.pwd_submit.show()
+            self.pwd_box.show()
+            self.pwd_lbl.show()
             self.checkbox_GM.setEnabled(False)
         if state != QtCore.Qt.Checked:
             os.remove("Settings\\GM")
             self.hider.hide()
+            self.pwd_submit.hide()
+            self.pwd_box.hide()
+            self.pwd_lbl.hide()
             self.tabWidget.setTabVisible(0, True)
         log.debug("gmbox function ran")
 
