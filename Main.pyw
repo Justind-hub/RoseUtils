@@ -51,7 +51,8 @@ class MyGUI(QMainWindow):
             self.tabWidget.setTabVisible(0, False)
             self.hider.show()
             self.checkbox_GM.setChecked(True)
-            self.checkbox_GM.hide()
+            self.checkbox_GM.set_enabled
+            self.checkbox_GM.setEnabled(False)
             self.tabWidget.setCurrentIndex(2)
         else:
             self.tabWidget.setTabVisible(0, True)
