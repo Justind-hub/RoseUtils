@@ -51,6 +51,7 @@ class MyGUI(QMainWindow):
             self.tabWidget.setTabVisible(0, False)
             self.hider.show()
             self.checkbox_GM.setChecked(True)
+            self.checkbox_GM.hide()
             self.tabWidget.setCurrentIndex(2)
         else:
             self.tabWidget.setTabVisible(0, True)
@@ -88,6 +89,7 @@ class MyGUI(QMainWindow):
         self.savefolders()
         self.refreshfolders()
         log.debug("wizzard function ran")
+
     def initui(self):
         log.debug("initui function called")
         #self.logoframe.pixmap.scaledToWidth(20)
