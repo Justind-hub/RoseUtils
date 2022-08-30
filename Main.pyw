@@ -13,7 +13,7 @@ from subprocess import Popen, PIPE
 class MyGUI(QMainWindow):
     def __init__(self):
         super(MyGUI, self).__init__()
-        uic.loadUi("lib/Main_UI.ui",self)
+        uic.loadUi("lib\\Main_UI.ui",self)
         filelist = []
         self.initui()
         self.initvars()
