@@ -103,3 +103,15 @@ First NON-BETA Release!!
         gui.outputbox.append(text) 
 
     r13(gui, False)
+
+def r14_1(gui,x):  
+    text = '''Release Version 1.4.1
+    Bugfix - "Browse" button was crashing the program
+
+    '''
+    if x:
+        gui.outputbox.setText(text)
+    else:
+        gui.outputbox.append(text) 
+
+    r14(gui, False)

@@ -116,6 +116,7 @@ class MyGUI(QMainWindow):
         self.actionBETA_V1_3.triggered.connect(lambda: Release.r13(self, True)) 
         self.actionBETA_V1_3_5.triggered.connect(lambda: Release.r135(self, True)) 
         self.actionVersion_1_4.triggered.connect(lambda: Release.r14(self, True)) 
+        self.actionVersion_1_4_1.triggered.connect(lambda: Release.r14_1(self, True)) 
         #Buttons
         self.btn_targetrcp.clicked.connect(lambda: Target_Inventory.run(self, self.zocdownloadfolder, self.outputfolder, "RCP"))
         self.btn_breaksrcp.clicked.connect(lambda: Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.rcpdatabase, "RCP"))
@@ -184,7 +185,7 @@ class MyGUI(QMainWindow):
         if len(filelist) >= 1 and len(filelist) <=4:
             self.btn_gm_history.setDisabled(False)
             self.gm_history_label.hide()
-        log.debug("filepicker function ran, returning "+self.filelist)
+        log.debug("filepicker function ran, returning "+str(filelist))
 
     def historybutton(self,filelist):
         log.debug("historybutton function called with filelist "+self.filelist)

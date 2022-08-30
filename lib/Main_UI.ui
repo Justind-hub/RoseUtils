@@ -22,7 +22,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>RoseUtils Daily DM Reports V1.4</string>
+   <string>RoseUtils Daily DM Reports V1.4.1</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -960,12 +960,13 @@
     <property name="title">
      <string>Release Notes</string>
     </property>
+    <addaction name="actionVersion_1_4_1"/>
+    <addaction name="actionVersion_1_4"/>
     <addaction name="actionBETA_V1_3_5"/>
     <addaction name="actionBETA_V1_3"/>
     <addaction name="actionBETA_V1_25"/>
     <addaction name="actionBETA_V1_2"/>
     <addaction name="actionBETA_V1_1"/>
-    <addaction name="actionVersion_1_4"/>
    </widget>
    <addaction name="menuSettings"/>
    <addaction name="menuRelease_Notes"/>
@@ -1027,6 +1028,11 @@
   <action name="actionVersion_1_4">
    <property name="text">
     <string>Version 1.4</string>
+   </property>
+  </action>
+  <action name="actionVersion_1_4_1">
+   <property name="text">
+    <string>Version 1.4.1</string>
    </property>
   </action>
  </widget>
