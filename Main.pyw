@@ -26,7 +26,10 @@ class MyGUI(QMainWindow):
         self.show()
         self.buttons()
         self.setFixedSize(self.size())
-        self.update()
+        try:
+            self.update()
+        except Exception:
+            log.error(Exception)
         
 
     def update(self):
