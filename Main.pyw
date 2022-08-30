@@ -51,7 +51,6 @@ class MyGUI(QMainWindow):
             self.tabWidget.setTabVisible(0, False)
             self.hider.show()
             self.checkbox_GM.setChecked(True)
-            self.checkbox_GM.set_enabled
             self.checkbox_GM.setEnabled(False)
             self.tabWidget.setCurrentIndex(2)
         else:
@@ -160,6 +159,7 @@ class MyGUI(QMainWindow):
                 f.write("Hello")
             self.tabWidget.setTabVisible(0, False)
             self.hider.show()
+            self.checkbox_GM.setEnabled(False)
         if state != QtCore.Qt.Checked:
             os.remove("Settings\\GM")
             self.hider.hide()
