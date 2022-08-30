@@ -4,7 +4,10 @@ from PyQt5.QtWidgets import QTabWidget, QPushButton, QLabel, QLineEdit, QMenuBar
 from PyQt5 import uic,QtWidgets,QtCore
 import os
 from os.path import exists
- 
+from subprocess import Popen, PIPE
+
+
+
 
 
 class MyGUI(QMainWindow):
@@ -18,11 +21,16 @@ class MyGUI(QMainWindow):
         self.show()
         self.buttons()
         self.setFixedSize(self.size())
+        self.update()
         
 
-    
+    def update(self):
+        process = Popen(['git', 'pull', str('https://github.com/Justind-hub/RoseUtils')],stdout=PIPE, stderr=PIPE)
+        stdout, stderr = process.communicate()
+        if "Already up to date" not in str(stdout):
+            self.popup("Update Downloaded!\nPlease quit the program and re-open to apply",QMessageBox.Information,"New Update Downloaded!")
+
     def initvars(self):
-        
         if not exists("Settings/"):
             os.mkdir("Settings")
             self.popup("Please set your folders and files on the Configuration tab",QMessageBox.Information,"First time set-up")
@@ -66,11 +74,6 @@ class MyGUI(QMainWindow):
         self.savefolders()
         self.refreshfolders()
 
-        
-        
-
-
-
     def initui(self):
         
         #self.logoframe.pixmap.scaledToWidth(20)
@@ -82,10 +85,8 @@ class MyGUI(QMainWindow):
         self.btn_gm_yields.setDisabled(True)
         self.gm_yields_label.show()
 
-
     def buttons(self):
-        #connect button clicks
-        ######self.run_target.clicked.connect(lambda: self.targetbutton(self.weeklycompslist))
+        # Actions (Menu items)
         self.actionOutput_Folder.triggered.connect(self.outputfolderfunc)
         self.actionZocDownload_Folder.triggered.connect(self.zocdownloadfolderfunc)
         self.actionRCP_Database_Folder.triggered.connect(self.rcpdatabasefunc)
@@ -97,6 +98,7 @@ class MyGUI(QMainWindow):
         self.actionBETA_V1_3.triggered.connect(lambda: Release.r13(self, True)) 
         self.actionBETA_V1_3_5.triggered.connect(lambda: Release.r135(self, True)) 
 
+        #Buttons
         self.btn_targetrcp.clicked.connect(lambda: Target_Inventory.run(self, self.zocdownloadfolder, self.outputfolder, "RCP"))
         self.btn_breaksrcp.clicked.connect(lambda: Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.rcpdatabase, "RCP"))
         self.btn_new_hirercp.clicked.connect(lambda: New_Hire.run(self, self.zocdownloadfolder, self.rcpdatabase, self.outputfolder))
@@ -124,11 +126,11 @@ class MyGUI(QMainWindow):
         self.btn_compliments.clicked.connect(self.comments)
         self.btn_wizzard.clicked.connect(self.wizzard)
 
+        # GM specific buttons
         self.btn_browse.clicked.connect(self.filepicker)
         self.btn_clear.clicked.connect(self.historyClearButton)
         self.btn_gm_history.clicked.connect(lambda: self.historybutton(self.weeklycompslist))
         self.btn_gm_yields.clicked.connect(lambda: self.targetbutton(self.weeklycompslist))
-
         self.checkbox_GM.stateChanged.connect(self.gmbox)
 
 
@@ -160,8 +162,6 @@ class MyGUI(QMainWindow):
         if len(filelist) >= 1 and len(filelist) <=4:
             self.btn_gm_history.setDisabled(False)
             self.gm_history_label.hide()
-
-
 
     def historybutton(self,filelist):
         if len(filelist) == 0:
@@ -204,7 +204,6 @@ class MyGUI(QMainWindow):
         self.commentsfile = self.commentsfile[0]
         Comments.run(self, self.outputfolder, self.commentsfile)
         
-
     def refreshfolders(self):
         self.output_edit.setText(self.outputfolder)
         self.zocdownload_edit.setText(self.zocdownloadfolder)
@@ -309,7 +308,11 @@ class MyGUI(QMainWindow):
         self.refreshfolders()
 
 
-            
+
+
+
+
+
 def main ():
     app = QApplication(sys.argv)
     window = MyGUI()
