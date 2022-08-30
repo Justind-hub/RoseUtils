@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory, Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity, Epp, Comments, Release, gm_Target_inv, gm_weeklycomp
 import sys
 from PyQt5.QtWidgets import QTabWidget, QPushButton, QLabel, QLineEdit, QMenuBar, QMenu, QMainWindow, QApplication, QMessageBox, QFileDialog, QCheckBox # Change to * if you get an error
@@ -5,10 +6,14 @@ from PyQt5 import uic,QtWidgets,QtCore
 import os
 from os.path import exists
 from subprocess import Popen, PIPE
+import logging
+
+log = logging.getLogger("Justin")
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s:%(name)s:%(message)s',filename='RoseUtils.log')
+print("Finished imports")
+log.debug("Finished imports")
 
 
-
-#testing test test test
 
 class MyGUI(QMainWindow):
     def __init__(self):
@@ -31,11 +36,11 @@ class MyGUI(QMainWindow):
             self.popup("Update Downloaded!\nPlease quit the program and re-open to apply",QMessageBox.Information,"New Update Downloaded!")
 
     def initvars(self):
-        if not exists("Settings/"):
+        if not exists("Settings\\"):
             os.mkdir("Settings")
             self.popup("Please set your folders and files on the Configuration tab",QMessageBox.Information,"First time set-up")
             self.tabWidget.setCurrentIndex(1)
-        if exists("Settings/GM"): 
+        if exists("Settings\\GM"): 
             self.tabWidget.setTabVisible(0, False)
             self.hider.show()
             self.checkbox_GM.setChecked(True)
@@ -43,34 +48,34 @@ class MyGUI(QMainWindow):
         else:
             self.tabWidget.setTabVisible(0, True)
             self.hider.hide()
-        if exists("Settings/CCDDatabase"): 
-            with open("Settings/CCDDatabase", "r") as f: self.ccddatabase = f.readline()
+        if exists("Settings\\CCDDatabase"): 
+            with open("Settings\\CCDDatabase", "r") as f: self.ccddatabase = f.readline()
         else:
             self.ccddatabase = ""
-        if exists("Settings/export"): 
-            with open("Settings/export", "r") as f: self.outputfolder = f.readline()
+        if exists("Settings\\export"): 
+            with open("Settings\\export", "r") as f: self.outputfolder = f.readline()
         else:
             self.outputfolder = ""
-        if exists("Settings/RCPDatabase"): 
-            with open("Settings/RCPDatabase", "r") as f: self.rcpdatabase = f.readline()
+        if exists("Settings\\RCPDatabase"): 
+            with open("Settings\\RCPDatabase", "r") as f: self.rcpdatabase = f.readline()
         else:
             self.rcpdatabase = ""
-        if exists("Settings/Zocdownload"): 
-            with open("Settings/Zocdownload", "r") as f: self.zocdownloadfolder = f.readline()
+        if exists("Settings\\Zocdownload"): 
+            with open("Settings\\Zocdownload", "r") as f: self.zocdownloadfolder = f.readline()
         else:
             self.zocdownloadfolder = ""
-        if exists("Settings/Downloadfolder"): 
-            with open("Settings/Downloadfolder", "r") as f: self.downloadfolder = f.readline()
+        if exists("Settings\\Downloadfolder"): 
+            with open("Settings\\Downloadfolder", "r") as f: self.downloadfolder = f.readline()
         else:
             self.downloadfolder = ""
 
 
     def wizzard(self):
-        if not exists("Settings/CCDDatabase"): self.ccddatabasefunc()
-        if not exists("Settings/export"): self.outputfolderfunc()    
-        if not exists("Settings/RCPDatabase"): self.rcpdatabasefunc()
-        if not exists("Settings/Zocdownload"): self.zocdownloadfolderfunc()
-        if not exists("Settings/Downloadfolder"): self.downloadfolderfunc()
+        if not exists("Settings\\CCDDatabase"): self.ccddatabasefunc()
+        if not exists("Settings\\export"): self.outputfolderfunc()    
+        if not exists("Settings\\RCPDatabase"): self.rcpdatabasefunc()
+        if not exists("Settings\\Zocdownload"): self.zocdownloadfolderfunc()
+        if not exists("Settings\\Downloadfolder"): self.downloadfolderfunc()
         self.savefolders()
         self.refreshfolders()
 
@@ -136,12 +141,12 @@ class MyGUI(QMainWindow):
 
     def gmbox(self, state):
         if state == QtCore.Qt.Checked:
-            with open("Settings/GM", "w") as f:
+            with open("Settings\\GM", "w") as f:
                 f.write("Hello")
             self.tabWidget.setTabVisible(0, False)
             self.hider.show()
         if state != QtCore.Qt.Checked:
-            os.remove("Settings/GM")
+            os.remove("Settings\\GM")
             self.hider.hide()
             self.tabWidget.setTabVisible(0, True)
 
@@ -266,19 +271,19 @@ class MyGUI(QMainWindow):
 
     def savefolders(self):
 
-        with open("Settings/CCDDatabase", "w") as f:
+        with open("Settings\\CCDDatabase", "w") as f:
             f.write(self.ccddatabase)
 
-        with open("Settings/export", "w") as f:
+        with open("Settings\\export", "w") as f:
             f.write(self.outputfolder)
 
-        with open("Settings/RCPDatabase", "w") as f:
+        with open("Settings\\RCPDatabase", "w") as f:
             f.write(self.rcpdatabase)
 
-        with open("Settings/Zocdownload", "w") as f:
+        with open("Settings\\Zocdownload", "w") as f:
             f.write(self.zocdownloadfolder)
 
-        with open("Settings/Downloadfolder", "w") as f:
+        with open("Settings\\Downloadfolder", "w") as f:
             f.write(self.downloadfolder)
         self.outputbox.append("All Folders/Files Saved in configuration")
 
