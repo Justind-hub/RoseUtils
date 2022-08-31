@@ -227,22 +227,22 @@ def run(self, zocdownload, output, fran):
         for col in ws.columns:
             column = col[0].column_letter # Get the column name
             ws.column_dimensions[column].width = 5
-            
+        {"2208":0,"2306":4,"2325":8,"2478":12,"2612":16,"2618":20,"2687":24,"2921":28,"3015":32,"3130":36,"3479":40,"4405":44}
 
         for i in weekday:
-            ws.cell(row = 1+i, column = 2, value = 1740).border = allborder
-            ws.cell(row = 1+i, column = 6, value = 2172).border = allborder
-            ws.cell(row = 1+i, column = 10, value = 2236).border = allborder
-            ws.cell(row = 1+i, column = 14, value = 2272).border = allborder
-            ws.cell(row = 1+i, column = 18, value = 2549).border = allborder
-            ws.cell(row = 1+i, column = 22, value = 2953).border = allborder
-            ws.cell(row = 1+i, column = 26, value = 4778).border = allborder
-            ws.cell(row = 1+i, column = 30, value = 1743).border = allborder
-            ws.cell(row = 1+i, column = 34, value = 2174).border = allborder
-            ws.cell(row = 1+i, column = 38, value = 2457).border = allborder
-            ws.cell(row = 1+i, column = 42, value = 2603).border = allborder
+            ws.cell(row = 1+i, column = 2, value = 2208).border = allborder
+            ws.cell(row = 1+i, column = 6, value = 2306).border = allborder
+            ws.cell(row = 1+i, column = 10, value = 2325).border = allborder
+            ws.cell(row = 1+i, column = 14, value = 2478).border = allborder
+            ws.cell(row = 1+i, column = 18, value = 2612).border = allborder
+            ws.cell(row = 1+i, column = 22, value = 2618).border = allborder
+            ws.cell(row = 1+i, column = 26, value = 2687).border = allborder
+            ws.cell(row = 1+i, column = 30, value = 2921).border = allborder
+            ws.cell(row = 1+i, column = 34, value = 3015).border = allborder
+            ws.cell(row = 1+i, column = 38, value = 3130).border = allborder
+            ws.cell(row = 1+i, column = 42, value = 23479).border = allborder
             ws.cell(row = 1+i, column = 42).alignment = Alignment(horizontal="center")
-            ws.cell(row = 1+i, column = 46, value = 3498).border = allborder
+            ws.cell(row = 1+i, column = 46, value = 4405).border = allborder
             ws.cell(row = 1+i, column = 46).alignment = Alignment(horizontal="center")
 
             ws.cell(row=3+i, column = 1, value ="10-11")
