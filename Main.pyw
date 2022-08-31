@@ -213,7 +213,7 @@ class MyGUI(QMainWindow):
         log.debug("filepicker function ran, returning "+str(filelist))
 
     def historybutton(self,filelist):
-        log.debug("historybutton function called with filelist "+self.filelist)
+        log.debug("historybutton function called")
         if len(filelist) == 0:
             self.popup("Click on 'Browse' and select at least one weekly comparison file before clicking submit!",QMessageBox.Warning,"Error")
             return
@@ -227,7 +227,7 @@ class MyGUI(QMainWindow):
         gm_weeklycomp.run(self, filelist)
         log.debug("historybutton function ran")
     def targetbutton(self,filelist):
-        log.debug("targetbutton function called with filelist "+self.filelist)
+        log.debug("targetbutton function called")
         if len(filelist) != 1:
             self.popup("Click on 'Browse' and select exactly ONE target inentory cost report!",QMessageBox.Warning,"Error")
             return
