@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from msilib.schema import CheckBox
-from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory, Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity, Epp, Comments, Release, gm_Target_inv, gm_weeklycomp
+from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory, Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity, Epp, Comments, Release, gm_Target_inv, gm_weeklycomp, export_SQL
 import sys
-from PyQt5.QtWidgets import QTabWidget, QPushButton, QLabel, QLineEdit, QMenuBar, QMenu, QMainWindow, QApplication, QMessageBox, QFileDialog, QCheckBox, QLineEdit # Change to * if you get an error
+from PyQt5.QtWidgets import QTabWidget, QPushButton, QLabel, QLineEdit, QMenuBar, QMenu, QMenuBar, QMainWindow, QApplication, QMessageBox, QFileDialog, QCheckBox, QLineEdit # Change to * if you get an error
 from PyQt5 import uic,QtWidgets,QtCore, QtGui
 import os
 from os.path import exists
@@ -26,11 +26,24 @@ class MyGUI(QMainWindow):
         self.show()
         self.buttons()
         self.setFixedSize(self.size())
+        self.menubars()
         try:
             self.update()
         except Exception:
             log.error("UNABLE TO RUN UPDATER")
         log.debug("Finished __init__")
+    
+    def menubars(self):
+        # Actions
+        self.actionBETA_V1_2.triggered.connect(lambda: Release.r12(self, True)) 
+        self.actionBETA_V1_1.triggered.connect(lambda: Release.r11(self, True)) 
+        self.actionBETA_V1_25.triggered.connect(lambda: Release.r125(self, True)) 
+        self.actionBETA_V1_3.triggered.connect(lambda: Release.r13(self, True)) 
+        self.actionBETA_V1_3_5.triggered.connect(lambda: Release.r135(self, True)) 
+        self.actionVersion_1_4.triggered.connect(lambda: Release.r14(self, True)) 
+        self.actionVersion_1_4_1.triggered.connect(lambda: Release.r14_1(self, True)) 
+        self.actionVersion_1_4_2.triggered.connect(lambda: Release.r14_2(self, True)) 
+
 
     def update(self):
         log.debug("Update function called")
@@ -112,19 +125,7 @@ class MyGUI(QMainWindow):
 
     def buttons(self):
         log.debug("buttons function called")
-        # Actions (Menu items)
-        self.actionOutput_Folder.triggered.connect(self.outputfolderfunc)
-        self.actionZocDownload_Folder.triggered.connect(self.zocdownloadfolderfunc)
-        self.actionRCP_Database_Folder.triggered.connect(self.rcpdatabasefunc)
-        self.actionCCD_Database_File.triggered.connect(self.ccddatabasefunc)
-        self.actionDownloads_Folder.triggered.connect(self.downloadfolderfunc) 
-        self.actionBETA_V1_2.triggered.connect(lambda: Release.r12(self, True)) 
-        self.actionBETA_V1_1.triggered.connect(lambda: Release.r11(self, True)) 
-        self.actionBETA_V1_25.triggered.connect(lambda: Release.r125(self, True)) 
-        self.actionBETA_V1_3.triggered.connect(lambda: Release.r13(self, True)) 
-        self.actionBETA_V1_3_5.triggered.connect(lambda: Release.r135(self, True)) 
-        self.actionVersion_1_4.triggered.connect(lambda: Release.r14(self, True)) 
-        self.actionVersion_1_4_1.triggered.connect(lambda: Release.r14_1(self, True)) 
+
         #Buttons
         self.btn_targetrcp.clicked.connect(lambda: Target_Inventory.run(self, self.zocdownloadfolder, self.outputfolder, "RCP"))
         self.btn_breaksrcp.clicked.connect(lambda: Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.rcpdatabase, "RCP"))
@@ -152,6 +153,7 @@ class MyGUI(QMainWindow):
         self.btn_downloads_set.clicked.connect(self.savefolders)
         self.btn_compliments.clicked.connect(self.comments)
         self.btn_wizzard.clicked.connect(self.wizzard)
+        self.btn_reexport.clicked.connect(lambda: export_SQL.run(self))
 
         # GM specific buttons
         self.btn_browse.clicked.connect(self.filepicker)
@@ -163,7 +165,12 @@ class MyGUI(QMainWindow):
         self.pwd_box.returnPressed.connect(self.pwd_submitfunc)
         log.debug("buttons function ran")
 
+
+
+
+
     def pwd_submitfunc(self):
+        log.info(f"Password submitted: {str(self.pwd_box.text())}")
         pwd = str(self.pwd_box.text())
         self.pwd_box.setText("")
         if pwd == "24bo":

@@ -13,7 +13,7 @@
     <x>0</x>
     <y>0</y>
     <width>1023</width>
-    <height>373</height>
+    <height>403</height>
    </rect>
   </property>
   <property name="font">
@@ -22,7 +22,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>RoseUtils V1.4.1</string>
+   <string>RoseUtils V1.4.2</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -38,7 +38,7 @@
       <x>0</x>
       <y>0</y>
       <width>1021</width>
-      <height>331</height>
+      <height>361</height>
      </rect>
     </property>
     <property name="font">
@@ -50,7 +50,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="iconSize">
      <size>
@@ -71,6 +71,12 @@
         <height>40</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>Run the Daily Breaks Report</string>
+      </property>
+      <property name="whatsThis">
+       <string/>
+      </property>
       <property name="text">
        <string>Breaks Report</string>
       </property>
@@ -86,6 +92,9 @@
       </property>
       <property name="mouseTracking">
        <bool>false</bool>
+      </property>
+      <property name="toolTip">
+       <string>Run the Daily Weekly Comps Report</string>
       </property>
       <property name="text">
        <string>Weekly Comp</string>
@@ -111,6 +120,9 @@
         <width>150</width>
         <height>40</height>
        </rect>
+      </property>
+      <property name="toolTip">
+       <string>Run the Inventory Variances Report</string>
       </property>
       <property name="text">
        <string>Inv Variances</string>
@@ -138,6 +150,9 @@
         <height>40</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>Run the New Hire Report</string>
+      </property>
       <property name="text">
        <string>NewHire Report</string>
       </property>
@@ -164,6 +179,9 @@
         <height>40</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>Run the Daily Drivosity Report</string>
+      </property>
       <property name="text">
        <string>Drivosity Report</string>
       </property>
@@ -177,6 +195,9 @@
         <height>40</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>Run the Weekly &quot;Breaks&quot; type report</string>
+      </property>
       <property name="text">
        <string>Wkly DOR CSC</string>
       </property>
@@ -189,6 +210,9 @@
         <width>150</width>
         <height>40</height>
        </rect>
+      </property>
+      <property name="toolTip">
+       <string>Run the EPP Report</string>
       </property>
       <property name="text">
        <string>EPP</string>
@@ -222,6 +246,9 @@
         <width>150</width>
         <height>40</height>
        </rect>
+      </property>
+      <property name="toolTip">
+       <string>Run the Compliments Report</string>
       </property>
       <property name="text">
        <string>Compliments</string>
@@ -269,6 +296,9 @@
         <height>40</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>Run the Daily Inventory Variances Report</string>
+      </property>
       <property name="text">
        <string>Inv Variances</string>
       </property>
@@ -284,6 +314,9 @@
       </property>
       <property name="mouseTracking">
        <bool>false</bool>
+      </property>
+      <property name="toolTip">
+       <string>Run the Daily Weekly Comps Report</string>
       </property>
       <property name="text">
        <string>Weekly Comp</string>
@@ -310,6 +343,9 @@
         <height>40</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>Run the Daily Breaks Report</string>
+      </property>
       <property name="text">
        <string>Breaks Report</string>
       </property>
@@ -332,6 +368,22 @@
       </property>
       <property name="text">
        <string>Misc:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_reexport">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>260</y>
+        <width>211</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Re-export both the RCP and CCD Database files for Drivosity and Breaks</string>
+      </property>
+      <property name="text">
+       <string>Re-Export Databases</string>
       </property>
      </widget>
     </widget>
@@ -792,6 +844,9 @@
         <height>31</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>Generate history for writing schedules from weekly comparisson reports</string>
+      </property>
       <property name="text">
        <string>Schedule History</string>
       </property>
@@ -804,6 +859,9 @@
         <width>90</width>
         <height>30</height>
        </rect>
+      </property>
+      <property name="toolTip">
+       <string>Open file dialog to browse for reports downloaded from ZOC</string>
       </property>
       <property name="text">
        <string>Browse</string>
@@ -830,6 +888,9 @@
         <width>91</width>
         <height>30</height>
        </rect>
+      </property>
+      <property name="toolTip">
+       <string>Clear Selection</string>
       </property>
       <property name="text">
        <string>Clear</string>
@@ -864,6 +925,9 @@
         <width>141</width>
         <height>31</height>
        </rect>
+      </property>
+      <property name="toolTip">
+       <string>Generate a spreadsheet with your yields in the order of your ACO</string>
       </property>
       <property name="text">
        <string>Inventory Yields</string>
@@ -946,7 +1010,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>290</y>
+      <y>330</y>
       <width>131</width>
       <height>16</height>
      </rect>
@@ -966,7 +1030,7 @@
       <x>600</x>
       <y>60</y>
       <width>401</width>
-      <height>251</height>
+      <height>290</height>
      </rect>
     </property>
     <property name="font">
@@ -985,20 +1049,11 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuSettings">
-    <property name="title">
-     <string>Settings</string>
-    </property>
-    <addaction name="actionOutput_Folder"/>
-    <addaction name="actionZocDownload_Folder"/>
-    <addaction name="actionRCP_Database_Folder"/>
-    <addaction name="actionCCD_Database_File"/>
-    <addaction name="actionDownloads_Folder"/>
-   </widget>
    <widget class="QMenu" name="menuRelease_Notes">
     <property name="title">
      <string>Release Notes</string>
     </property>
+    <addaction name="actionVersion_1_4_2"/>
     <addaction name="actionVersion_1_4_1"/>
     <addaction name="actionVersion_1_4"/>
     <addaction name="actionBETA_V1_3_5"/>
@@ -1007,7 +1062,6 @@
     <addaction name="actionBETA_V1_2"/>
     <addaction name="actionBETA_V1_1"/>
    </widget>
-   <addaction name="menuSettings"/>
    <addaction name="menuRelease_Notes"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -1072,6 +1126,11 @@
   <action name="actionVersion_1_4_1">
    <property name="text">
     <string>Version 1.4.1</string>
+   </property>
+  </action>
+  <action name="actionVersion_1_4_2">
+   <property name="text">
+    <string>Version 1.4.2</string>
    </property>
   </action>
  </widget>

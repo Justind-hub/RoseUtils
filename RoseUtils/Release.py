@@ -115,3 +115,15 @@ def r14_1(gui,x):
         gui.outputbox.append(text) 
 
     r14(gui, False)
+
+def r14_2(gui,x):  
+    text = '''Release Version 1.4.2
+    Added Re-Export Database to DM Reports tab and tooltips to buttons
+
+    '''
+    if x:
+        gui.outputbox.setText(text)
+    else:
+        gui.outputbox.append(text) 
+
+    r14_1(gui, False)
