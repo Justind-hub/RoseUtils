@@ -32,7 +32,7 @@ def run(self, zocdownload, output, fran):
         ws = wb.create_sheet('Weekly Comp', index = 0)
         if fran == "RCP":
             STORECOL = {"1740":0,"1743":28,"2172":4,"2174":32,"2236":8,"2272":12,"2457":36,"2549":16,"2603":40,"3498":44,"4778":24,"2953":20}
-            stores = [1740,1743,2172, 2174, 2236, 2272, 2457, 2549, 2603, 2953, 3498, 4778]
+            stores = [1740,2172,2236,2272,2549,2953,4778,1743,2174,2457,2603,3498]
         else:
             STORECOL = {"2208":0,"2306":4,"2325":8,"2478":12,"2612":16,"2618":20,"2687":24,"2921":28,"3015":32,"3130":36,"3479":40,"4405":44}
             stores = [2208,2306,2325,2478,2612,2618,2687,2921,3015,3130,3479,4405]
@@ -227,22 +227,22 @@ def run(self, zocdownload, output, fran):
         for col in ws.columns:
             column = col[0].column_letter # Get the column name
             ws.column_dimensions[column].width = 5
-        {"2208":0,"2306":4,"2325":8,"2478":12,"2612":16,"2618":20,"2687":24,"2921":28,"3015":32,"3130":36,"3479":40,"4405":44}
+        
 
         for i in weekday:
-            ws.cell(row = 1+i, column = 2, value = 2208).border = allborder
-            ws.cell(row = 1+i, column = 6, value = 2306).border = allborder
-            ws.cell(row = 1+i, column = 10, value = 2325).border = allborder
-            ws.cell(row = 1+i, column = 14, value = 2478).border = allborder
-            ws.cell(row = 1+i, column = 18, value = 2612).border = allborder
-            ws.cell(row = 1+i, column = 22, value = 2618).border = allborder
-            ws.cell(row = 1+i, column = 26, value = 2687).border = allborder
-            ws.cell(row = 1+i, column = 30, value = 2921).border = allborder
-            ws.cell(row = 1+i, column = 34, value = 3015).border = allborder
-            ws.cell(row = 1+i, column = 38, value = 3130).border = allborder
-            ws.cell(row = 1+i, column = 42, value = 23479).border = allborder
+            ws.cell(row = 1+i, column = 2, value = stores[1-1]).border = allborder
+            ws.cell(row = 1+i, column = 6, value = stores[2-1]).border = allborder
+            ws.cell(row = 1+i, column = 10, value = stores[3-1]).border = allborder
+            ws.cell(row = 1+i, column = 14, value = stores[4-1]).border = allborder
+            ws.cell(row = 1+i, column = 18, value = stores[5-1]).border = allborder
+            ws.cell(row = 1+i, column = 22, value = stores[6-1]).border = allborder
+            ws.cell(row = 1+i, column = 26, value = stores[7-1]).border = allborder
+            ws.cell(row = 1+i, column = 30, value = stores[8-1]).border = allborder
+            ws.cell(row = 1+i, column = 34, value = stores[9-1]).border = allborder
+            ws.cell(row = 1+i, column = 38, value = stores[10-1]).border = allborder
+            ws.cell(row = 1+i, column = 42, value = stores[11-1]).border = allborder
             ws.cell(row = 1+i, column = 42).alignment = Alignment(horizontal="center")
-            ws.cell(row = 1+i, column = 46, value = 4405).border = allborder
+            ws.cell(row = 1+i, column = 46, value = stores[12-1]).border = allborder
             ws.cell(row = 1+i, column = 46).alignment = Alignment(horizontal="center")
 
             ws.cell(row=3+i, column = 1, value ="10-11")
