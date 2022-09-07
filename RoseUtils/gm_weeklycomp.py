@@ -1,10 +1,12 @@
+from logging import exception
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, Border, Side, PatternFill, Color
 import os
 import traceback
 from striprtf.striprtf import rtf_to_text
+import math
 
-def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
+def openrtf(file: str) -> list[str]: #Call this to open an rtf file with the filepath in the thing.
                     #Will return a list of strings for each line of the file
     with open(file, 'r') as file:
         text = file.read()
@@ -13,7 +15,13 @@ def openrtf(file): #Call this to open an rtf file with the filepath in the thing
     return textlist #returns a list containing entire RTF file
 
 
-
+def findline(filel: list[str], string: str) -> int:
+    for i, line in enumerate(filel):
+        if string in line:
+            return i
+    raise Exception(f"'{string}' was not found in file provided!")
+    return 0
+    
 
 
 def run(self, filelist):
@@ -97,7 +105,8 @@ def run(self, filelist):
         ws['ac2'].font = Font(size = 24)
         ws['ac2'] = "Week _"
         ws['t2'] = "Period _"
-
+        ws['a17'] = "Sales"
+        ws['a47'] = "Sales"
         #Merge cells
         ws.merge_cells('b2:r2')
         ws.merge_cells('t2:aa2')
@@ -142,7 +151,7 @@ def run(self, filelist):
 
 
         del(cell,col,cel1,cel2,cel3,cel4,i,o,p,row,HOURS,HOURSCOLS,HOURSROWS,DFORMROWS,IFORMROWS,FORMCOLS,DAYROWS,COLWIDTHS,DAYS,DFORMS,IFORMS,COLORROWS,GREENFILL,BLUEFILL,ORANGEFILL,LEFTBORDER,TOPBORDER,TOPLEFTBORDER,LEFTCELLS,HISTORYCELLS1,HISTORYCELLS2,HISTORYCELLS3,HISTORYCELLS4)
-
+        SALESFORMULAS = ['=ROUNDUP(LARGE(INDIRECT("RC[-5]",0):INDIRECT("RC[-2]",0),1),0)','=ROUNDUP(SMALL(INDIRECT("RC[-6]",0):INDIRECT("RC[-3]",0),1),0)','=ROUNDUP(AVERAGE(INDIRECT("RC[-7]",0):INDIRECT("RC[-4]",0)),0)']
 
 
         for i, file in enumerate(filelist):
@@ -167,9 +176,32 @@ def run(self, filelist):
                 ws.cell(row = row+30, column = 11+i, value = int(file[row+11][50+23:54+23].strip()))#Sat 
                 ws.cell(row = row+30, column = 20+i, value = int(file[row+11][79+23:83+23].strip()))#Sun 
 
-    #:00 am - 10:59 am   10   1   1.70   1.00    2     2   0   0.98   1.00    6     0   3   1.47   1.00    5     1   0   1.78   1.00    1'
+            #Get Sales
+            salesline = findline(file, "Net Sales")
+            mon = int(round(float(file[salesline][27:34]),-2)//100)
+            tue = int(round(float(file[salesline][44:51]),-2)//100)
+            wed = int(round(float(file[salesline][61:68]),-2)//100)
+            thu = int(round(float(file[salesline][78:85]),-2)//100)
+            fri = int(round(float(file[salesline][95:102]),-2)/100)
+            sat = int(round(float(file[salesline][112:119]),-2)//100)
+            sun = int(round(float(file[salesline][129:136]),-2)//100)
+            ws.cell(row=17, column =  1+i+1, value = mon)#Tue
+            ws.cell(row=17, column = 10+i+1, value = tue)#Wed
+            ws.cell(row=17, column = 19+i+1, value = wed)#Mon
+            ws.cell(row=17, column = 28+i+1, value = thu)#Thur
+            ws.cell(row=47, column =  1+i+1, value = fri)#Fri
+            ws.cell(row=47, column = 10+i+1, value = sat)#Sat
+            ws.cell(row=47, column = 19+i+1, value = sun)#Sun
+            for j, form in enumerate(SALESFORMULAS):
+                ws.cell(row=17, column =  1+j+6, value = form)#Tue
+                ws.cell(row=17, column = 10+j+6, value = form)#Wed
+                ws.cell(row=17, column = 19+j+6, value = form)#Mon
+                ws.cell(row=17, column = 28+j+6, value = form)#Thur
+                ws.cell(row=47, column =  1+j+6, value = form)#Fri
+                ws.cell(row=47, column = 10+j+6, value = form)#Sat
+                ws.cell(row=47, column = 19+j+6, value = form)#Sun
 
-
+#      Net Sales:         3680.40          2876.97          3232.95          5107.77          6521.32          5671.18          5258.75'
 
         wb.save(self.outputfolder+"Schedule History.xlsx")
         os.startfile(self.outputfolder+"Schedule History.xlsx")

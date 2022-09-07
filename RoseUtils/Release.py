@@ -127,3 +127,16 @@ def r14_2(gui,x):
         gui.outputbox.append(text) 
 
     r14_1(gui, False)
+
+def r15(gui,x):  
+    text = '''Release Version 1.5.0
+    Added sales to schedule history report. 
+    Rows 17 and 47 now show each day's sales divided by 100 (4385 shows as '44') as well as the high low and average for each day. Should be helpful with projected sales!
+
+    '''
+    if x:
+        gui.outputbox.setText(text)
+    else:
+        gui.outputbox.append(text) 
+
+    r14_2(gui, False)

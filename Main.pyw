@@ -43,6 +43,8 @@ class MyGUI(QMainWindow):
         self.actionVersion_1_4.triggered.connect(lambda: Release.r14(self, True)) 
         self.actionVersion_1_4_1.triggered.connect(lambda: Release.r14_1(self, True)) 
         self.actionVersion_1_4_2.triggered.connect(lambda: Release.r14_2(self, True)) 
+        self.actionVersion_1_5.triggered.connect(lambda: Release.r15(self, True)) 
+        
 
 
     def update(self):
