@@ -134,10 +134,10 @@ def run(self, filelist):
         for cell in LEFTCELLS:
             ws[cell].border = TOPLEFTBORDER
         ws['i1'] = "Histories Used:"
-        ws['k1'] = "w1"
-        ws['l1'] = "w2"
-        ws['m1'] = "w3"
-        ws['n1'] = "w4"
+        ws['k1'] = self.w1.text()
+        ws['l1'] = self.w2.text()
+        ws['m1'] = self.w3.text()
+        ws['n1'] = self.w4.text()
 
         for cel1, cel2, cel3, cel4 in zip(HISTORYCELLS1, HISTORYCELLS2, HISTORYCELLS3, HISTORYCELLS4):
             ws[cel1] = "=k1"
