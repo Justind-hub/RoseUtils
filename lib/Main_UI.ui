@@ -50,7 +50,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="iconSize">
      <size>
@@ -819,6 +819,37 @@
         </property>
        </widget>
       </widget>
+     </widget>
+     <widget class="QCheckBox" name="checkbox_debug">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>280</y>
+        <width>351</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Debug Mode</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_15">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>300</y>
+        <width>241</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string> (Only Check this if Justin asks you to)</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab">

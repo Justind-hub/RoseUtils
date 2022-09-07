@@ -163,16 +163,25 @@ class MyGUI(QMainWindow):
         self.btn_gm_history.clicked.connect(lambda: self.historybutton(self.weeklycompslist))
         self.btn_gm_yields.clicked.connect(lambda: self.targetbutton(self.weeklycompslist))
         self.checkbox_GM.stateChanged.connect(self.gmbox)
+        self.checkbox_debug.stateChanged.connect(self.debug)
         self.pwd_submit.clicked.connect(self.pwd_submitfunc)
         self.pwd_box.returnPressed.connect(self.pwd_submitfunc)
         log.debug("buttons function ran")
 
 
 
-
+    def debug(self,state):
+        log.debug("debug function called")
+        if state == QtCore.Qt.Checked:
+            log.setLevel(logging.DEBUG)
+            log.debug("debug mode turned on")
+        if state != QtCore.Qt.Checked:
+            log.debug("debug mode turned off")
+            log.setLevel(logging.INFO)
+        log.debug("Debug mode turned on")
 
     def pwd_submitfunc(self):
-        log.info(f"Password submitted: {str(self.pwd_box.text())}")
+        log.debug(f"Password submitted: {str(self.pwd_box.text())}")
         pwd = str(self.pwd_box.text())
         self.pwd_box.setText("")
         if pwd == "24bo":
@@ -285,13 +294,13 @@ class MyGUI(QMainWindow):
         x = msg.exec_()
         log.debug("popup function ran")
 
-    def tabchange(self, i):
-        log.debug("tabchange function called")
-        if i == self.configtab:
+    def tabchange(self, tab):
+        log.debug(f"Changed tab to {str(tab)}")
+        if tab == self.configtab:
             self.outputbox.hide()
         else:
             self.outputbox.show()
-        log.debug("tabchange function ran")
+        
 
     def all3rcp(self):
         log.debug("all3rcp function called")
