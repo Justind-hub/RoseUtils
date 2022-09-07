@@ -1,0 +1,11 @@
+set PATH=%PATH%;C:\Program Files\Git\cmd\git.exe
+git clone https://github.com/Justind-hub/RoseUtils /RoseUtils
+git config --global --add safe.directory 'C:/RoseUtils'
+
+- to test git - try "git pull" from c:/RoseUtils
+
+pip install pyqt5
+pip install striprtf
+pip install pandas
+pip install openpyxl
+pip install xlsxwriter
