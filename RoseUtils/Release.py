@@ -140,3 +140,21 @@ def r15(gui,x):
         gui.outputbox.append(text) 
 
     r14_2(gui, False)
+
+def r16(gui,x):  
+    text = '''Release Version 1.6.... PDF Tools!!
+
+    Add as many PDFs to the list as you like by selecting "Browse", you can rearange them however you like
+    Once you're satisfied with the order of the PDFs, enter a name for your new file into the box above the list of PDFs. You can then either "Combine" or "Spit".
+      - Split: Each individual page of each PDF will be saved as a new file in your Output Folder, with the page number appended
+      - Combine: All of the PDFs selected will be combined into one file in the order shown in the box and saved as as a new file
+
+      
+
+    '''
+    if x:
+        gui.outputbox.setText(text)
+    else:
+        gui.outputbox.append(text) 
+
+    r15(gui, False)

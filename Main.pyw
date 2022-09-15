@@ -8,10 +8,21 @@ import os
 from os.path import exists
 from subprocess import Popen, PIPE
 import logging
-
 log = logging.getLogger("Justin")
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s:%(name)s:%(message)s',filename='RoseUtils.log')
 log.debug("Finished imports")
+
+try:
+    import PyPDF2
+    log.debug("imported PyPDF2")
+except:
+    log.info("Downloading PyPDF2")
+    process = Popen(['pip', 'install', 'pypdf2'],stdout=PIPE, stderr=PIPE)
+    stdout, stderr = process.communicate()
+    log.debug(f"stdout = {stdout}")
+    log.debug(f"stderr = {stderr}")
+from PyPDF2 import PdfFileReader, PdfFileWriter
+
 
 
 
@@ -20,6 +31,7 @@ class MyGUI(QMainWindow):
         super(MyGUI, self).__init__()
         uic.loadUi("lib\\Main_UI.ui",self)
         filelist = []
+        pdflist = []
         self.initui()
         self.initvars()
         self.refreshfolders()
@@ -44,6 +56,7 @@ class MyGUI(QMainWindow):
         self.actionVersion_1_4_1.triggered.connect(lambda: Release.r14_1(self, True)) 
         self.actionVersion_1_4_2.triggered.connect(lambda: Release.r14_2(self, True)) 
         self.actionVersion_1_5.triggered.connect(lambda: Release.r15(self, True)) 
+        self.actionVersion_1_6.triggered.connect(lambda: Release.r16(self, True)) 
         
 
 
@@ -123,6 +136,14 @@ class MyGUI(QMainWindow):
         self.btn_gm_yields.setDisabled(True)
         self.gm_yields_label.show()
         self.pwd_box.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.btn_pdf_remove.setDisabled(True)
+        self.btn_pdf_clear.setDisabled(True)
+        self.btn_pdf_up.setDisabled(True)
+        self.btn_pdf_down.setDisabled(True)
+        self.btn_pdf_split.setDisabled(True)
+        self.btn_pdf_combine.setDisabled(True)
+
+
         log.debug("initui function ran")
 
     def buttons(self):
@@ -169,6 +190,69 @@ class MyGUI(QMainWindow):
         log.debug("buttons function ran")
 
 
+        # PDF Buttons
+        self.btn_pdf_browse.clicked.connect(self.pdfpicker)
+        self.btn_pdf_clear.clicked.connect(self.pdfClearButton)
+        self.btn_pdf_up.clicked.connect(self.move_up)
+        self.btn_pdf_down.clicked.connect(self.move_down)
+        self.btn_pdf_split.clicked.connect(self.pdf_split)
+        self.btn_pdf_combine.clicked.connect(self.pdf_combine)
+        self.pdf_listbox.currentRowChanged.connect(self.pdfboxchanged)
+        self.btn_pdf_remove.clicked.connect(self.pdf_remove)
+
+    def pdf_remove(self):
+        pass
+
+
+    def pdfboxchanged(self, i):
+        if i == 0:
+            self.btn_pdf_up.setDisabled(True)
+        else:
+            self.btn_pdf_up.setDisabled(False)
+        if i == self.pdf_listbox.count()-1:
+            self.btn_pdf_down.setDisabled(True)
+        else:
+            self.btn_pdf_down.setDisabled(False)
+
+
+    def move_up(self):
+        rowIndex = self.pdf_listbox.currentRow()
+        currentItem = self.pdf_listbox.takeItem(rowIndex)
+        self.pdf_listbox.insertItem(rowIndex - 1, currentItem)
+        self.pdf_listbox.setCurrentRow(rowIndex -1)
+
+
+    def move_down(self):
+        rowIndex = self.pdf_listbox.currentRow()
+        currentItem = self.pdf_listbox.takeItem(rowIndex)
+        self.pdf_listbox.insertItem(rowIndex + 1, currentItem)
+        self.pdf_listbox.setCurrentRow(rowIndex + 1)
+
+
+    def pdf_split(self):
+        pdflist = [self.pdf_listbox.item(i).text() for i in range(self.pdf_listbox.count())]
+        self.outputbox.setText("Splitting your files now..")
+        for file in pdflist:
+            pdf = PdfFileReader(file)
+            for page in range(pdf.getNumPages()):
+                pdf_writer = PdfFileWriter()
+                pdf_writer.addPage(pdf.getPage(page))
+
+                with open(f"{self.outputfolder}{self.pdf_name.text()}_{page+1}.pdf", 'wb') as out:
+                    pdf_writer.write(out)
+                self.outputbox.append(f"Saved Page {page} of {file} as {self.outputfolder}{self.pdf_name.text()}_{page+1}.pdf")
+        
+
+    def pdf_combine(self):
+        pdflist = [self.pdf_listbox.item(i).text() for i in range(self.pdf_listbox.count())]
+        merger = PyPDF2.PdfFileMerger()
+        for file in pdflist:
+            merger.append(file)
+        merger.write(self.outputfolder + self.pdf_name.text() + ".pdf")
+        self.outputbox.setText(f"Combined file saved as {self.outputfolder}{self.pdf_name.text()}.pdf")
+        self.outputbox.append("Opening file now....")
+        os.startfile(self.outputfolder + self.pdf_name.text() + ".pdf")
+        
 
     def debug(self,state):
         log.debug("debug function called")
@@ -229,6 +313,22 @@ class MyGUI(QMainWindow):
             self.btn_gm_history.setDisabled(False)
             self.gm_history_label.hide()
         log.debug("filepicker function ran, returning "+str(filelist))
+    
+    def pdfpicker(self): #Opens file picker to select weekly comp files
+        log.debug("filepicker function called")
+        pdflist , check = QFileDialog.getOpenFileNames(None, "QFileDialog.getOpenFileName()",
+                        self.outputfolder,"PDF Files (*.pdf)")
+        if check:
+            for i, file in enumerate(pdflist):
+                self.pdf_listbox.addItem(file)
+            self.pdffilelist = pdflist
+            self.numitems_label_2.setText(str(len(pdflist)))
+            self.btn_pdf_remove.setDisabled(False)
+            self.btn_pdf_clear.setDisabled(False)
+            self.btn_pdf_split.setDisabled(False)
+            self.btn_pdf_combine.setDisabled(False)
+
+        log.debug("filepicker function ran, returning "+str(pdflist))
 
     def historybutton(self,filelist):
         log.debug("historybutton function called")
@@ -244,6 +344,7 @@ class MyGUI(QMainWindow):
                 return
         gm_weeklycomp.run(self, filelist)
         log.debug("historybutton function ran")
+
     def targetbutton(self,filelist):
         log.debug("targetbutton function called")
         if len(filelist) != 1:
@@ -258,6 +359,7 @@ class MyGUI(QMainWindow):
                 return
         gm_Target_inv.run(self, filelist[0])
         log.debug("targetbutton function ran")
+
     def historyClearButton(self): #clears the list box showing files selected
         log.debug("historyclearbutton function called")
         self.weeklycomplist = []
@@ -269,6 +371,13 @@ class MyGUI(QMainWindow):
         self.gm_yields_label.show()
         log.debug("historyclearbutton function ran")
     
+    def pdfClearButton(self): #clears the list box showing files selected
+        log.debug("pdfclearbutton function called")
+        self.pdflist = []
+        self.pdf_listbox.clear()
+        self.numitems_label_2.setText("0")
+        log.debug("pdfclearbutton function ran")
+
     def comments(self):
         log.debug("comments function called")
         self.commentsfile = QtWidgets.QFileDialog.getOpenFileName(self, 'Select the Comments File')
