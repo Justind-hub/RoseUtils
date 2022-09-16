@@ -59,6 +59,7 @@ class MyGUI(QMainWindow):
             self.popup("Update Downloaded!\nPlease re-open the program.",QMessageBox.Information,"New Update Downloaded!")
             self.close()
         log.debug("Update function ran")
+        
 
     def initvars(self):
         log.debug("initvars function called")
