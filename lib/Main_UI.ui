@@ -22,7 +22,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>RoseUtils 1.6.1</string>
+   <string>RoseUtils 1.7</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -50,7 +50,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>2</number>
     </property>
     <property name="iconSize">
      <size>
@@ -870,7 +870,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>170</y>
+        <y>156</y>
         <width>141</width>
         <height>31</height>
        </rect>
@@ -952,7 +952,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>246</y>
+        <y>232</y>
         <width>141</width>
         <height>31</height>
        </rect>
@@ -994,7 +994,7 @@
       <property name="geometry">
        <rect>
         <x>170</x>
-        <y>175</y>
+        <y>161</y>
         <width>401</width>
         <height>20</height>
        </rect>
@@ -1007,7 +1007,7 @@
       <property name="geometry">
        <rect>
         <x>170</x>
-        <y>250</y>
+        <y>236</y>
         <width>401</width>
         <height>20</height>
        </rect>
@@ -1020,7 +1020,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>210</y>
+        <y>196</y>
         <width>31</width>
         <height>30</height>
        </rect>
@@ -1033,7 +1033,7 @@
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>210</y>
+        <y>196</y>
         <width>31</width>
         <height>30</height>
        </rect>
@@ -1046,7 +1046,7 @@
       <property name="geometry">
        <rect>
         <x>100</x>
-        <y>210</y>
+        <y>196</y>
         <width>31</width>
         <height>30</height>
        </rect>
@@ -1059,7 +1059,7 @@
       <property name="geometry">
        <rect>
         <x>140</x>
-        <y>210</y>
+        <y>196</y>
         <width>31</width>
         <height>30</height>
        </rect>
@@ -1072,13 +1072,42 @@
       <property name="geometry">
        <rect>
         <x>180</x>
-        <y>210</y>
+        <y>196</y>
         <width>401</width>
         <height>30</height>
        </rect>
       </property>
       <property name="text">
        <string>Enter weeks used for schedule history</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_gm_onhand">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>270</y>
+        <width>141</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Generate a spreadsheet with your yields in the order of your ACO</string>
+      </property>
+      <property name="text">
+       <string>On Hand Amounts</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="gm_onhand_label">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>274</y>
+        <width>401</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Please select exactly one Inventory Value Report</string>
       </property>
      </widget>
     </widget>
@@ -2212,6 +2241,7 @@
     <property name="title">
      <string>Release Notes</string>
     </property>
+    <addaction name="actionVersion_1_7"/>
     <addaction name="actionVersion_1_6"/>
     <addaction name="actionVersion_1_5"/>
     <addaction name="actionVersion_1_4_2"/>
@@ -2303,6 +2333,11 @@
   <action name="actionVersion_1_6">
    <property name="text">
     <string>Version 1.6</string>
+   </property>
+  </action>
+  <action name="actionVersion_1_7">
+   <property name="text">
+    <string>Version 1.7</string>
    </property>
   </action>
  </widget>

@@ -158,3 +158,22 @@ def r16(gui,x):
         gui.outputbox.append(text) 
 
     r15(gui, False)
+
+
+def r17(gui,x):  
+    text = '''Release Version 1.7... Lots of small things..
+
+    - Added an "On Hand Amounts" report for ACOs to accompany the yields report. Items that are missing are by design, not a bug :)
+    - Slightly changed the auto updater to now quit the program and force you to reopen it if an update is downloaded
+    - Added some external libraries to the repo to get around some "pip" issues. Now only have to pip install Pandas and PyQT5
+    - Some various refactoring for performance increases. Some daily DM reports now run about 20% faster.
+    - Started the process of re-writing the StripRTF library
+      
+
+    '''
+    if x:
+        gui.outputbox.setText(text)
+    else:
+        gui.outputbox.append(text) 
+
+    r16(gui, False)

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory, Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity, Epp, Comments, Release, gm_Target_inv, gm_weeklycomp, export_SQL
+from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory
+from RoseUtils import Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
+from RoseUtils import Epp, Comments, Release, gm_Target_inv, gm_weeklycomp
+from RoseUtils import export_SQL,gm_on_hands
 import sys
 from PyQt5.QtWidgets import QTabWidget, QPushButton, QLabel, QLineEdit, QMenuBar, QMenu, QMenuBar, QMainWindow, QApplication, QMessageBox, QFileDialog, QCheckBox, QLineEdit # Change to * if you get an error
 from PyQt5 import uic,QtWidgets,QtCore, QtGui
@@ -46,6 +49,7 @@ class MyGUI(QMainWindow):
         self.actionVersion_1_4_2.triggered.connect(lambda: Release.r14_2(self, True)) 
         self.actionVersion_1_5.triggered.connect(lambda: Release.r15(self, True)) 
         self.actionVersion_1_6.triggered.connect(lambda: Release.r16(self, True)) 
+        self.actionVersion_1_7.triggered.connect(lambda: Release.r17(self, True)) 
         
 
 
@@ -126,7 +130,9 @@ class MyGUI(QMainWindow):
         self.btn_gm_history.setDisabled(True)
         self.gm_history_label.show()
         self.btn_gm_yields.setDisabled(True)
+        self.btn_gm_onhand.setDisabled(True)
         self.gm_yields_label.show()
+        self.gm_onhand_label.show()
         self.pwd_box.setEchoMode(QtWidgets.QLineEdit.Password)
         self.btn_pdf_remove.setDisabled(True)
         self.btn_pdf_clear.setDisabled(True)
@@ -175,6 +181,7 @@ class MyGUI(QMainWindow):
         self.btn_clear.clicked.connect(self.historyClearButton)
         self.btn_gm_history.clicked.connect(lambda: self.historybutton(self.weeklycompslist))
         self.btn_gm_yields.clicked.connect(lambda: self.targetbutton(self.weeklycompslist))
+        self.btn_gm_onhand.clicked.connect(lambda: self.onhandbutton(self.weeklycompslist))
         self.checkbox_GM.stateChanged.connect(self.gmbox)
         self.checkbox_debug.stateChanged.connect(self.debug)
         self.pwd_submit.clicked.connect(self.pwd_submitfunc)
@@ -297,10 +304,14 @@ class MyGUI(QMainWindow):
             self.numitems_label.setText(str(len(filelist)))
         if len(filelist) == 1:
             self.btn_gm_yields.setDisabled(False)
+            self.btn_gm_onhand.setDisabled(False)
             self.gm_yields_label.hide()
+            self.gm_onhand_label.hide()
         else:
             self.btn_gm_yields.setDisabled(True)
+            self.btn_gm_onhand.setDisabled(True)
             self.gm_yields_label.show()
+            self.gm_onhand_label.show()
         if len(filelist) >= 1 and len(filelist) <=4:
             self.btn_gm_history.setDisabled(False)
             self.gm_history_label.hide()
@@ -352,6 +363,22 @@ class MyGUI(QMainWindow):
         gm_Target_inv.run(self, filelist[0])
         log.debug("targetbutton function ran")
 
+
+    def onhandbutton(self,filelist):
+        log.debug("targetbutton function called")
+        if len(filelist) != 1:
+            self.popup("Click on 'Browse' and select exactly ONE target inentory cost report!",QMessageBox.Warning,"Error")
+            return
+        for file in filelist:
+            if "INVVAL" not in file:
+                self.outputbox.setText("Must select a target inventory cost report. Please try again.\nYou selected:")
+                self.outputbox.append(file)
+                self.filelist = []
+                self.file_listbox.clear()
+                return
+        gm_on_hands.run(self, filelist[0])
+        log.debug("targetbutton function ran")
+
     def historyClearButton(self): #clears the list box showing files selected
         log.debug("historyclearbutton function called")
         self.weeklycomplist = []
@@ -361,6 +388,7 @@ class MyGUI(QMainWindow):
         self.gm_history_label.show()
         self.btn_gm_yields.setDisabled(True)
         self.gm_yields_label.show()
+        self.gm_onhand_label.show()
         log.debug("historyclearbutton function ran")
     
     def pdfClearButton(self): #clears the list box showing files selected
