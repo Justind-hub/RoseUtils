@@ -190,7 +190,7 @@ class MyGUI(QMainWindow):
         self.btn_pdf_remove.clicked.connect(self.pdf_remove)
 
     def pdf_remove(self):
-        pass
+        self.pdf_listbox.takeItem(self.pdf_listbox.currentRow())
 
 
     def pdfboxchanged(self, i):
