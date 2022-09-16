@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from msilib.schema import CheckBox
 from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory, Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity, Epp, Comments, Release, gm_Target_inv, gm_weeklycomp, export_SQL
 import sys
 from PyQt5.QtWidgets import QTabWidget, QPushButton, QLabel, QLineEdit, QMenuBar, QMenu, QMenuBar, QMainWindow, QApplication, QMessageBox, QFileDialog, QCheckBox, QLineEdit # Change to * if you get an error
@@ -8,22 +7,12 @@ import os
 from os.path import exists
 from subprocess import Popen, PIPE
 import logging
+import PyPDF2
+from PyPDF2 import PdfFileReader, PdfFileWriter
+
 log = logging.getLogger("Justin")
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s:%(name)s:%(message)s',filename='RoseUtils.log')
 log.debug("Finished imports")
-
-try:
-    import PyPDF2
-    log.debug("imported PyPDF2")
-except:
-    log.info("Downloading PyPDF2")
-    process = Popen(['pip', 'install', 'pypdf2'],stdout=PIPE, stderr=PIPE)
-    stdout, stderr = process.communicate()
-    log.debug(f"stdout = {stdout}")
-    log.debug(f"stderr = {stderr}")
-from PyPDF2 import PdfFileReader, PdfFileWriter
-
-
 
 
 class MyGUI(QMainWindow):
