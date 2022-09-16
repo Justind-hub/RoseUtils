@@ -56,7 +56,8 @@ class MyGUI(QMainWindow):
         log.debug(f"stdout = {stdout}")
         log.debug(f"stderr = {stderr}")
         if "Already up to date" not in str(stdout):
-            self.popup("Update Downloaded!\nPlease quit the program and re-open to apply",QMessageBox.Information,"New Update Downloaded!")
+            self.popup("Update Downloaded!\nPlease re-open the program.",QMessageBox.Information,"New Update Downloaded!")
+            self.close()
         log.debug("Update function ran")
 
     def initvars(self):
@@ -101,6 +102,7 @@ class MyGUI(QMainWindow):
         else:
             self.downloadfolder = ""
         log.debug("initvars function ran")
+        
         
 
     def wizzard(self):
