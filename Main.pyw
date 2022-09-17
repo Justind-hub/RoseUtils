@@ -2,7 +2,7 @@
 from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory
 from RoseUtils import Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
 from RoseUtils import Epp, Comments, Release, gm_Target_inv, gm_weeklycomp
-from RoseUtils import export_SQL,gm_on_hands
+from RoseUtils import export_SQL,gm_on_hands, updater
 import sys
 from PyQt5.QtWidgets import QTabWidget, QPushButton, QLabel, QLineEdit, QMenuBar, QMenu, QMenuBar, QMainWindow, QApplication, QMessageBox, QFileDialog, QCheckBox, QLineEdit # Change to * if you get an error
 from PyQt5 import uic,QtWidgets,QtCore, QtGui
@@ -32,7 +32,8 @@ class MyGUI(QMainWindow):
         self.setFixedSize(self.size())
         self.menubars()
         try:
-            self.update()
+            if not updater.run():
+                self.update()
         except Exception:
             log.error("UNABLE TO RUN UPDATER")
         log.debug("Finished __init__")
