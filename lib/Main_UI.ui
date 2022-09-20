@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <author>Justin Druet</author>
+ <class>RoseUtils</class>
+ <widget class="QMainWindow" name="RoseUtils">
   <property name="windowModality">
    <enum>Qt::WindowModal</enum>
   </property>
@@ -22,7 +23,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>RoseUtils 1.7.2</string>
+   <string>RoseUtils 1.8 - Dark Mode</string>
   </property>
   <property name="windowIcon">
    <iconset>

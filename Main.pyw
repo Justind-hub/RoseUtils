@@ -37,6 +37,7 @@ class MyGUI(QMainWindow):
         except Exception:
             log.error("UNABLE TO RUN UPDATER")
         log.debug("Finished __init__")
+        
     
     def menubars(self):
         # Actions
@@ -526,6 +527,10 @@ class MyGUI(QMainWindow):
 
 def main ():
     app = QApplication(sys.argv)
+    with open('lib/style.qss', 'r') as f:
+        style = f.read()
+    app.setStyleSheet(style)
+
     window = MyGUI()
     app.exec_()
     
