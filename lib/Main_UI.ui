@@ -23,7 +23,11 @@
    </font>
   </property>
   <property name="windowTitle">
+<<<<<<< HEAD
    <string>RoseUtils 1.9</string>
+=======
+   <string>RoseUtils 1.8 - Dark Mode</string>
+>>>>>>> c2a7a09a0cd8c8566bf16eb0d3b187067574cbb9
   </property>
   <property name="windowIcon">
    <iconset>

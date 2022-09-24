@@ -45,6 +45,7 @@ class RoseUtils(qtw.QMainWindow):
         except Exception:
             log.error("UNABLE TO RUN UPDATER")
         log.debug("Finished __init__")
+        
     
     def menubars(self):
         # Actions
@@ -560,6 +561,20 @@ class RoseUtils(qtw.QMainWindow):
         self.refreshfolders()
 
 
+
+
+
+
+
+def main ():
+    app = QApplication(sys.argv)
+    with open('lib/style.qss', 'r') as f:
+        style = f.read()
+    app.setStyleSheet(style)
+
+    window = MyGUI()
+    app.exec_()
+    
 if __name__ == '__main__':
     app = qtw.QApplication([])
 

@@ -5,7 +5,12 @@ git config --global --add safe.directory 'C:/RoseUtils'
 - to test git - try "git pull" from c:/RoseUtils
 
 pip install pyqt5
-pip install striprtf
 pip install pandas
-pip install openpyxl
-pip install xlsxwriter
+pip install requests
+
+create desktop shortcut
+change icon
+change name of shortcut
+
+
+
