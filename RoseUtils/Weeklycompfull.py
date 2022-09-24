@@ -12,7 +12,7 @@ import traceback
 
 def run(self, zocdownload, output, fran):
     try:
-        self.outputbox.setText("Running Weekly Comp")
+        self.ui.outputbox.setText("Running Weekly Comp")
         #print('Enter lowercase 3 letter day of the week, leave blank to run previous day')
         #print('Examples: "mon", "tue", "wed", "thu","fri","sat","sun"')
         #day = input()
@@ -168,7 +168,7 @@ def run(self, zocdownload, output, fran):
             date = date.strip()
             col = STORECOL[store]
             #print(f"Loading store {store} from file {file}....")
-            self.outputbox.append(f"Loading store {store} from file {file}....")
+            self.ui.outputbox.append(f"Loading store {store} from file {file}....")
             #clean up the file
             del textlist[50:]
             x = []
@@ -308,9 +308,9 @@ def run(self, zocdownload, output, fran):
         else:
             wb.save(output+"CCDWeekly Comp "+datetime.now().strftime("%m.%d.%y")+".xlsx")
     except:
-        self.outputbox.append("ENCOUNTERED ERROR")
-        self.outputbox.append("Please send the contents of this box to Justin")
-        self.outputbox.append(traceback.format_exc())
+        self.ui.outputbox.append("ENCOUNTERED ERROR")
+        self.ui.outputbox.append("Please send the contents of this box to Justin")
+        self.ui.outputbox.append(traceback.format_exc())
 
 if __name__ == '__main__':
     run()

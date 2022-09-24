@@ -7,9 +7,9 @@ def r12(gui,x):
     Report will output as an html file to your specificied output folder'''
     
     if x:
-        gui.outputbox.setText(text)
+        gui.ui.outputbox.setText(text)
     else:
-        gui.outputbox.append(text)
+        gui.ui.outputbox.append(text)
 
     r11(gui, False)
 
@@ -22,9 +22,9 @@ def r11(gui,x):
     Report will output to "EPP.xlsx" in your output directory'''
 
     if x:
-        gui.outputbox.setText(text)
+        gui.ui.outputbox.setText(text)
     else:
-        gui.outputbox.append(text)     
+        gui.ui.outputbox.append(text)     
 
     
 
@@ -45,9 +45,9 @@ Release Version 1.2
 '''
 
     if x:
-        gui.outputbox.setText(text)
+        gui.ui.outputbox.setText(text)
     else:
-        gui.outputbox.append(text) 
+        gui.ui.outputbox.append(text) 
     
     r11(gui, False)
 
@@ -69,9 +69,9 @@ def r13(gui,x):
 
     '''
     if x:
-        gui.outputbox.setText(text)
+        gui.ui.outputbox.setText(text)
     else:
-        gui.outputbox.append(text) 
+        gui.ui.outputbox.append(text) 
 
     r125(gui, False)
 
@@ -83,9 +83,9 @@ def r135(gui,x):
 
     '''
     if x:
-        gui.outputbox.setText(text)
+        gui.ui.outputbox.setText(text)
     else:
-        gui.outputbox.append(text) 
+        gui.ui.outputbox.append(text) 
 
     r13(gui, False)
 
@@ -98,9 +98,9 @@ First NON-BETA Release!!
 
     '''
     if x:
-        gui.outputbox.setText(text)
+        gui.ui.outputbox.setText(text)
     else:
-        gui.outputbox.append(text) 
+        gui.ui.outputbox.append(text) 
 
     r13(gui, False)
 
@@ -110,9 +110,9 @@ def r14_1(gui,x):
 
     '''
     if x:
-        gui.outputbox.setText(text)
+        gui.ui.outputbox.setText(text)
     else:
-        gui.outputbox.append(text) 
+        gui.ui.outputbox.append(text) 
 
     r14(gui, False)
 
@@ -122,9 +122,9 @@ def r14_2(gui,x):
 
     '''
     if x:
-        gui.outputbox.setText(text)
+        gui.ui.outputbox.setText(text)
     else:
-        gui.outputbox.append(text) 
+        gui.ui.outputbox.append(text) 
 
     r14_1(gui, False)
 
@@ -135,9 +135,9 @@ def r15(gui,x):
 
     '''
     if x:
-        gui.outputbox.setText(text)
+        gui.ui.outputbox.setText(text)
     else:
-        gui.outputbox.append(text) 
+        gui.ui.outputbox.append(text) 
 
     r14_2(gui, False)
 
@@ -153,9 +153,9 @@ def r16(gui,x):
 
     '''
     if x:
-        gui.outputbox.setText(text)
+        gui.ui.outputbox.setText(text)
     else:
-        gui.outputbox.append(text) 
+        gui.ui.outputbox.append(text) 
 
     r15(gui, False)
 
@@ -172,8 +172,24 @@ def r17(gui,x):
 
     '''
     if x:
-        gui.outputbox.setText(text)
+        gui.ui.outputbox.setText(text)
     else:
-        gui.outputbox.append(text) 
+        gui.ui.outputbox.append(text) 
 
     r16(gui, False)
+
+
+def r19(gui,x):  
+    text = '''Release Version 1.9... Added the timer tab
+    I put this together very quickly for my own use
+    Enter how many times you want the timer to repeat, feel free to change the frequency or duration, then enter the number of seconds in the between in each beep
+    The entire GUI will freeze while the timer is running. If you have to close out, click on it a bunch until it completely freezes and then use windows to kill the process
+
+
+    '''
+    if x:
+        gui.ui.outputbox.setText(text)
+    else:
+        gui.ui.outputbox.append(text) 
+
+    r17(gui, False)

@@ -11,7 +11,7 @@ def run(self, zocdownload, output):
 
     
 
-        self.outputbox.setText("Running Weekly DOR/CSC")
+        self.ui.outputbox.setText("Running Weekly DOR/CSC")
 
         wb = Workbook()
 
@@ -151,9 +151,9 @@ def run(self, zocdownload, output):
         wb.save(output+date.replace("/",".")+".xlsx")
 
     except:
-        self.outputbox.append("ENCOUNTERED ERROR")
-        self.outputbox.append("Please send the contents of this box to Justin")
-        self.outputbox.append(traceback.format_exc())
+        self.ui.outputbox.append("ENCOUNTERED ERROR")
+        self.ui.outputbox.append("Please send the contents of this box to Justin")
+        self.ui.outputbox.append(traceback.format_exc())
 
 
 if __name__ == '__main__':

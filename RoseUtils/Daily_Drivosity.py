@@ -12,7 +12,7 @@ def run(self, downloadsfolder, database, output):
         OUTPUT_FILE = database[:database.rfind("/")]+"/Drivosity.xlsx"
         ######### END USER CONFIG   ##############
 
-        self.outputbox.setText("Running Daily Drivosity")
+        self.ui.outputbox.setText("Running Daily Drivosity")
 
 
         ######Setup for pandas, SQLite and openpyxl
@@ -52,9 +52,9 @@ def run(self, downloadsfolder, database, output):
 
         conn.close()
     except:
-        self.outputbox.append("ENCOUNTERED ERROR")
-        self.outputbox.append("Please send the contents of this box to Justin")
-        self.outputbox.append(traceback.format_exc())
+        self.ui.outputbox.append("ENCOUNTERED ERROR")
+        self.ui.outputbox.append("Please send the contents of this box to Justin")
+        self.ui.outputbox.append(traceback.format_exc())
 
 if __name__ == '__main__':
     run()

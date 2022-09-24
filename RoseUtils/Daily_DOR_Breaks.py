@@ -11,7 +11,7 @@ import traceback
 def run(self, zocdownload, databasefile, franchise):
     try:
         ####### Change the 3 variables below. Inlude double "\\"s, including 2 at the end of paths
-        self.outputbox.setText("Running Breaks Report")
+        self.ui.outputbox.setText("Running Breaks Report")
         if franchise == "RCP":
             CCD = False
             RCP = True
@@ -177,7 +177,7 @@ def run(self, zocdownload, databasefile, franchise):
             ##Store, Date and CSC. All simple
             store = dor[1][83:87]
             #print(f"Opening store #{store} from file {file}")
-            self.outputbox.append(f"Opening store #{store} from file {file}")
+            self.ui.outputbox.append(f"Opening store #{store} from file {file}")
             date = dor[4].strip()
             csc = f'{dor[findline("Void Unmade Orders",0)][126:].strip()}%'
             excess = dor[findline("Excess",0)][65:70].strip()
@@ -312,8 +312,8 @@ def run(self, zocdownload, databasefile, franchise):
         con.close()
         end_time = time.perf_counter()
         #print(f"Completed {len(fileList)} stores in {end_time - start_time} seconds")
-        self.outputbox.append(f"Completed {len(fileList)} stores in {end_time - start_time} seconds")
+        self.ui.outputbox.append(f"Completed {len(fileList)} stores in {end_time - start_time} seconds")
     except:
-        self.outputbox.append("ENCOUNTERED ERROR")
-        self.outputbox.append("Please send the contents of this box to Justin")
-        self.outputbox.append(traceback.format_exc())
+        self.ui.outputbox.append("ENCOUNTERED ERROR")
+        self.ui.outputbox.append("Please send the contents of this box to Justin")
+        self.ui.outputbox.append(traceback.format_exc())

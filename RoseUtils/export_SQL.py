@@ -2,7 +2,7 @@ import sqlite3 #Save to database
 from xlsxwriter.workbook import Workbook #to export the database into an excel file
 
 def run(self):
-    self.outputbox.setText("Databases Exported")
+    self.ui.outputbox.setText("Databases Exported")
     RCP_BREAKS = self.rcpdatabase[:self.rcpdatabase.rfind("/")]+"/Breaks.xlsx"
     RCP_DRIVOSITY = self.rcpdatabase[:self.rcpdatabase.rfind("/")]+"/Drivosity.xlsx"
     CCD_BREAKS = self.ccddatabase[:self.ccddatabase.rfind("/")]+"/Breaks.xlsx"

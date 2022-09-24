@@ -51,11 +51,11 @@ def run(self: object,file: string) -> None:
 
         wb.save(self.outputfolder+"On Hands.xlsx")
         os.startfile(self.outputfolder+"On Hands.xlsx")
-        self.outputbox.setText("On Hand Report Successful, opening output file now")
+        self.ui.outputbox.setText("On Hand Report Successful, opening output file now")
     except:
-        self.outputbox.append("ENCOUNTERED ERROR")
-        self.outputbox.append("Please send the contents of this box to Justin")
-        self.outputbox.append(traceback.format_exc())
+        self.ui.outputbox.append("ENCOUNTERED ERROR")
+        self.ui.outputbox.append("Please send the contents of this box to Justin")
+        self.ui.outputbox.append(traceback.format_exc())
 
 
 

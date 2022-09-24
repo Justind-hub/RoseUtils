@@ -26,7 +26,7 @@ def findline(filel: list[str], string: str) -> int:
 
 def run(self, filelist):
     try:
-        self.outputbox.setText("Running Schedule History....")
+        self.ui.outputbox.setText("Running Schedule History....")
         #Variables
         wb = Workbook()
         ws = wb.active
@@ -134,10 +134,10 @@ def run(self, filelist):
         for cell in LEFTCELLS:
             ws[cell].border = TOPLEFTBORDER
         ws['i1'] = "Histories Used:"
-        ws['k1'] = self.w1.text()
-        ws['l1'] = self.w2.text()
-        ws['m1'] = self.w3.text()
-        ws['n1'] = self.w4.text()
+        ws['k1'] = self.ui.w1.text()
+        ws['l1'] = self.ui.w2.text()
+        ws['m1'] = self.ui.w3.text()
+        ws['n1'] = self.ui.w4.text()
 
         for cel1, cel2, cel3, cel4 in zip(HISTORYCELLS1, HISTORYCELLS2, HISTORYCELLS3, HISTORYCELLS4):
             ws[cel1] = "=k1"
@@ -205,11 +205,11 @@ def run(self, filelist):
 
         wb.save(self.outputfolder+"Schedule History.xlsx")
         os.startfile(self.outputfolder+"Schedule History.xlsx")
-        self.outputbox.setText("History Report ran successfully, opening output file now")
+        self.ui.outputbox.setText("History Report ran successfully, opening output file now")
     except:
-        self.outputbox.append("ENCOUNTERED ERROR")
-        self.outputbox.append("Please send the contents of this box to Justin")
-        self.outputbox.append(traceback.format_exc())
+        self.ui.outputbox.append("ENCOUNTERED ERROR")
+        self.ui.outputbox.append("Please send the contents of this box to Justin")
+        self.ui.outputbox.append(traceback.format_exc())
     
 
 

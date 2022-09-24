@@ -15,11 +15,11 @@ def run(self, output, comments):
 
         df.apply(test, axis=1)
         df.to_html(output+"Comments.html", na_rep="",columns=['Unit','Feedback Date','Event Date','Comment','Manager In Charge','Delivery Driver'],index=False)
-        self.outputbox.setText(f"Report outputed to \n{output}Comments.html")
+        self.ui.outputbox.setText(f"Report outputed to \n{output}Comments.html")
     except:
-        self.outputbox.append("ENCOUNTERED ERROR")
-        self.outputbox.append("Please send the contents of this box to Justin")
-        self.outputbox.append(traceback.format_exc())
+        self.ui.outputbox.append("ENCOUNTERED ERROR")
+        self.ui.outputbox.append("Please send the contents of this box to Justin")
+        self.ui.outputbox.append(traceback.format_exc())
 
 
 

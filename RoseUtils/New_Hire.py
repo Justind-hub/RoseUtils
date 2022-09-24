@@ -7,7 +7,7 @@ from datetime import datetime
 
 def run(self, zocdownload, database, export):
     try:
-        self.outputbox.setText("Running New Hire Report")
+        self.ui.outputbox.setText("Running New Hire Report")
         ####### Change the 3 variables below. Inlude double "\\"s, including 2 at the end of paths
         ZOCDOWNLOAD_FOLDER = zocdownload  
         DATABASE_FILE = database
@@ -72,8 +72,8 @@ def run(self, zocdownload, database, export):
         con.close()
 
     except:
-        self.outputbox.append("ENCOUNTERED ERROR")
-        self.outputbox.append("Please send the contents of this box to Justin")
-        self.outputbox.append(traceback.format_exc())
+        self.ui.outputbox.append("ENCOUNTERED ERROR")
+        self.ui.outputbox.append("Please send the contents of this box to Justin")
+        self.ui.outputbox.append(traceback.format_exc())
 if __name__ == '__main__':
     run()

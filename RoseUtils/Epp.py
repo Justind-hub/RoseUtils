@@ -7,7 +7,7 @@ import traceback
 
 def run(self, zocdownload, output):
     try:
-        self.outputbox.setText("Running EPP")
+        self.ui.outputbox.setText("Running EPP")
         filelist = [] #create list of files to loop through -> filelist
         for file in os.listdir(zocdownload):
             filelist.append(file)
@@ -91,14 +91,14 @@ def run(self, zocdownload, output):
 
 
         wb.save(output+"EPP.xlsx")
-        self.outputbox.append("Done!")
+        self.ui.outputbox.append("Done!")
         
 
 
     except:
-        self.outputbox.append("ENCOUNTERED ERROR")
-        self.outputbox.append("Please send the contents of this box to Justin")
-        self.outputbox.append(traceback.format_exc())
+        self.ui.outputbox.append("ENCOUNTERED ERROR")
+        self.ui.outputbox.append("Please send the contents of this box to Justin")
+        self.ui.outputbox.append(traceback.format_exc())
 
 
 

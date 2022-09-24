@@ -11,7 +11,7 @@ import traceback
 
 def run(self, zocdownload, outputfolder, fran):
     try:
-        self.outputbox.setText("Running Target Inventory")
+        self.ui.outputbox.setText("Running Target Inventory")
         wb= Workbook()
         ws = wb.create_sheet('Sheet', 0)
         if fran == "RCP":
@@ -121,11 +121,11 @@ def run(self, zocdownload, outputfolder, fran):
             wb.save(outputfolder+"Inventory Target "+datetime.now().strftime("%m.%d.%y")+".xlsx")
         else:
             wb.save(outputfolder+"CCDInventory Target "+datetime.now().strftime("%m.%d.%y")+".xlsx")
-        self.outputbox.append("Done!")
+        self.ui.outputbox.append("Done!")
     except:
-        self.outputbox.append("ENCOUNTERED ERROR")
-        self.outputbox.append("Please send the contents of this box to Justin")
-        self.outputbox.append(traceback.format_exc())
+        self.ui.outputbox.append("ENCOUNTERED ERROR")
+        self.ui.outputbox.append("Please send the contents of this box to Justin")
+        self.ui.outputbox.append(traceback.format_exc())
 
 
 if __name__ == '__main__':
