@@ -566,15 +566,6 @@ class RoseUtils(qtw.QMainWindow):
 
 
 
-def main ():
-    app = QApplication(sys.argv)
-    with open('lib/style.qss', 'r') as f:
-        style = f.read()
-    app.setStyleSheet(style)
-
-    window = MyGUI()
-    app.exec_()
-    
 if __name__ == '__main__':
     app = qtw.QApplication([])
 
