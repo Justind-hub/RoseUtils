@@ -23,11 +23,7 @@
    </font>
   </property>
   <property name="windowTitle">
-<<<<<<< HEAD
-   <string>RoseUtils 1.9</string>
-=======
-   <string>RoseUtils 1.8 - Dark Mode</string>
->>>>>>> c2a7a09a0cd8c8566bf16eb0d3b187067574cbb9
+   <string>RoseUtils 1.10</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -55,7 +51,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>5</number>
     </property>
     <property name="iconSize">
      <size>
@@ -2435,6 +2431,103 @@
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="title">
+      <string>Cost Change Analyzer</string>
+     </attribute>
+     <widget class="QLabel" name="label_55">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>6</y>
+        <width>411</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Commodity Price Change Analyzer</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="file_listbox_3">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>104</y>
+        <width>241</width>
+        <height>81</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_browse_3">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>110</y>
+        <width>90</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Open file dialog to browse for reports downloaded from ZOC</string>
+      </property>
+      <property name="text">
+       <string>Browse</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_clear_3">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>150</y>
+        <width>91</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Clear Selection</string>
+      </property>
+      <property name="text">
+       <string>Clear</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_56">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>60</y>
+        <width>451</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Please select 2 Actual Inventory Cost Reports to continue</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_runcostreport">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>200</y>
+        <width>241</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Open file dialog to browse for reports downloaded from ZOC</string>
+      </property>
+      <property name="text">
+       <string>Run Report</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
@@ -2502,6 +2595,7 @@
     <property name="title">
      <string>Release Notes</string>
     </property>
+    <addaction name="actionVersion_1_10"/>
     <addaction name="actionVersion_1_9"/>
     <addaction name="actionVersion_1_7"/>
     <addaction name="actionVersion_1_6"/>
@@ -2605,6 +2699,11 @@
   <action name="actionVersion_1_9">
    <property name="text">
     <string>Version 1.9</string>
+   </property>
+  </action>
+  <action name="actionVersion_1_10">
+   <property name="text">
+    <string>Version 1.10</string>
    </property>
   </action>
  </widget>

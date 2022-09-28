@@ -193,3 +193,17 @@ def r19(gui,x):
         gui.ui.outputbox.append(text) 
 
     r17(gui, False)
+
+def r110(gui,x):  
+    text = '''Release Version 1.10... Commodity Price Change Analysis.
+
+    Download any two weeks Actual Inventory Cost Reports from ZOC
+    Select them with the "Browse" button, then click Run Report.
+    The file will output to your desktop
+    '''
+    if x:
+        gui.ui.outputbox.setText(text)
+    else:
+        gui.ui.outputbox.append(text) 
+
+    r19(gui, False)

@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import  QMessageBox, QFileDialog # Change to * if you get a
 from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory
 from RoseUtils import Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
 from RoseUtils import Epp, Comments, Release, gm_Target_inv, gm_weeklycomp
-from RoseUtils import export_SQL,gm_on_hands, updater
+from RoseUtils import export_SQL,gm_on_hands, updater, costreport
 import winsound
 import time
 
@@ -31,6 +31,7 @@ class RoseUtils(qtw.QMainWindow):
 
         filelist = []
         pdflist = []
+        cost_report_list = []
         self.timer = True
         self.initui()
         self.initvars()
@@ -61,6 +62,7 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.actionVersion_1_6.triggered.connect(lambda: Release.r16(self, True)) 
         self.ui.actionVersion_1_7.triggered.connect(lambda: Release.r17(self, True)) 
         self.ui.actionVersion_1_9.triggered.connect(lambda: Release.r19(self, True)) 
+        self.ui.actionVersion_1_10.triggered.connect(lambda: Release.r110(self, True)) 
         
 
 
@@ -215,6 +217,41 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.btn_timer_start.clicked.connect(self.timer_start)
         self.ui.btn_timer_test.clicked.connect(self.timer_test)
 
+        #Inventory cost tab buttons
+        self.ui.btn_browse_3.clicked.connect(self.costreportpicker)
+        self.ui.btn_clear_3.clicked.connect(self.costreportclear)
+        self.ui.btn_runcostreport.clicked.connect(self.runcostreport)
+        #self.file_listbox_3
+
+    def runcostreport(self):
+        costreport.run(self)
+
+    def costreportclear(self):
+        self.cost_report_list = []
+        self.ui.file_listbox_3.clear()
+
+
+    def costreportpicker(self): #Opens file picker to select weekly comp files
+        log.debug("filepicker function called")
+        self.cost_report_list = []
+        costlist, check = QFileDialog.getOpenFileNames(None, "QFileDialog.getOpenFileName()",
+                        self.zocdownloadfolder,"RTF Files (*.rtf)")
+        if check:
+            if len(costlist) == 2:
+                for i, file in enumerate(costlist):
+                    self.ui.file_listbox_3.addItem(file)
+                    self.cost_report_list.append(file)
+            else:
+                self.popup("Select exactly 2 reports",
+                              QMessageBox.Warning,"Error")
+            
+
+
+
+        log.debug("filepicker function ran, returning "+str(costlist))
+
+
+
 
     def timer_test(self):
         timer_freq = int(self.ui.timer_freq.text())
@@ -222,7 +259,6 @@ class RoseUtils(qtw.QMainWindow):
         
         winsound.Beep(timer_freq,int(timer_length))
         
-
     def timer_start(self):
         if self.ui.timer_repeat_time.text() == "":
             self.popup("Enter the number of seconds between each beep",
