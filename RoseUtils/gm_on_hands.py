@@ -48,10 +48,14 @@ def run(self: object,file: string) -> None:
             ws.cell(row = i+1, column = 2, value = items[index])
             if num not in EXCLUDELIST:
                 ws.cell(row = i+1, column = 3, value = onhands[index])
-
-        wb.save(self.outputfolder+"On Hands.xlsx")
-        os.startfile(self.outputfolder+"On Hands.xlsx")
-        self.ui.outputbox.setText("On Hand Report Successful, opening output file now")
+        if self.gm_filename_checked:
+            wb.save(self.outputfolder+self.ui.gm_filename.text()+".xlsx")
+            self.ui.outputbox.setText("On Hand Report ran successfully, saved to "+self.outputfolder+self.ui.gm_filename.text()+".xlsx")
+            os.startfile(self.outputfolder+self.ui.gm_filename.text()+".xlsx")
+        else:
+            wb.save(self.outputfolder+"On Hands.xlsx")
+            os.startfile(self.outputfolder+"On Hands.xlsx")
+            self.ui.outputbox.setText("On Hand Report Successful, opening output file now")
     except:
         self.ui.outputbox.append("ENCOUNTERED ERROR")
         self.ui.outputbox.append("Please send the contents of this box to Justin")

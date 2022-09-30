@@ -14,7 +14,7 @@
     <x>0</x>
     <y>0</y>
     <width>1023</width>
-    <height>403</height>
+    <height>405</height>
    </rect>
   </property>
   <property name="font">
@@ -23,7 +23,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>RoseUtils 1.10.1</string>
+   <string>RoseUtils 1.11</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -39,7 +39,7 @@
       <x>0</x>
       <y>0</y>
       <width>1021</width>
-      <height>361</height>
+      <height>371</height>
      </rect>
     </property>
     <property name="font">
@@ -51,7 +51,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>2</number>
     </property>
     <property name="iconSize">
      <size>
@@ -1109,6 +1109,32 @@
       </property>
       <property name="text">
        <string>Please select exactly one Inventory Value Report</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="check_custom_file_name">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>30</y>
+        <width>161</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Custom File Name:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="gm_filename">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>29</y>
+        <width>161</width>
+        <height>21</height>
+       </rect>
       </property>
      </widget>
     </widget>
@@ -2552,7 +2578,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>330</y>
+      <y>340</y>
       <width>131</width>
       <height>16</height>
      </rect>

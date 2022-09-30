@@ -48,10 +48,14 @@ def run(self, file: str) -> None:
             ws.cell(row = i+1, column = 1, value = num)
             ws.cell(row = i+1, column = 2, value = items[index])
             ws.cell(row = i+1, column = 3, value = yields[index])
-         
-        wb.save(self.outputfolder+"yields.xlsx")
-        os.startfile(self.outputfolder+"yields.xlsx")
-        self.ui.outputbox.setText("Yields report Successful, opening output file now")
+        if self.gm_filename_checked:
+            wb.save(self.outputfolder+self.ui.gm_filename.text()+".xlsx")
+            self.ui.outputbox.setText("Yields Report ran successfully, saved to "+self.outputfolder+self.ui.gm_filename.text()+".xlsx")
+            os.startfile(self.outputfolder+self.ui.gm_filename.text()+".xlsx")
+        else:
+            wb.save(self.outputfolder+"yields.xlsx")
+            os.startfile(self.outputfolder+"yields.xlsx")
+            self.ui.outputbox.setText("Yields report Successful, opening output file now")
     except:
         self.ui.outputbox.append("ENCOUNTERED ERROR")
         self.ui.outputbox.append("Please send the contents of this box to Justin")

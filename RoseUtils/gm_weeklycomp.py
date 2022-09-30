@@ -202,10 +202,14 @@ def run(self, filelist):
                 ws.cell(row=47, column = 19+j+6, value = form)#Sun
 
 #      Net Sales:         3680.40          2876.97          3232.95          5107.77          6521.32          5671.18          5258.75'
-
-        wb.save(self.outputfolder+"Schedule History.xlsx")
-        os.startfile(self.outputfolder+"Schedule History.xlsx")
-        self.ui.outputbox.setText("History Report ran successfully, opening output file now")
+        if self.gm_filename_checked:
+            wb.save(self.outputfolder+self.ui.gm_filename.text()+".xlsx")
+            self.ui.outputbox.setText("History Report ran successfully, saved to "+self.outputfolder+self.ui.gm_filename.text()+".xlsx")
+            os.startfile(self.outputfolder+self.ui.gm_filename.text()+".xlsx")
+        else:
+            wb.save(self.outputfolder+"Schedule History.xlsx")
+            os.startfile(self.outputfolder+"Schedule History.xlsx")
+            self.ui.outputbox.setText("History Report ran successfully, opening output file now")
     except:
         self.ui.outputbox.append("ENCOUNTERED ERROR")
         self.ui.outputbox.append("Please send the contents of this box to Justin")

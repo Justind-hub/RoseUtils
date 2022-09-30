@@ -190,7 +190,7 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.btn_wizzard.clicked.connect(self.wizzard)
         self.ui.btn_reexport.clicked.connect(lambda: export_SQL.run(self))
 
-        # GM specific buttons
+        # GM tab buttons
         self.ui.btn_browse.clicked.connect(self.filepicker)
         self.ui.btn_clear.clicked.connect(self.historyClearButton)
         self.ui.btn_gm_history.clicked.connect(lambda: self.historybutton(self.weeklycompslist))
@@ -200,6 +200,7 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.checkbox_debug.stateChanged.connect(self.debug)
         self.ui.pwd_submit.clicked.connect(self.pwd_submitfunc)
         self.ui.pwd_box.returnPressed.connect(self.pwd_submitfunc)
+        self.ui.check_custom_file_name.stateChanged.connect(self.gm_filename)
         log.debug("buttons function ran")
 
 
@@ -351,6 +352,13 @@ class RoseUtils(qtw.QMainWindow):
             self.ui.checkbox_GM.setEnabled(True)
 
         
+    def gm_filename(self, state):
+        if state == qtc.Qt.Checked:
+            self.ui.gm_filename.setEnabled(True)
+            self.gm_filename_checked = True
+        else:
+            self.ui.gm_filename.setEnabled(False)
+            self.gm_filename_checked = False
 
     def gmbox(self, state):
         log.debug("gmbox function called")
