@@ -844,7 +844,7 @@ class Ui_RoseUtils(object):
 
     def retranslateUi(self, RoseUtils):
         _translate = QtCore.QCoreApplication.translate
-        RoseUtils.setWindowTitle(_translate("RoseUtils", "RoseUtils 1.11"))
+        RoseUtils.setWindowTitle(_translate("RoseUtils", "RoseUtils 1.11.1"))
         self.btn_breaksrcp.setToolTip(_translate("RoseUtils", "Run the Daily Breaks Report"))
         self.btn_breaksrcp.setText(_translate("RoseUtils", "Breaks Report"))
         self.btn_weekly_comprcp.setToolTip(_translate("RoseUtils", "Run the Daily Weekly Comps Report"))

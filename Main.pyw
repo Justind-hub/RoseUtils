@@ -80,6 +80,7 @@ class RoseUtils(qtw.QMainWindow):
 
     def initvars(self):
         log.debug("initvars function called")
+        self.gm_filename_checked = False
         if not exists("Settings\\"):
             os.mkdir("Settings")
             self.popup("Please set your folders and files on the Configuration tab",QMessageBox.Information,"First time set-up")
