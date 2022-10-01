@@ -249,6 +249,13 @@ def run(self, zocdownload, databasefile, franchise):
             else:
                 deposit = dor[ccDepLine-1][64:71]
             
+            ##### Travel Payouts
+            travel = 0
+            for i in range(33,50):
+                if dor[i][15:34].strip() == "Travel":
+                    travel = travel + float(dor[i][50:63].strip())
+
+
             ### Find short and missing breaks 
             ################# DATABASE CALLs ARE IN THE "noBreak" and "shortBreak" FUNCTIONS
             if driverline != 0: breakscount = breaks(drivers,False,breakscount)
@@ -289,7 +296,9 @@ def run(self, zocdownload, databasefile, franchise):
                         (date, store, "Opening MGR",opener),
                         (date, store, "Deposit",deposit),
                         (date, store, "Voids",void),
+                        (date, store, "Travel", travel),
                         (date, store, "Excess Mileage",excess)]
+
             cursor.executemany("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", database)
 
             

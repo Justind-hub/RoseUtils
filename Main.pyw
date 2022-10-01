@@ -27,11 +27,7 @@ class RoseUtils(qtw.QMainWindow):
         super().__init__(*args, **kwargs)
 
         self.ui = Ui_RoseUtils()
-        self.ui.setupUi(self)
-
-        filelist = []
-        pdflist = []
-        cost_report_list = []
+        self.ui.setupUi(self)      
         self.timer = True
         self.initui()
         self.initvars()
@@ -40,6 +36,7 @@ class RoseUtils(qtw.QMainWindow):
         self.buttons()
         self.setFixedSize(self.size())
         self.menubars()
+        
         try:
             if not updater.run():
                 self.update()
@@ -80,6 +77,9 @@ class RoseUtils(qtw.QMainWindow):
 
     def initvars(self):
         log.debug("initvars function called")
+        filelist = []
+        pdflist = []
+        cost_report_list = []
         self.gm_filename_checked = False
         if not exists("Settings\\"):
             os.mkdir("Settings")
