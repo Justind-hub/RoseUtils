@@ -3,6 +3,7 @@ from openpyxl import Workbook
 from datetime import datetime
 from os import startfile
 import traceback
+import os
 
 def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
                         #Will return a list of strings for each line of the file
@@ -15,6 +16,8 @@ def openrtf(file): #Call this to open an rtf file with the filepath in the thing
 def run(self):
     try:
         textlist = openrtf(self.cost_report_list[0])
+        if self.check_delete:
+            os.remove(self.cost_report_list[0])
         date1 = textlist[3].strip()
         textlist = [line for line in textlist if len(line) == 119]
 
@@ -30,6 +33,8 @@ def run(self):
                 cost1.append(0)
 
         textlist = openrtf(self.cost_report_list[1])
+        if self.check_delete:
+            os.remove(self.cost_report_list[1])
         date2 = textlist[3].strip()
         textlist = [line for line in textlist if len(line) == 119]
 

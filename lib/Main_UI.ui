@@ -23,7 +23,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>RoseUtils 1.12</string>
+   <string>RoseUtils 1.13</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -374,9 +374,9 @@
      <widget class="QPushButton" name="btn_reexport">
       <property name="geometry">
        <rect>
-        <x>90</x>
+        <x>20</x>
         <y>260</y>
-        <width>211</width>
+        <width>221</width>
         <height>40</height>
        </rect>
       </property>
@@ -385,6 +385,19 @@
       </property>
       <property name="text">
        <string>Re-Export Databases</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="check_delete">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>280</y>
+        <width>211</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Delete files after report</string>
       </property>
      </widget>
     </widget>
@@ -1135,6 +1148,19 @@
         <width>161</width>
         <height>21</height>
        </rect>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="check_delete_2">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>51</y>
+        <width>211</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Delete files after report</string>
       </property>
      </widget>
     </widget>
@@ -2614,13 +2640,14 @@
      <x>0</x>
      <y>0</y>
      <width>1023</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuRelease_Notes">
     <property name="title">
      <string>Release Notes</string>
     </property>
+    <addaction name="actionVersion_1_13"/>
     <addaction name="actionVersion_1_10"/>
     <addaction name="actionVersion_1_9"/>
     <addaction name="actionVersion_1_7"/>
@@ -2730,6 +2757,16 @@
   <action name="actionVersion_1_10">
    <property name="text">
     <string>Version 1.10</string>
+   </property>
+  </action>
+  <action name="actionVersion_1_12">
+   <property name="text">
+    <string>Version 1.12</string>
+   </property>
+  </action>
+  <action name="actionVersion_1_13">
+   <property name="text">
+    <string>Version 1.13</string>
    </property>
   </action>
  </widget>

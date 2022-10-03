@@ -59,6 +59,8 @@ def run(self, zocdownload, database, export):
                 name = tm[10:36].strip()
                 date = tm[37:].strip()
                 cursor.execute("INSERT INTO NewHires(date,store,TM,TMID) VALUES(?,?,?,?)", (date,store,name,tmID))
+            if self.check_delete:
+                os.remove(ZOCDOWNLOAD_FOLDER + file)
                 
         con.commit()
         workbook = Workbook(EXPORT_EXCEL_FILE)

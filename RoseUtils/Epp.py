@@ -92,8 +92,11 @@ def run(self, zocdownload, output):
 
         wb.save(output+"EPP.xlsx")
         self.ui.outputbox.append("Done!")
-        
-
+        if self.check_delete:
+            for file in targets:
+                os.remove(file)
+            for file in values:
+                os.remove(file)
 
     except:
         self.ui.outputbox.append("ENCOUNTERED ERROR")

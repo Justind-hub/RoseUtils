@@ -150,6 +150,7 @@ def run(self, zocdownload, output, fran):
                     ws.cell(row = i+3+wday, column = col+5).border = rightborder
                 i+=1
 
+            
 
 
 
@@ -159,7 +160,8 @@ def run(self, zocdownload, output, fran):
         for file in filelist:
 
             textlist = openrtf(zocdownload+file)
-
+            if self.check_delete:
+                os.remove(zocdownload+file)
             #set store number and date range, and save  
             store = textlist[1]
             store = store[82:90].strip()

@@ -97,7 +97,8 @@ def run(self, zocdownload, outputfolder, fran):
             
 
             f +=1
-
+            if self.check_delete:
+                os.remove(zocdownload+each)
 
 
 

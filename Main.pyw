@@ -60,6 +60,8 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.actionVersion_1_7.triggered.connect(lambda: Release.r17(self, True)) 
         self.ui.actionVersion_1_9.triggered.connect(lambda: Release.r19(self, True)) 
         self.ui.actionVersion_1_10.triggered.connect(lambda: Release.r110(self, True)) 
+        self.ui.actionVersion_1_13.triggered.connect(lambda: Release.r113(self, True)) 
+        
         
 
 
@@ -77,6 +79,7 @@ class RoseUtils(qtw.QMainWindow):
 
     def initvars(self):
         log.debug("initvars function called")
+        self.check_delete = False
         filelist = []
         pdflist = []
         cost_report_list = []
@@ -190,6 +193,8 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.btn_compliments.clicked.connect(self.comments)
         self.ui.btn_wizzard.clicked.connect(self.wizzard)
         self.ui.btn_reexport.clicked.connect(lambda: export_SQL.run(self))
+        self.ui.check_delete.stateChanged.connect(self.deletecheck)
+        self.ui.check_delete_2.stateChanged.connect(self.deletecheck)
 
         # GM tab buttons
         self.ui.btn_browse.clicked.connect(self.filepicker)
@@ -360,6 +365,19 @@ class RoseUtils(qtw.QMainWindow):
         else:
             self.ui.gm_filename.setEnabled(False)
             self.gm_filename_checked = False
+    
+    def deletecheck(self, state):
+        if state == qtc.Qt.Checked:
+            self.check_delete = True
+            self.ui.outputbox.setText(" - - - - - - WARNING - - - - - - ")
+            self.ui.outputbox.append("  Report files will be deleted after you run the report")
+            self.ui.check_delete.setChecked(True)
+            self.ui.check_delete_2.setChecked(True)
+        else:
+            self.check_delete = False
+            self.ui.outputbox.setText("Report files will NOT be deleted after you run the report")
+            self.ui.check_delete.setChecked(False)
+            self.ui.check_delete_2.setChecked(False)
 
     def gmbox(self, state):
         log.debug("gmbox function called")

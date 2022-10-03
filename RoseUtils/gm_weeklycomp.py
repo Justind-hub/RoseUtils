@@ -156,7 +156,8 @@ def run(self, filelist):
 
         for i, file in enumerate(filelist):
             file = openrtf(file)
-
+            if self.check_delete:
+                os.remove(file)
             ws['b2'] = int(file[1][83:87])
             for row in range(5,17): #Deliveries
                 ws.cell(row = row, column = 2+i, value = int(file[row+4][21:25].strip()))#Mon 

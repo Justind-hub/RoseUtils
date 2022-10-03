@@ -136,7 +136,8 @@ def run(self, zocdownload, output):
             ws.cell(row = 6, column = col, value = dinnerotd+" "+dinnercsc+"%")
             ws.cell(row = 7, column = col, value = eveningotd+" "+eveningcsc+"%")
             
-            
+            if self.check_delete:
+                os.remove(zocdownload + each)
             f += 1
 
         for col in ws.columns:

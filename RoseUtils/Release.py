@@ -207,3 +207,15 @@ def r110(gui,x):
         gui.ui.outputbox.append(text) 
 
     r19(gui, False)
+
+def r113(gui,x):  
+    text = '''Release Version 1.13... File cleanup!
+    
+    If you check the "Delete files after report" button, the downloaded RTF or CSV files will be automatically deleted when you're done
+    '''
+    if x:
+        gui.ui.outputbox.setText(text)
+    else:
+        gui.ui.outputbox.append(text) 
+
+    r110(gui, False)

@@ -425,7 +425,7 @@ QTabBar::tab:!selected:hover
     background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:1 #212121, stop:0.4 #343434, stop:0.2 #343434, stop:0.1 #ffaa00);
 }
 
-QRadioButton::indicator:checked, QRadioButton::indicator:unchecked{
+QRadioButton::indicator:unchecked{
     color: #b1b1b1;
     background-color: #323232;
     border: 1px solid #b1b1b1;
@@ -444,8 +444,8 @@ QRadioButton::indicator:checked
 }
 
 QCheckBox::indicator{
-    color: #b1b1b1;
-    background-color: #323232;
+    color: #ffffff;
+    background-color: #ffffff;
     border: 1px solid #b1b1b1;
     width: 9px;
     height: 9px;
@@ -461,9 +461,12 @@ QRadioButton::indicator:hover, QCheckBox::indicator:hover
     border: 1px solid #ffaa00;
 }
 
-QCheckBox::indicator:checked
+QCheckBox::indicator:checked, QCheckBox::indicator:checked:hover, QCheckBox::indicator:checked:pressed 
 {
-    image:url(:/dark_orange/img/checkbox.png);
+    color: #000000;
+    background-color: orange;
+    border: 1px solid #000000;
+
 }
 
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled

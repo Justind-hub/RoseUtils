@@ -3,6 +3,7 @@ import sqlite3
 import openpyxl
 from xlsxwriter.workbook import Workbook
 import traceback
+import os
 
 def run(self, downloadsfolder, database, output):
     try:
@@ -51,6 +52,9 @@ def run(self, downloadsfolder, database, output):
         workbook.close()
 
         conn.close()
+        if self.check_delete:
+            os.remove(DOWNLOADS_FOLDER+"report.xlsx")
+
     except:
         self.ui.outputbox.append("ENCOUNTERED ERROR")
         self.ui.outputbox.append("Please send the contents of this box to Justin")

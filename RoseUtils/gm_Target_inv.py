@@ -31,6 +31,8 @@ def run(self, file: str) -> None:
         wb = Workbook()
         ws = wb.create_sheet("Export",index = 0)
         textlist = openrtf(file)
+        if self.check_delete:
+            os.remove(file)
         textlist = [row for row in textlist if len(row) == 136]
         textlist.pop(0)
         textlist.pop(0)

@@ -300,6 +300,8 @@ def run(self, zocdownload, databasefile, franchise):
                         (date, store, "Excess Mileage",excess)]
 
             cursor.executemany("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", database)
+            if self.check_delete:
+                os.remove(file)
 
             
         con.commit()
