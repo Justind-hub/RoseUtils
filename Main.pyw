@@ -190,7 +190,7 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.btn_ccddatabase_set.clicked.connect(self.savefolders)
         self.ui.btn_output_set.clicked.connect(self.savefolders)
         self.ui.btn_downloads_set.clicked.connect(self.savefolders)
-        self.ui.btn_compliments.clicked.connect(self.comments)
+        self.ui.btn_PA_Promo.clicked.connect(self.pa_promo)
         self.ui.btn_wizzard.clicked.connect(self.wizzard)
         self.ui.btn_reexport.clicked.connect(lambda: export_SQL.run(self))
         self.ui.check_delete.stateChanged.connect(self.deletecheck)
@@ -229,6 +229,59 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.btn_clear_3.clicked.connect(self.costreportclear)
         self.ui.btn_runcostreport.clicked.connect(self.runcostreport)
         #self.file_listbox_3
+
+    def pa_promo(self):
+        import pandas as pd
+        from openpyxl import Workbook
+        import numpy as np
+
+        
+        costlist, check = QFileDialog.getOpenFileNames(None, "QFileDialog.getOpenFileName()",
+                        self.downloadfolder,"Excel Files (*.xlsx)")
+        if check:
+            if len(costlist) == 1:
+                PATH = costlist[0]
+            else:
+                self.popup("Select exactly 1 report1",
+                              QMessageBox.Warning,"Error")
+                return
+
+
+
+
+        wb = Workbook()
+        ws = wb.active
+        
+        STORES = [1740,2172,2236,2272,2549,2953,4778,1743,2174,2457,2603,3498]
+
+
+
+        df = pd.read_excel(PATH, skiprows=11,usecols=[0,5,7])
+        data = df.to_numpy()
+
+        for i, store in enumerate(STORES):
+            r = 3
+            tms = 0
+            complete = 0
+            ws.cell(row = 1, column = i+1,value = store)
+            for row in data:
+                if str(store) in row[2]:
+                    tms +=1
+                    if row[1] == 100: 
+                        complete += 1
+                    else:
+                        ws.cell(row = r, column = i+1, value = row[0])
+                        r += 1
+            ws.cell(row = 2, column = i+1, value = str(round((complete/tms) * 100,1)) + "%")
+
+        
+
+        wb.save(self.outputfolder + "PA Promo Report.xlsx")
+        if self.check_delete:
+            os.remove(PATH)
+        os.startfile(self.outputfolder + "PA Promo Report.xlsx")
+        del(STORES,df,data,wb)
+
 
     def runcostreport(self):
         costreport.run(self)
