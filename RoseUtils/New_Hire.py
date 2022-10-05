@@ -32,10 +32,12 @@ def run(self, zocdownload, database, export):
 
         def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
                             #Will return a list of strings for each line of the file
-            with open(file, 'r', errors="ignore") as file:
-                text = file.read()
+            with open(file, 'r', errors="ignore") as f:
+                text = f.read()
             text = rtf_to_text(text)
             textlist = text.splitlines()
+            if self.check_delete:
+                os.remove(file)
             return textlist #returns a list containing entire RTF file
 
 
@@ -59,8 +61,7 @@ def run(self, zocdownload, database, export):
                 name = tm[10:36].strip()
                 date = tm[37:].strip()
                 cursor.execute("INSERT INTO NewHires(date,store,TM,TMID) VALUES(?,?,?,?)", (date,store,name,tmID))
-            if self.check_delete:
-                os.remove(ZOCDOWNLOAD_FOLDER + file)
+            
                 
         con.commit()
         workbook = Workbook(EXPORT_EXCEL_FILE)

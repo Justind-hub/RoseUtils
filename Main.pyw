@@ -1,20 +1,26 @@
-from Main_UI import Ui_RoseUtils
-
-from PyQt5 import QtWidgets as qtw
-from PyQt5 import QtCore as qtc
-from PyQt5 import QtGui
-from PyQt5.QtWidgets import  QMessageBox, QFileDialog # Change to * if you get an error
-from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory
-from RoseUtils import Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
-from RoseUtils import Epp, Comments, Release, gm_Target_inv, gm_weeklycomp
-from RoseUtils import export_SQL,gm_on_hands, updater, costreport
-import winsound
-import time
-
+# Globals
 import os
 from os.path import exists
 from subprocess import Popen, PIPE
 import logging
+import winsound
+import time
+
+#PyQt
+from PyQt5 import QtWidgets as qtw
+from PyQt5 import QtCore as qtc
+from PyQt5 import QtGui
+from PyQt5.QtWidgets import  QMessageBox, QFileDialog # Change to * if you get an error
+
+# RoseUtils package functions
+from RoseUtils.Main_UI import Ui_RoseUtils
+from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory
+from RoseUtils import Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
+from RoseUtils import Epp, Comments, Release, gm_Target_inv, gm_weeklycomp
+from RoseUtils import export_SQL,gm_on_hands, updater, costreport
+from RoseUtils.Buttons import Buttons #Buttons class init as "b"
+
+#Downloaded
 import PyPDF2
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
@@ -25,7 +31,7 @@ log.debug("Finished imports")
 class RoseUtils(qtw.QMainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
+        self.b = Buttons()
         self.ui = Ui_RoseUtils()
         self.ui.setupUi(self)      
         self.timer = True
@@ -37,6 +43,8 @@ class RoseUtils(qtw.QMainWindow):
         self.setFixedSize(self.size())
         self.menubars()
         
+        
+        
         try:
             if not updater.run():
                 self.update()
@@ -44,7 +52,6 @@ class RoseUtils(qtw.QMainWindow):
             log.error("UNABLE TO RUN UPDATER")
         log.debug("Finished __init__")
         
-    
     def menubars(self):
         # Actions
         self.ui.actionBETA_V1_2.triggered.connect(lambda: Release.r12(self, True)) 
@@ -62,9 +69,6 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.actionVersion_1_10.triggered.connect(lambda: Release.r110(self, True)) 
         self.ui.actionVersion_1_13.triggered.connect(lambda: Release.r113(self, True)) 
         
-        
-
-
     def update(self):
         log.debug("Update function called")
         process = Popen(['git', 'pull', str('https://github.com/Justind-hub/RoseUtils')],stdout=PIPE, stderr=PIPE)
@@ -75,9 +79,8 @@ class RoseUtils(qtw.QMainWindow):
             self.popup("Update Downloaded!\nPlease re-open the program.",QMessageBox.Information,"New Update Downloaded!")
             self.close()
         log.debug("Update function ran")
-        
 
-    def initvars(self):
+    def initvars(self): # Class Attributes and program settings initialized
         log.debug("initvars function called")
         self.check_delete = False
         filelist = []
@@ -125,9 +128,7 @@ class RoseUtils(qtw.QMainWindow):
             self.downloadfolder = ""
         log.debug("initvars function ran")
         
-        
-
-    def wizzard(self):
+    def wizzard(self): # Initializes settings
         log.debug("wizzard function called")
         if not exists("Settings\\CCDDatabase"): self.ccddatabasefunc()
         if not exists("Settings\\export"): self.outputfolderfunc()    
@@ -138,7 +139,7 @@ class RoseUtils(qtw.QMainWindow):
         self.refreshfolders()
         log.debug("wizzard function ran")
 
-    def initui(self):
+    def initui(self): #Various UI things not editable in Designer. Buttons disbaled by default
         log.debug("initui function called")
         #self.logoframe.pixmap.scaledToWidth(20)
         self.configtab = 1
@@ -162,7 +163,7 @@ class RoseUtils(qtw.QMainWindow):
 
         log.debug("initui function ran")
 
-    def buttons(self):
+    def buttons(self): # Links all of the UI controls
         log.debug("buttons function called")
 
         #Buttons
@@ -190,7 +191,7 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.btn_ccddatabase_set.clicked.connect(self.savefolders)
         self.ui.btn_output_set.clicked.connect(self.savefolders)
         self.ui.btn_downloads_set.clicked.connect(self.savefolders)
-        self.ui.btn_PA_Promo.clicked.connect(self.pa_promo)
+        self.ui.btn_PA_Promo.clicked.connect(lambda: self.b.pa_promo(self))
         self.ui.btn_wizzard.clicked.connect(self.wizzard)
         self.ui.btn_reexport.clicked.connect(lambda: export_SQL.run(self))
         self.ui.check_delete.stateChanged.connect(self.deletecheck)
@@ -227,69 +228,11 @@ class RoseUtils(qtw.QMainWindow):
         #Inventory cost tab buttons
         self.ui.btn_browse_3.clicked.connect(self.costreportpicker)
         self.ui.btn_clear_3.clicked.connect(self.costreportclear)
-        self.ui.btn_runcostreport.clicked.connect(self.runcostreport)
-        #self.file_listbox_3
-
-    def pa_promo(self):
-        import pandas as pd
-        from openpyxl import Workbook
-        import numpy as np
-
+        self.ui.btn_runcostreport.clicked.connect(lambda: costreport.run(self))
         
-        costlist, check = QFileDialog.getOpenFileNames(None, "QFileDialog.getOpenFileName()",
-                        self.downloadfolder,"Excel Files (*.xlsx)")
-        if check:
-            if len(costlist) == 1:
-                PATH = costlist[0]
-            else:
-                self.popup("Select exactly 1 report1",
-                              QMessageBox.Warning,"Error")
-                return
-
-
-
-
-        wb = Workbook()
-        ws = wb.active
-        
-        STORES = [1740,2172,2236,2272,2549,2953,4778,1743,2174,2457,2603,3498]
-
-
-
-        df = pd.read_excel(PATH, skiprows=11,usecols=[0,5,7])
-        data = df.to_numpy()
-
-        for i, store in enumerate(STORES):
-            r = 3
-            tms = 0
-            complete = 0
-            ws.cell(row = 1, column = i+1,value = store)
-            for row in data:
-                if str(store) in row[2]:
-                    tms +=1
-                    if row[1] == 100: 
-                        complete += 1
-                    else:
-                        ws.cell(row = r, column = i+1, value = row[0])
-                        r += 1
-            ws.cell(row = 2, column = i+1, value = str(round((complete/tms) * 100,1)) + "%")
-
-        
-
-        wb.save(self.outputfolder + "PA Promo Report.xlsx")
-        if self.check_delete:
-            os.remove(PATH)
-        os.startfile(self.outputfolder + "PA Promo Report.xlsx")
-        del(STORES,df,data,wb)
-
-
-    def runcostreport(self):
-        costreport.run(self)
-
     def costreportclear(self):
         self.cost_report_list = []
         self.ui.file_listbox_3.clear()
-
 
     def costreportpicker(self): #Opens file picker to select weekly comp files
         log.debug("filepicker function called")
@@ -309,9 +252,6 @@ class RoseUtils(qtw.QMainWindow):
 
 
         log.debug("filepicker function ran, returning "+str(costlist))
-
-
-
 
     def timer_test(self):
         timer_freq = int(self.ui.timer_freq.text())
@@ -341,7 +281,6 @@ class RoseUtils(qtw.QMainWindow):
     def pdf_remove(self):
         self.ui.pdf_listbox.takeItem(self.ui.pdf_listbox.currentRow())
 
-
     def pdfboxchanged(self, i):
         if i == 0:
             self.ui.btn_pdf_up.setDisabled(True)
@@ -352,20 +291,17 @@ class RoseUtils(qtw.QMainWindow):
         else:
             self.ui.btn_pdf_down.setDisabled(False)
 
-
     def move_up(self):
         rowIndex = self.ui.pdf_listbox.currentRow()
         currentItem = self.ui.pdf_listbox.takeItem(rowIndex)
         self.ui.pdf_listbox.insertItem(rowIndex - 1, currentItem)
         self.ui.pdf_listbox.setCurrentRow(rowIndex -1)
 
-
     def move_down(self):
         rowIndex = self.ui.pdf_listbox.currentRow()
         currentItem = self.ui.pdf_listbox.takeItem(rowIndex)
         self.ui.pdf_listbox.insertItem(rowIndex + 1, currentItem)
         self.ui.pdf_listbox.setCurrentRow(rowIndex + 1)
-
 
     def pdf_split(self):
         pdflist = [self.ui.pdf_listbox.item(i).text() for i in range(self.ui.pdf_listbox.count())]
@@ -380,7 +316,6 @@ class RoseUtils(qtw.QMainWindow):
                     pdf_writer.write(out)
                 self.ui.outputbox.append(f"Saved Page {page} of {file} as {self.outputfolder}{self.ui.pdf_name.text()}_{page+1}.pdf")
         
-
     def pdf_combine(self):
         pdflist = [self.ui.pdf_listbox.item(i).text() for i in range(self.ui.pdf_listbox.count())]
         merger = PyPDF2.PdfFileMerger()
@@ -391,7 +326,6 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.outputbox.append("Opening file now....")
         os.startfile(self.outputfolder + self.ui.pdf_name.text() + ".pdf")
         
-
     def debug(self,state):
         log.debug("debug function called")
         if state == qtc.Qt.Checked:
@@ -409,8 +343,7 @@ class RoseUtils(qtw.QMainWindow):
         if pwd == "24bo":
             self.ui.checkbox_GM.setChecked(False)
             self.ui.checkbox_GM.setEnabled(True)
-
-        
+ 
     def gm_filename(self, state):
         if state == qtc.Qt.Checked:
             self.ui.gm_filename.setEnabled(True)
@@ -522,7 +455,6 @@ class RoseUtils(qtw.QMainWindow):
         gm_Target_inv.run(self, filelist[0])
         log.debug("targetbutton function ran")
 
-
     def onhandbutton(self,filelist):
         log.debug("targetbutton function called")
         if len(filelist) != 1:
@@ -589,7 +521,6 @@ class RoseUtils(qtw.QMainWindow):
         else:
             self.ui.outputbox.show()
         
-
     def all3rcp(self):
         log.debug("all3rcp function called")
         self.ui.outputbox.setText("Running Reports...")
@@ -603,7 +534,6 @@ class RoseUtils(qtw.QMainWindow):
         Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.ccddatabase, "CCD")
         Target_Inventory.run(self, self.zocdownloadfolder, self.outputfolder, "CCD")
         Weeklycompfull.run(self, self.zocdownloadfolder, self.outputfolder, "CCD")
-
 
     def outputfolderfunc(self):
         self.outputfolder = qtw.QFileDialog.getExistingDirectory(self, 'Select Output Folder') + "/"
@@ -630,7 +560,6 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.outputbox.append("CCD Database File Saved")
         self.refreshfolders()
         return self.ccddatabase
-
 
     def savefolders(self):
         log.debug("savefolder function called")
