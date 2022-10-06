@@ -18,6 +18,7 @@ from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory
 from RoseUtils import Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
 from RoseUtils import Epp, Comments, Release, gm_Target_inv, gm_weeklycomp
 from RoseUtils import export_SQL,gm_on_hands, updater, costreport
+from RoseUtils import Schedule_reviewer
 from RoseUtils.Buttons import Buttons #Buttons class init as "b"
 
 #Downloaded
@@ -25,7 +26,9 @@ import PyPDF2
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
 log = logging.getLogger("Justin")
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s:%(name)s:%(message)s',filename='RoseUtils.log')
+logging.basicConfig(level=logging.INFO, 
+                    format='%(asctime)s %(levelname)s:%(name)s:%(message)s',
+                    filename='RoseUtils.log')
 log.debug("Finished imports")
 
 class RoseUtils(qtw.QMainWindow):
@@ -52,7 +55,7 @@ class RoseUtils(qtw.QMainWindow):
             log.error("UNABLE TO RUN UPDATER")
         log.debug("Finished __init__")
         
-    def menubars(self):
+    def menubars(self):                                                        # links the menubar buttons
         # Actions
         self.ui.actionBETA_V1_2.triggered.connect(lambda: Release.r12(self, True)) 
         self.ui.actionBETA_V1_1.triggered.connect(lambda: Release.r11(self, True)) 
@@ -69,7 +72,7 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.actionVersion_1_10.triggered.connect(lambda: Release.r110(self, True)) 
         self.ui.actionVersion_1_13.triggered.connect(lambda: Release.r113(self, True)) 
         
-    def update(self):
+    def update(self):                                                          # Checks to see if update is available and downloads it
         log.debug("Update function called")
         process = Popen(['git', 'pull', str('https://github.com/Justind-hub/RoseUtils')],stdout=PIPE, stderr=PIPE)
         stdout, stderr = process.communicate()
@@ -80,7 +83,7 @@ class RoseUtils(qtw.QMainWindow):
             self.close()
         log.debug("Update function ran")
 
-    def initvars(self): # Class Attributes and program settings initialized
+    def initvars(self):                                                        # Class Attributes and program settings initialized
         log.debug("initvars function called")
         self.check_delete = False
         filelist = []
@@ -89,7 +92,8 @@ class RoseUtils(qtw.QMainWindow):
         self.gm_filename_checked = False
         if not exists("Settings\\"):
             os.mkdir("Settings")
-            self.popup("Please set your folders and files on the Configuration tab",QMessageBox.Information,"First time set-up")
+            self.popup("Please set your folders and files on the Configuration tab",
+                        QMessageBox.Information,"First time set-up")
             self.ui.tabWidget.setCurrentIndex(1)
         if exists("Settings\\GM"): 
             self.ui.tabWidget.setTabVisible(0, False)
@@ -128,7 +132,7 @@ class RoseUtils(qtw.QMainWindow):
             self.downloadfolder = ""
         log.debug("initvars function ran")
         
-    def wizzard(self): # Initializes settings
+    def wizzard(self):                                                         # Initializes settings
         log.debug("wizzard function called")
         if not exists("Settings\\CCDDatabase"): self.ccddatabasefunc()
         if not exists("Settings\\export"): self.outputfolderfunc()    
@@ -139,7 +143,7 @@ class RoseUtils(qtw.QMainWindow):
         self.refreshfolders()
         log.debug("wizzard function ran")
 
-    def initui(self): #Various UI things not editable in Designer. Buttons disbaled by default
+    def initui(self):                                                          # Various UI things not editable in Designer. Buttons disbaled by default
         log.debug("initui function called")
         #self.logoframe.pixmap.scaledToWidth(20)
         self.configtab = 1
@@ -163,7 +167,7 @@ class RoseUtils(qtw.QMainWindow):
 
         log.debug("initui function ran")
 
-    def buttons(self): # Links all of the UI controls
+    def buttons(self):                                                         # Links all of the UI controls
         log.debug("buttons function called")
 
         #Buttons
@@ -198,7 +202,7 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.check_delete_2.stateChanged.connect(self.deletecheck)
 
         # GM tab buttons
-        self.ui.btn_browse.clicked.connect(self.filepicker)
+        self.ui.btn_browse.clicked.connect(lambda: self.filepicker())
         self.ui.btn_clear.clicked.connect(self.historyClearButton)
         self.ui.btn_gm_history.clicked.connect(lambda: self.historybutton(self.weeklycompslist))
         self.ui.btn_gm_yields.clicked.connect(lambda: self.targetbutton(self.weeklycompslist))
@@ -208,6 +212,8 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.pwd_submit.clicked.connect(self.pwd_submitfunc)
         self.ui.pwd_box.returnPressed.connect(self.pwd_submitfunc)
         self.ui.check_custom_file_name.stateChanged.connect(self.gm_filename)
+        self.ui.btn_gm_schedule_review.clicked.connect(self.filepicker_for_schedule_review)
+        self.ui.btn_gm_schedule_help.clicked.connect(self.gm_schedule_help)
         log.debug("buttons function ran")
 
 
@@ -230,11 +236,11 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.btn_clear_3.clicked.connect(self.costreportclear)
         self.ui.btn_runcostreport.clicked.connect(lambda: costreport.run(self))
         
-    def costreportclear(self):
+    def costreportclear(self):                                                 # 
         self.cost_report_list = []
         self.ui.file_listbox_3.clear()
 
-    def costreportpicker(self): #Opens file picker to select weekly comp files
+    def costreportpicker(self):                                                # Opens file picker to select weekly comp files
         log.debug("filepicker function called")
         self.cost_report_list = []
         costlist, check = QFileDialog.getOpenFileNames(None, "QFileDialog.getOpenFileName()",
@@ -253,13 +259,13 @@ class RoseUtils(qtw.QMainWindow):
 
         log.debug("filepicker function ran, returning "+str(costlist))
 
-    def timer_test(self):
+    def timer_test(self):                                                      # Beeps once to test the timer settings
         timer_freq = int(self.ui.timer_freq.text())
         timer_length = float(self.ui.timer_length.text()) * 1000
         
         winsound.Beep(timer_freq,int(timer_length))
         
-    def timer_start(self):
+    def timer_start(self):                                                     # Starts the timer
         if self.ui.timer_repeat_time.text() == "":
             self.popup("Enter the number of seconds between each beep",
                         QMessageBox.Warning,"Error")
@@ -278,10 +284,10 @@ class RoseUtils(qtw.QMainWindow):
             winsound.Beep(timer_freq,int(timer_length))
             time.sleep(timer_wait)
 
-    def pdf_remove(self):
+    def pdf_remove(self):                                                      # Removes an item from the PDF list
         self.ui.pdf_listbox.takeItem(self.ui.pdf_listbox.currentRow())
 
-    def pdfboxchanged(self, i):
+    def pdfboxchanged(self, i):                                                # Updates the 'enabled' of the up/down/remove buttons
         if i == 0:
             self.ui.btn_pdf_up.setDisabled(True)
         else:
@@ -291,19 +297,19 @@ class RoseUtils(qtw.QMainWindow):
         else:
             self.ui.btn_pdf_down.setDisabled(False)
 
-    def move_up(self):
+    def move_up(self):                                                         # moves the selected PDF up
         rowIndex = self.ui.pdf_listbox.currentRow()
         currentItem = self.ui.pdf_listbox.takeItem(rowIndex)
         self.ui.pdf_listbox.insertItem(rowIndex - 1, currentItem)
         self.ui.pdf_listbox.setCurrentRow(rowIndex -1)
 
-    def move_down(self):
+    def move_down(self):                                                       # moves the selected PDF down
         rowIndex = self.ui.pdf_listbox.currentRow()
         currentItem = self.ui.pdf_listbox.takeItem(rowIndex)
         self.ui.pdf_listbox.insertItem(rowIndex + 1, currentItem)
         self.ui.pdf_listbox.setCurrentRow(rowIndex + 1)
 
-    def pdf_split(self):
+    def pdf_split(self):                                                       # splits the selected PDF(s) into multiple files
         pdflist = [self.ui.pdf_listbox.item(i).text() for i in range(self.ui.pdf_listbox.count())]
         self.ui.outputbox.setText("Splitting your files now..")
         for file in pdflist:
@@ -316,7 +322,7 @@ class RoseUtils(qtw.QMainWindow):
                     pdf_writer.write(out)
                 self.ui.outputbox.append(f"Saved Page {page} of {file} as {self.outputfolder}{self.ui.pdf_name.text()}_{page+1}.pdf")
         
-    def pdf_combine(self):
+    def pdf_combine(self):                                                     # Merges PDFs
         pdflist = [self.ui.pdf_listbox.item(i).text() for i in range(self.ui.pdf_listbox.count())]
         merger = PyPDF2.PdfFileMerger()
         for file in pdflist:
@@ -326,7 +332,7 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.outputbox.append("Opening file now....")
         os.startfile(self.outputfolder + self.ui.pdf_name.text() + ".pdf")
         
-    def debug(self,state):
+    def debug(self,state):                                                     # Enables or disables debug mode
         log.debug("debug function called")
         if state == qtc.Qt.Checked:
             log.setLevel(logging.DEBUG)
@@ -336,7 +342,7 @@ class RoseUtils(qtw.QMainWindow):
             log.setLevel(logging.INFO)
         log.debug("Debug mode turned on")
 
-    def pwd_submitfunc(self):
+    def pwd_submitfunc(self):                                                  # Checks the submitted password
         log.debug(f"Password submitted: {str(self.ui.pwd_box.text())}")
         pwd = str(self.ui.pwd_box.text())
         self.ui.pwd_box.setText("")
@@ -344,15 +350,41 @@ class RoseUtils(qtw.QMainWindow):
             self.ui.checkbox_GM.setChecked(False)
             self.ui.checkbox_GM.setEnabled(True)
  
-    def gm_filename(self, state):
+    def gm_filename(self, state):                                              # runs the logic for the custom filename checkbox
         if state == qtc.Qt.Checked:
             self.ui.gm_filename.setEnabled(True)
             self.gm_filename_checked = True
         else:
             self.ui.gm_filename.setEnabled(False)
             self.gm_filename_checked = False
-    
-    def deletecheck(self, state):
+
+    def filepicker_for_schedule_review(self):                                  # Opens file picker to select weekly comp files
+        log.debug("filepicker function called")
+        filelist , check = QFileDialog.getOpenFileNames(None, 
+                                        "QFileDialog.getOpenFileName()",
+                        self.zocdownloadfolder,"HTML Files (*.html)")
+        if check:
+            for i, file in enumerate(filelist):
+                self.ui.file_listbox.insertItem(i,file[file.rfind("/")+1:])
+            self.weeklycompslist = filelist
+            self.ui.numitems_label.setText(str(len(filelist)))
+        if len(filelist) == 1:
+            Schedule_reviewer.run(self)
+            self.ui.btn_gm_yields.setDisabled(False)
+            self.ui.btn_gm_onhand.setDisabled(False)
+            self.ui.gm_yields_label.hide()
+            self.ui.gm_onhand_label.hide()
+        else:
+            self.ui.btn_gm_yields.setDisabled(True)
+            self.ui.btn_gm_onhand.setDisabled(True)
+            self.ui.gm_yields_label.show()
+            self.ui.gm_onhand_label.show()
+        log.debug("filepicker function ran, returning "+str(filelist))
+
+    def gm_schedule_help(self):       ########## STILL NEED TO WRITE ########### Displays help text to the outputbox
+        pass
+
+    def deletecheck(self, state):                                              # Logic for the "Delete after report" checkbox
         if state == qtc.Qt.Checked:
             self.check_delete = True
             self.ui.outputbox.setText(" - - - - - - WARNING - - - - - - ")
@@ -365,7 +397,7 @@ class RoseUtils(qtw.QMainWindow):
             self.ui.check_delete.setChecked(False)
             self.ui.check_delete_2.setChecked(False)
 
-    def gmbox(self, state):
+    def gmbox(self, state):                                                    # Logic for the GM Mode checkbox
         log.debug("gmbox function called")
         if state == qtc.Qt.Checked:
             with open("Settings\\GM", "w") as f:
@@ -385,7 +417,7 @@ class RoseUtils(qtw.QMainWindow):
             self.ui.tabWidget.setTabVisible(0, True)
         log.debug("gmbox function ran")
 
-    def filepicker(self): #Opens file picker to select weekly comp files
+    def filepicker(self):                                                      #Opens file picker to select weekly comp files
         log.debug("filepicker function called")
         filelist , check = QFileDialog.getOpenFileNames(None, "QFileDialog.getOpenFileName()",
                         self.zocdownloadfolder,"RTF Files (*.rtf)")
@@ -409,7 +441,7 @@ class RoseUtils(qtw.QMainWindow):
             self.ui.gm_history_label.hide()
         log.debug("filepicker function ran, returning "+str(filelist))
     
-    def pdfpicker(self): #Opens file picker to select weekly comp files
+    def pdfpicker(self):                                                       #Opens file picker to select weekly comp files
         log.debug("filepicker function called")
         pdflist , check = QFileDialog.getOpenFileNames(None, "QFileDialog.getOpenFileName()",
                         self.outputfolder,"PDF Files (*.pdf)")
@@ -425,7 +457,7 @@ class RoseUtils(qtw.QMainWindow):
 
         log.debug("filepicker function ran, returning "+str(pdflist))
 
-    def historybutton(self,filelist):
+    def historybutton(self,filelist):                                          # Runs the GM schedule history button
         log.debug("historybutton function called")
         if len(filelist) == 0:
             self.popup("Click on 'Browse' and select at least one weekly comparison file before clicking submit!",QMessageBox.Warning,"Error")
@@ -440,7 +472,7 @@ class RoseUtils(qtw.QMainWindow):
         gm_weeklycomp.run(self, filelist)
         log.debug("historybutton function ran")
 
-    def targetbutton(self,filelist):
+    def targetbutton(self,filelist):                                           # Runs the GM target yield button
         log.debug("targetbutton function called")
         if len(filelist) != 1:
             self.popup("Click on 'Browse' and select exactly ONE target inentory cost report!",QMessageBox.Warning,"Error")
@@ -455,7 +487,7 @@ class RoseUtils(qtw.QMainWindow):
         gm_Target_inv.run(self, filelist[0])
         log.debug("targetbutton function ran")
 
-    def onhandbutton(self,filelist):
+    def onhandbutton(self,filelist):                                           # Runs the GM On Hands button
         log.debug("targetbutton function called")
         if len(filelist) != 1:
             self.popup("Click on 'Browse' and select exactly ONE target inentory cost report!",QMessageBox.Warning,"Error")
@@ -470,7 +502,7 @@ class RoseUtils(qtw.QMainWindow):
         gm_on_hands.run(self, filelist[0])
         log.debug("targetbutton function ran")
 
-    def historyClearButton(self): #clears the list box showing files selected
+    def historyClearButton(self):                                              #clears the list box showing files selected
         log.debug("historyclearbutton function called")
         self.weeklycomplist = []
         self.ui.file_listbox.clear()
@@ -482,21 +514,21 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.gm_onhand_label.show()
         log.debug("historyclearbutton function ran")
     
-    def pdfClearButton(self): #clears the list box showing files selected
+    def pdfClearButton(self):                                                  # clears the list box showing files selected
         log.debug("pdfclearbutton function called")
         self.pdflist = []
         self.ui.pdf_listbox.clear()
         self.ui.numitems_label_2.setText("0")
         log.debug("pdfclearbutton function ran")
 
-    def comments(self):
+    def comments(self):                                                        ############# NO LONGER USED # Runs the Comments Report
         log.debug("comments function called")
         self.commentsfile = qtw.QFileDialog.getOpenFileName(self, 'Select the Comments File')
         self.commentsfile = self.commentsfile[0]
         Comments.run(self, self.outputfolder, self.commentsfile)
         log.debug("comments function ran")
 
-    def refreshfolders(self):
+    def refreshfolders(self):                                                  # refreshes the folders displayed on the ui settings tab
         log.debug("refreshfolders function ran")
         self.ui.output_edit.setText(self.outputfolder)
         self.ui.zocdownload_edit.setText(self.zocdownloadfolder)
@@ -505,7 +537,7 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.downloads_edit.setText(self.downloadfolder)        
         log.debug("refreshfolders function ran")
     
-    def popup(self, text, icon, title):
+    def popup(self, text, icon, title):                                        # Generic popup -> self.popup("_BODY_",QMessageBox.Information,"_TITLE_")
         log.debug(f"popup function called with text {text}, icon {icon} and title {title}")
         msg = QMessageBox()
         msg.setWindowTitle(title)
@@ -514,14 +546,14 @@ class RoseUtils(qtw.QMainWindow):
         x = msg.exec_()
         log.debug("popup function ran")
 
-    def tabchange(self, tab):
+    def tabchange(self, tab):                                                  # Hides the outputbox on the settings tab
         log.debug(f"Changed tab to {str(tab)}")
         if tab == self.configtab:
             self.ui.outputbox.hide()
         else:
             self.ui.outputbox.show()
         
-    def all3rcp(self):
+    def all3rcp(self):                                                         # All 3 RCP Daily reports
         log.debug("all3rcp function called")
         self.ui.outputbox.setText("Running Reports...")
         Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.rcpdatabase, "RCP")
@@ -529,39 +561,41 @@ class RoseUtils(qtw.QMainWindow):
         Weeklycompfull.run(self, self.zocdownloadfolder, self.outputfolder, "RCP")
         log.debug("all3rcp function ran")
 
-    def all3ccd(self):
+    def all3ccd(self):                                                         # All 3 CCD Daily reports
         self.ui.outputbox.setText("Running Reports...")
         Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.ccddatabase, "CCD")
         Target_Inventory.run(self, self.zocdownloadfolder, self.outputfolder, "CCD")
         Weeklycompfull.run(self, self.zocdownloadfolder, self.outputfolder, "CCD")
 
-    def outputfolderfunc(self):
+                    ############### Need to refactor everything below this line into 2 functions
+
+    def outputfolderfunc(self):                                                # Dialog box to delect folder for settings
         self.outputfolder = qtw.QFileDialog.getExistingDirectory(self, 'Select Output Folder') + "/"
         self.refreshfolders()
         self.ui.outputbox.append("Output Folder Saved")
         return self.outputfolder
 
-    def zocdownloadfolderfunc(self):
+    def zocdownloadfolderfunc(self):                                           # Dialog box to delect folder for settings
         self.zocdownloadfolder = qtw.QFileDialog.getExistingDirectory(self, 'Select Zoc Download Folder') +"/"
         self.refreshfolders()
         self.ui.outputbox.append("ZocDownload Folder Saved")
         return self.zocdownloadfolder
 
-    def rcpdatabasefunc(self):
+    def rcpdatabasefunc(self):                                                 # Dialog box to delect folder for settings
         self.rcpdatabase = qtw.QFileDialog.getOpenFileName(self, 'Select the RCP Database File')
         self.rcpdatabase = self.rcpdatabase[0]
         self.ui.outputbox.append("RCP Database File Saved")
         self.refreshfolders()
         return self.rcpdatabase
 
-    def ccddatabasefunc(self):
+    def ccddatabasefunc(self):                                                 # Dialog box to delect folder for settings
         self.ccddatabase = qtw.QFileDialog.getOpenFileName(self, 'Select the CCD Database File')
         self.ccddatabase = self.ccddatabase[0]
         self.ui.outputbox.append("CCD Database File Saved")
         self.refreshfolders()
         return self.ccddatabase
 
-    def savefolders(self):
+    def savefolders(self):                                                     # Dialog box to delect folder for settings
         log.debug("savefolder function called")
         with open("Settings\\CCDDatabase", "w") as f:
             f.write(self.ccddatabase)
@@ -580,32 +614,30 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.outputbox.append("All Folders/Files Saved in configuration")
         log.debug("savefolders function ran")
 
-    def downloadfolderfunc(self):
+    def downloadfolderfunc(self):                                              # Dialog box to delect folder for settings
         self.downloadfolder = qtw.QFileDialog.getExistingDirectory(self, 'Select Downloads Folder') +"/"
         self.ui.outputbox.append("Downloads Folder Saved")
         self.refreshfolders()
 
-    def outputfolderfunc2(self):
+    def outputfolderfunc2(self):                                               # Saves what's in the UI to self.variable
         self.outputfolder = self.ui.output_edit.text()
         self.refreshfolders()
 
-    def zocdownloadfolderfunc2(self):
+    def zocdownloadfolderfunc2(self):                                          # Saves what's in the UI to self.variable
         self.zocdownloadfolder = self.ui.zocdownload_edit.text()
         self.refreshfolders()
 
-    def rcpdatabasefunc2(self):
+    def rcpdatabasefunc2(self):                                                # Saves what's in the UI to self.variable
         self.rcpdatabase = self.ui.rcpdatabase_edit.text()
         self.refreshfolders()
 
-    def ccddatabasefunc2(self):
+    def ccddatabasefunc2(self):                                                # Saves what's in the UI to self.variable
         self.ccddatabase = self.ui.ccddatabase_edit.text()
         self.refreshfolders()
 
-    def downloadfolderfunc2(self):
+    def downloadfolderfunc2(self):                                             # Saves what's in the UI to self.variable
         self.downloadfolder = self.ui.downloads_edit.text()
         self.refreshfolders()
-
-
 
 
 

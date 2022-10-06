@@ -14,7 +14,7 @@
     <x>0</x>
     <y>0</y>
     <width>1023</width>
-    <height>405</height>
+    <height>443</height>
    </rect>
   </property>
   <property name="font">
@@ -23,7 +23,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>RoseUtils 1.14.2</string>
+   <string>RoseUtils 1.15</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -39,7 +39,7 @@
       <x>0</x>
       <y>0</y>
       <width>1021</width>
-      <height>371</height>
+      <height>411</height>
      </rect>
     </property>
     <property name="font">
@@ -51,7 +51,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <property name="iconSize">
      <size>
@@ -748,8 +748,8 @@
      <widget class="QPushButton" name="btn_wizzard">
       <property name="geometry">
        <rect>
-        <x>410</x>
-        <y>260</y>
+        <x>330</x>
+        <y>270</y>
         <width>271</width>
         <height>30</height>
        </rect>
@@ -761,8 +761,8 @@
      <widget class="QCheckBox" name="checkbox_GM">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>260</y>
+        <x>200</x>
+        <y>290</y>
         <width>91</width>
         <height>20</height>
        </rect>
@@ -777,7 +777,7 @@
         <x>0</x>
         <y>110</y>
         <width>1011</width>
-        <height>141</height>
+        <height>151</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -795,7 +795,7 @@
          <x>0</x>
          <y>0</y>
          <width>1011</width>
-         <height>141</height>
+         <height>151</height>
         </rect>
        </property>
        <widget class="QLineEdit" name="pwd_box">
@@ -842,8 +842,8 @@
      <widget class="QCheckBox" name="checkbox_debug">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>280</y>
+        <x>200</x>
+        <y>310</y>
         <width>351</width>
         <height>21</height>
        </rect>
@@ -855,8 +855,8 @@
      <widget class="QLabel" name="label_15">
       <property name="geometry">
        <rect>
-        <x>220</x>
-        <y>300</y>
+        <x>150</x>
+        <y>330</y>
         <width>241</width>
         <height>16</height>
        </rect>
@@ -1166,6 +1166,38 @@
       </property>
       <property name="text">
        <string>Delete files after report</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_gm_schedule_review">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>310</y>
+        <width>141</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Generate a spreadsheet with your yields in the order of your ACO</string>
+      </property>
+      <property name="text">
+       <string>Schedule Analyzer</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_gm_schedule_help">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>310</y>
+        <width>111</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Generate a spreadsheet with your yields in the order of your ACO</string>
+      </property>
+      <property name="text">
+       <string>Instructions</string>
       </property>
      </widget>
     </widget>
@@ -2609,7 +2641,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>340</y>
+      <y>380</y>
       <width>131</width>
       <height>16</height>
      </rect>

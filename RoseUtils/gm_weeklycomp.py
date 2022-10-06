@@ -6,11 +6,13 @@ import traceback
 from striprtf.striprtf import rtf_to_text
 import math
 
-def openrtf(file: str) -> list[str]: #Call this to open an rtf file with the filepath in the thing.
+def openrtf(self, file: str) -> list[str]: #Call this to open an rtf file with the filepath in the thing.
                     #Will return a list of strings for each line of the file
-    with open(file, 'r') as file:
-        text = file.read()
+    with open(file, 'r') as file2:
+        text = file2.read()
     text = rtf_to_text(text)
+    if self.check_delete:
+        os.remove(file)
     textlist = text.splitlines()
     return textlist #returns a list containing entire RTF file
 
@@ -155,9 +157,8 @@ def run(self, filelist):
 
 
         for i, file in enumerate(filelist):
-            file = openrtf(file)
-            if self.check_delete:
-                os.remove(file)
+            file = openrtf(self, file)
+            
             ws['b2'] = int(file[1][83:87])
             for row in range(5,17): #Deliveries
                 ws.cell(row = row, column = 2+i, value = int(file[row+4][21:25].strip()))#Mon 
