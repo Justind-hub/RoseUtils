@@ -1,3 +1,3 @@
 # RoseUtils
 
-Version 1.15
+Version 1.15.1
