@@ -15,8 +15,8 @@ import os
 from os.path import exists
 from subprocess import Popen, PIPE
 import logging
-import PyPDF2
-from PyPDF2 import PdfFileReader, PdfFileWriter
+#import PyPDF2
+#from PyPDF2 import PdfFileReader, PdfFileWriter
 
 
 class Buttons():
@@ -55,12 +55,14 @@ class Buttons():
             complete = 0
             ws.cell(row = 1, column = i+1,value = store)
             for row in data:
+                fname = row[0][row[0].find(" ")+1:]
+                lname = row[0][:row[0].find(" ")]
                 if str(store) in row[2]:
                     tms +=1
                     if row[1] == 100: 
                         complete += 1
                     else:
-                        ws.cell(row = r, column = i+1, value = row[0])
+                        ws.cell(row = r, column = i+1, value = f"{fname} {lname}")
                         r += 1
             ws.cell(row = 2, column = i+1, value = str(round((complete/tms) * 100,1)) + "%")
 
