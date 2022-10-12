@@ -1,8 +1,10 @@
 import os
 import pandas as pd
 from datetime import datetime
+from datetime import date as Date
 import traceback
 from time import sleep
+
 
 def read_rtf(file:str, headers=True)->list[str]:
     with open(file, 'r') as file:
@@ -50,6 +52,9 @@ def run(self):
         def formatasminutes(time):
             return int(time.total_seconds()/60)
 
+        def weeknum(d):
+            return Date(int(d[-4:]),int(d[:2]),int(d[3:5])).isocalendar()[1] + 1
+
         path = self.zocdownloadfolder
         odlist = []
         elist = []
@@ -96,7 +101,7 @@ def run(self):
         odf['difference'] = odf['time_dispatch'].apply(timeobj) - odf['time_in'].apply(timeobj)
         odf['difference'] = odf['difference'].apply(formatasminutes)
         odf.drop(['lookup'],axis=1,inplace=True)
-
+        odf['week'] = odf['date'].apply(weeknum)
 
         self.ui.outputbox.append(f"Done! finished in {datetime.now() - start}")
         self.ui.outputbox.append(f"Opening file {self.outputfolder}DDD_Dispatch_Times.csv ")
@@ -106,3 +111,11 @@ def run(self):
         self.ui.outputbox.append("ENCOUNTERED ERROR")
         self.ui.outputbox.append("Please send the contents of this box to Justin")
         self.ui.outputbox.append(traceback.format_exc())
+'''
+
+
+d = "08/18/2022"
+
+
+
+'''
