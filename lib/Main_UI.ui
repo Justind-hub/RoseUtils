@@ -23,7 +23,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>RoseUtils 1.15</string>
+   <string>RoseUtils 1.16</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -51,7 +51,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <property name="iconSize">
      <size>
@@ -153,7 +153,7 @@
         <x>400</x>
         <y>40</y>
         <width>150</width>
-        <height>40</height>
+        <height>36</height>
        </rect>
       </property>
       <property name="toolTip">
@@ -180,9 +180,9 @@
       <property name="geometry">
        <rect>
         <x>400</x>
-        <y>90</y>
+        <y>85</y>
         <width>150</width>
-        <height>40</height>
+        <height>36</height>
        </rect>
       </property>
       <property name="toolTip">
@@ -196,9 +196,9 @@
       <property name="geometry">
        <rect>
         <x>400</x>
-        <y>140</y>
+        <y>130</y>
         <width>150</width>
-        <height>40</height>
+        <height>36</height>
        </rect>
       </property>
       <property name="toolTip">
@@ -212,9 +212,9 @@
       <property name="geometry">
        <rect>
         <x>400</x>
-        <y>190</y>
+        <y>175</y>
         <width>150</width>
-        <height>40</height>
+        <height>36</height>
        </rect>
       </property>
       <property name="toolTip">
@@ -248,9 +248,9 @@
       <property name="geometry">
        <rect>
         <x>400</x>
-        <y>240</y>
+        <y>220</y>
         <width>150</width>
-        <height>40</height>
+        <height>36</height>
        </rect>
       </property>
       <property name="toolTip">
@@ -380,7 +380,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>260</y>
+        <y>290</y>
         <width>221</width>
         <height>40</height>
        </rect>
@@ -396,13 +396,29 @@
       <property name="geometry">
        <rect>
         <x>260</x>
-        <y>280</y>
+        <y>310</y>
         <width>211</width>
         <height>17</height>
        </rect>
       </property>
       <property name="text">
        <string>Delete files after report</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_DDD">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>265</y>
+        <width>150</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Run the Compliments Report</string>
+      </property>
+      <property name="text">
+       <string>DDD Dispatch Time</string>
       </property>
      </widget>
     </widget>

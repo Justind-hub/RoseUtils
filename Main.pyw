@@ -5,6 +5,7 @@ from subprocess import Popen, PIPE
 import logging
 import winsound
 import time
+import threading
 
 #PyQt
 from PyQt5 import QtWidgets as qtw
@@ -18,7 +19,7 @@ from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory
 from RoseUtils import Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
 from RoseUtils import Epp, Comments, Release, gm_Target_inv, gm_weeklycomp
 from RoseUtils import export_SQL,gm_on_hands, updater, costreport
-from RoseUtils import Schedule_reviewer
+from RoseUtils import Schedule_reviewer, DDD_Dispatch_Times
 from RoseUtils.Buttons import Buttons #Buttons class init as "b"
 
 #Downloaded
@@ -200,6 +201,7 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.btn_reexport.clicked.connect(lambda: export_SQL.run(self))
         self.ui.check_delete.stateChanged.connect(self.deletecheck)
         self.ui.check_delete_2.stateChanged.connect(self.deletecheck)
+        self.ui.btn_DDD.clicked.connect(self.DDD)
 
         # GM tab buttons
         self.ui.btn_browse.clicked.connect(lambda: self.filepicker())
@@ -235,6 +237,10 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.btn_browse_3.clicked.connect(self.costreportpicker)
         self.ui.btn_clear_3.clicked.connect(self.costreportclear)
         self.ui.btn_runcostreport.clicked.connect(lambda: costreport.run(self))
+    
+    def DDD(self):
+        x = threading.Thread(target=DDD_Dispatch_Times.run,args=(self,))
+        x.start()
         
     def costreportclear(self):                                                 # 
         self.cost_report_list = []
