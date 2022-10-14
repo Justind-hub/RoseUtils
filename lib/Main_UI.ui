@@ -140,7 +140,7 @@
         <x>20</x>
         <y>190</y>
         <width>150</width>
-        <height>60</height>
+        <height>41</height>
        </rect>
       </property>
       <property name="text">
@@ -150,10 +150,10 @@
      <widget class="QPushButton" name="btn_new_hirercp">
       <property name="geometry">
        <rect>
-        <x>400</x>
+        <x>220</x>
         <y>40</y>
         <width>150</width>
-        <height>36</height>
+        <height>40</height>
        </rect>
       </property>
       <property name="toolTip">
@@ -179,10 +179,10 @@
      <widget class="QPushButton" name="btn_drivosity">
       <property name="geometry">
        <rect>
-        <x>400</x>
-        <y>85</y>
+        <x>220</x>
+        <y>90</y>
         <width>150</width>
-        <height>36</height>
+        <height>40</height>
        </rect>
       </property>
       <property name="toolTip">
@@ -195,10 +195,10 @@
      <widget class="QPushButton" name="btn_weekly_dor">
       <property name="geometry">
        <rect>
-        <x>400</x>
-        <y>130</y>
+        <x>220</x>
+        <y>140</y>
         <width>150</width>
-        <height>36</height>
+        <height>40</height>
        </rect>
       </property>
       <property name="toolTip">
@@ -211,10 +211,10 @@
      <widget class="QPushButton" name="btn_epp">
       <property name="geometry">
        <rect>
-        <x>400</x>
-        <y>175</y>
+        <x>390</x>
+        <y>140</y>
         <width>150</width>
-        <height>36</height>
+        <height>40</height>
        </rect>
       </property>
       <property name="toolTip">
@@ -241,16 +241,16 @@
        </font>
       </property>
       <property name="text">
-       <string>Rose City Pizza:</string>
+       <string>Daily Reports:</string>
       </property>
      </widget>
      <widget class="QPushButton" name="btn_PA_Promo">
       <property name="geometry">
        <rect>
-        <x>400</x>
-        <y>220</y>
+        <x>390</x>
+        <y>40</y>
         <width>150</width>
-        <height>36</height>
+        <height>40</height>
        </rect>
       </property>
       <property name="toolTip">
@@ -260,106 +260,10 @@
        <string>PA Period Promo</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="btn_all3ccd">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>190</y>
-        <width>150</width>
-        <height>60</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>All 3 Reports</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_11">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>5</y>
-        <width>181</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>16</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Cascade Dining:</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_targetccd">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>140</y>
-        <width>150</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="toolTip">
-       <string>Run the Daily Inventory Variances Report</string>
-      </property>
-      <property name="text">
-       <string>Inv Variances</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_weekly_compccd">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>90</y>
-        <width>150</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="mouseTracking">
-       <bool>false</bool>
-      </property>
-      <property name="toolTip">
-       <string>Run the Daily Weekly Comps Report</string>
-      </property>
-      <property name="text">
-       <string>Weekly Comp</string>
-      </property>
-      <property name="checkable">
-       <bool>false</bool>
-      </property>
-      <property name="autoDefault">
-       <bool>false</bool>
-      </property>
-      <property name="default">
-       <bool>false</bool>
-      </property>
-      <property name="flat">
-       <bool>false</bool>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_breaksccd">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>40</y>
-        <width>150</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="toolTip">
-       <string>Run the Daily Breaks Report</string>
-      </property>
-      <property name="text">
-       <string>Breaks Report</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_12">
       <property name="geometry">
        <rect>
-        <x>400</x>
+        <x>230</x>
         <y>5</y>
         <width>71</width>
         <height>30</height>
@@ -379,9 +283,9 @@
      <widget class="QPushButton" name="btn_reexport">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>290</y>
-        <width>221</width>
+        <x>220</x>
+        <y>190</y>
+        <width>151</width>
         <height>40</height>
        </rect>
       </property>
@@ -389,14 +293,14 @@
        <string>Re-export both the RCP and CCD Database files for Drivosity and Breaks</string>
       </property>
       <property name="text">
-       <string>Re-Export Databases</string>
+       <string>Re-Export Database</string>
       </property>
      </widget>
      <widget class="QCheckBox" name="check_delete">
       <property name="geometry">
        <rect>
-        <x>260</x>
-        <y>310</y>
+        <x>330</x>
+        <y>300</y>
         <width>211</width>
         <height>17</height>
        </rect>
@@ -408,10 +312,10 @@
      <widget class="QPushButton" name="btn_DDD">
       <property name="geometry">
        <rect>
-        <x>400</x>
-        <y>265</y>
+        <x>390</x>
+        <y>90</y>
         <width>150</width>
-        <height>36</height>
+        <height>40</height>
        </rect>
       </property>
       <property name="toolTip">
@@ -420,6 +324,45 @@
       <property name="text">
        <string>DDD Dispatch Time</string>
       </property>
+     </widget>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>270</y>
+        <width>281</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Select Franchise:</string>
+      </property>
+      <widget class="QRadioButton" name="radio_CCD">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>27</y>
+         <width>91</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Cascade</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="radio_RCP">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>27</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Rose City</string>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="Settings">

@@ -1,4 +1,5 @@
-from striprtf.striprtf import rtf_to_text
+#from striprtf.striprtf import rtf_to_text
+from RoseUtils.rtf_reader import read_rtf as openrtf
 import os
 from os.path import exists
 
@@ -8,11 +9,12 @@ from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, Border, Side, PatternFill
 from datetime import datetime
 import traceback
-
+from time import sleep
 
 def run(self, zocdownload, output, fran):
     try:
         self.ui.outputbox.setText("Running Weekly Comp")
+        sleep(.01)
         #print('Enter lowercase 3 letter day of the week, leave blank to run previous day')
         #print('Examples: "mon", "tue", "wed", "thu","fri","sat","sun"')
         #day = input()
@@ -30,7 +32,7 @@ def run(self, zocdownload, output, fran):
 
         wb= Workbook()
         ws = wb.create_sheet('Weekly Comp', index = 0)
-        if fran == "RCP":
+        if self.rcp:
             STORECOL = {"1740":0,"1743":28,"2172":4,"2174":32,"2236":8,"2272":12,"2457":36,"2549":16,"2603":40,"3498":44,"4778":24,"2953":20}
             stores = [1740,2172,2236,2272,2549,2953,4778,1743,2174,2457,2603,3498]
         else:
@@ -47,13 +49,13 @@ def run(self, zocdownload, output, fran):
         
 
         #openrtf file
-        def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
+        '''def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
                             #Will return a list of strings for each line of the file
             with open(file, 'r') as file:
                 text = file.read()
             text = rtf_to_text(text)
             textlist = text.splitlines()
-            return textlist #returns a list containing entire RTF file
+            return textlist #returns a list containing entire RTF file'''
 
         def left(s, amount): #litterally just the "left" function from excel
             return s[:amount]
@@ -160,6 +162,8 @@ def run(self, zocdownload, output, fran):
         for file in filelist:
 
             textlist = openrtf(zocdownload+file)
+            textlist.insert(0,"")
+            textlist.insert(5,"")
             if self.check_delete:
                 os.remove(zocdownload+file)
             #set store number and date range, and save  
@@ -171,6 +175,7 @@ def run(self, zocdownload, output, fran):
             col = STORECOL[store]
             #print(f"Loading store {store} from file {file}....")
             self.ui.outputbox.append(f"Loading store {store} from file {file}....")
+            sleep(.01)
             #clean up the file
             del textlist[50:]
             x = []
@@ -305,7 +310,7 @@ def run(self, zocdownload, output, fran):
         ws.cell(row=103, column = 1,value = "Sunday").font = Font(bold=True, size = 30)
 
 
-        if fran =="RCP":
+        if self.rcp:
             wb.save(output+"Weekly Comp "+datetime.now().strftime("%m.%d.%y")+".xlsx")
         else:
             wb.save(output+"CCDWeekly Comp "+datetime.now().strftime("%m.%d.%y")+".xlsx")

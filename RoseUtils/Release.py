@@ -219,3 +219,17 @@ def r113(gui,x):
         gui.ui.outputbox.append(text) 
 
     r110(gui, False)
+
+def r20(gui,x):  
+    text = '''Release Version 2.0... Loads of small updates and very few release notes!
+    Well I skipped 1.4-1.16, but here's the gist of it:
+    Added a couple new buttons and corresponding reports, most notably the PA report and the DDD Dispatch Time report
+    Made all of the DM reports work for both franchises
+    TONS of changes under the hood to make future updates easier, and now the window is resizable!
+    '''
+    if x:
+        gui.ui.outputbox.setText(text)
+    else:
+        gui.ui.outputbox.append(text) 
+
+    r113(gui, False)

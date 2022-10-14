@@ -3,17 +3,22 @@ import os
 from openpyxl import Workbook
 from openpyxl.styles import Alignment
 import traceback
+from time import sleep
 
-
-def run(self, zocdownload, output):
+def run(self):
     try:
         self.ui.outputbox.setText("Running EPP")
+        sleep(.01)
         filelist = [] #create list of files to loop through -> filelist
-        for file in os.listdir(zocdownload):
+        for file in os.listdir(self.zocdownloadfolder):
             filelist.append(file)
-        filelist = [zocdownload + file for file in filelist]
+        filelist = [self.zocdownloadfolder + file for file in filelist]
 
-        STORECOL = {"1740":2,"1743":4,"2172":6,"2174":8,"2236":10,"2272":12,"2457":14,"2549":16,"2603":18,"2953":20,"3498":22,"0477":24}
+        if self.rcp:
+            STORECOL = {"1740":2,"1743":4,"2172":6,"2174":8,"2236":10,"2272":12,"2457":14,"2549":16,"2603":18,"2953":20,"3498":22,"0477":24}
+        else:
+            STORECOL = {"2208":2,"2306":4,"2325":6,"2478":8,"2612":10,"2618":12,"2687":14,"2921":16,"3015":18,"3130":20,"3479":22,"4405":24}
+                    #  
         PRODUCTS = {"10\" Dough":"1075",
                     "12\" Dough":"1077",
                     "14\" Dough":"1080",
@@ -90,8 +95,9 @@ def run(self, zocdownload, output):
 
 
 
-        wb.save(output+"EPP.xlsx")
+        wb.save(self.outputfolder+"EPP.xlsx")
         self.ui.outputbox.append("Done!")
+        sleep(.01)
         if self.check_delete:
             for file in targets:
                 os.remove(file)

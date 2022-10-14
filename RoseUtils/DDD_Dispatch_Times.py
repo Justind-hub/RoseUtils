@@ -4,9 +4,9 @@ from datetime import datetime
 from datetime import date as Date
 import traceback
 from time import sleep
+from RoseUtils.rtf_reader import read_rtf
 
-
-def read_rtf(file:str, headers=True)->list[str]:
+'''def read_rtf(file:str)->list[str]:
     with open(file, 'r') as file:
         text = file.readlines()
     for i in range(0,5):
@@ -19,23 +19,8 @@ def read_rtf(file:str, headers=True)->list[str]:
             else:
                 text2.append(line[66:-2])
     del(text)
-    if not headers:
-        store = text2[0][83:87]
-        header1 = text2[0][:70]
-        header2 = text2[1][:70]
-        header3 = text2[2][:70]
-        i = 0
-        while i < len(text2):
-            line = text2[i]
-            if header1 in line or header2 in line or header3 in line:
-                text2.pop(i)
-                i-=1
-            i+=1 
-        return text2, store
-
-
     return text2
-
+'''
 def run(self):
     try:
         def xlookup(lookup_value, lookup_array, return_array, inf:str = ''):
@@ -66,12 +51,13 @@ def run(self):
             if "ORD" in file: odlist.append(os.path.join(path,file))
             elif "SEC" in file: elist.append(os.path.join(path,file))
 
+        i = 1
         for file in odlist:
             detail = read_rtf(file)
             if self.check_delete: os.remove(file)
             date = ""
             store = detail[0][83:87]       
-            i = 1
+            
             for row in detail:
 
                 if len(row) == 30: date = row.strip()
@@ -82,8 +68,8 @@ def run(self):
             self.ui.outputbox.append(f"Running store {store}")
             sleep(.01)
 
+        i = 1
         for file in elist:
-            i = 1
             ex = read_rtf(file)
             if self.check_delete: os.remove(file)
             store = ex[0][83:87]
@@ -107,15 +93,11 @@ def run(self):
         self.ui.outputbox.append(f"Opening file {self.outputfolder}DDD_Dispatch_Times.csv ")
         odf.to_csv(os.path.join(self.outputfolder,"DDD_Dispatch_Times.csv"),index=False)
         os.startfile(os.path.join(self.outputfolder,"DDD_Dispatch_Times.csv"))
+        #pd.pivot_table(data=odf,index=['store'], columns=['week'], values='difference',
+            #aggfunc=['mean','median','count']).stack(level=0).unstack(level=0).stack().to_csv(self.outputfolder+"Entire_Report.csv")
+        os.startfile(self.outputfolder+"Entire_Report.csv")
+
     except:
         self.ui.outputbox.append("ENCOUNTERED ERROR")
         self.ui.outputbox.append("Please send the contents of this box to Justin")
         self.ui.outputbox.append(traceback.format_exc())
-'''
-
-
-d = "08/18/2022"
-
-
-
-'''

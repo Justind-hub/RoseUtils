@@ -7,6 +7,10 @@ from datetime import datetime
 
 def run(self, zocdownload, database, export):
     try:
+        if self.rcp:
+            database = self.rcpdatabase
+        else:
+            database = self.ccddatabase
         self.ui.outputbox.setText("Running New Hire Report")
         ####### Change the 3 variables below. Inlude double "\\"s, including 2 at the end of paths
         ZOCDOWNLOAD_FOLDER = zocdownload  

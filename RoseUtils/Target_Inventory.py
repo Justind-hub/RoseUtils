@@ -1,20 +1,22 @@
-from striprtf.striprtf import rtf_to_text
+#from striprtf.striprtf import rtf_to_text
+from RoseUtils.rtf_reader import read_rtf as openrtf
 import os
 from os.path import exists
-
+from PyQt5.QtWidgets import QApplication
 import pandas as pd
-
+from time import sleep
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font
 from datetime import datetime
 import traceback
 
-def run(self, zocdownload, outputfolder, fran):
+def run(self, fran):
     try:
+        
         self.ui.outputbox.setText("Running Target Inventory")
         wb= Workbook()
         ws = wb.create_sheet('Sheet', 0)
-        if fran == "RCP":
+        if self.rcp:
             STORECOL = {"1740":1,"1743":2,"2172":3,"2174":4,"2236":5,"2272":6,"2457":7,"2549":8,"2603":9,"2953":10,"3498":11,"4778":12}
         else:
             STORECOL = {"2208":1,"2306":2,"2325":3,"2478":4,"2612":5,"2618":6,"2687":7,"2921":8,"3015":9,"3130":10,"3479":11,"4405":12}
@@ -22,26 +24,26 @@ def run(self, zocdownload, outputfolder, fran):
 
 
         #openrtf file
-        def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
+        '''def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
                             #Will return a list of strings for each line of the file
             with open(file, 'r') as file:
                 text = file.read()
             text = rtf_to_text(text)
             textlist = text.splitlines()
-            return textlist #returns a list containing entire RTF file
+            return textlist #returns a list containing entire RTF file'''
 
         def left(s, amount): #litterally just the "left" function from excel
             return s[:amount]
 
         filelist = [] #create list of files to loop through -> filelist
-        for file in os.listdir(zocdownload):
+        for file in os.listdir(self.zocdownloadfolder):
             if file.startswith("INVTAR"):
                 filelist.append(file)
         f = 0
         for each in filelist:
                 
             #clean the file
-            textlist = openrtf(zocdownload+each)
+            textlist = openrtf(self.zocdownloadfolder+each)
             headerstart = left(textlist[1],10)
             i = 10
             while i < len(textlist):
@@ -98,7 +100,7 @@ def run(self, zocdownload, outputfolder, fran):
 
             f +=1
             if self.check_delete:
-                os.remove(zocdownload+each)
+                os.remove(self.zocdownloadfolder+each)
 
 
 
@@ -118,10 +120,10 @@ def run(self, zocdownload, outputfolder, fran):
 
         ws.cell(row = 1, column = 1, value = date).alignment = Alignment(horizontal="center")
         ws.merge_cells("A1:L1")
-        if fran == "RCP":
-            wb.save(outputfolder+"Inventory Target "+datetime.now().strftime("%m.%d.%y")+".xlsx")
+        if self.rcp:
+            wb.save(self.outputfolder+"Inventory Target "+datetime.now().strftime("%m.%d.%y")+".xlsx")
         else:
-            wb.save(outputfolder+"CCDInventory Target "+datetime.now().strftime("%m.%d.%y")+".xlsx")
+            wb.save(self.outputfolder+"CCDInventory Target "+datetime.now().strftime("%m.%d.%y")+".xlsx")
         self.ui.outputbox.append("Done!")
     except:
         self.ui.outputbox.append("ENCOUNTERED ERROR")

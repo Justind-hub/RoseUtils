@@ -1,24 +1,27 @@
 
 import os #To search the folder
-from striprtf.striprtf import rtf_to_text #RTF Reader
+#from striprtf.striprtf import rtf_to_text
+from RoseUtils.rtf_reader import read_rtf as openrtf
 import sqlite3 #Save to database
 from xlsxwriter.workbook import Workbook #to export the database into an excel file
 
 import time #just for timing the script
 import traceback
-
+from time import sleep
 
 def run(self, zocdownload, databasefile, franchise):
     try:
         ####### Change the 3 variables below. Inlude double "\\"s, including 2 at the end of paths
         self.ui.outputbox.setText("Running Breaks Report")
-        if franchise == "RCP":
+        sleep(.01)
+        if self.rcp:
             CCD = False
             RCP = True
             GM_NAMES = ("Mel",'tyler','kim','kristina','cara','nicole','jordan','sean',
                         'forrest','yerey','dan','jordan P','kim','maranda')
             GM_ID_LIST = ("10131868","10039186","10039195","10039300","10039462","10039205","10039288",
                         "10039248","10006085","10039389","10039191","10124254","10039195","10002623")
+            databasefile = self.rcpdatabase
         else:
             CCD = True
             RCP = False
@@ -26,6 +29,7 @@ def run(self, zocdownload, databasefile, franchise):
             MAXSHIFTOR = 5.15
             GM_ID_LIST = ("10165861","10039358","10162686","10162376","10177223","10161583","10165345","10039345",
                         "10162343","10039243","10039305","10039312","10161595","10171661","10173335")
+            databasefile = self.ccddatabase
         MAXSHIFTWA = 5.15
         MAXSHIFTOR = 6.15
         ZOCDOWNLOAD_FOLDER = zocdownload   
@@ -53,13 +57,13 @@ def run(self, zocdownload, databasefile, franchise):
         ''')
 
 
-        def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
+        '''def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
                             #Will return a list of strings for each line of the file
             with open(file, 'r', errors="ignore") as file:
                 text = file.read()
             text = rtf_to_text(text)
             textlist = text.splitlines()
-            return textlist #returns a list containing entire RTF file
+            return textlist #returns a list containing entire RTF file'''
 
         def truetime(time): 
             '''Pass in a string 12:30pm -> 12.50'''
@@ -175,10 +179,11 @@ def run(self, zocdownload, databasefile, franchise):
             dor = openrtf(file)
             breakscount = 0
             ##Store, Date and CSC. All simple
-            store = dor[1][83:87]
+            store = dor[0][83:87]
             #print(f"Opening store #{store} from file {file}")
             self.ui.outputbox.append(f"Opening store #{store} from file {file}")
-            date = dor[4].strip()
+            sleep(.01)
+            date = dor[3].strip()
             csc = f'{dor[findline("Void Unmade Orders",0)][126:].strip()}%'
             excess = dor[findline("Excess",0)][65:70].strip()
             void = dor[findline("Void",0)][30:38].strip()
@@ -324,6 +329,7 @@ def run(self, zocdownload, databasefile, franchise):
         end_time = time.perf_counter()
         #print(f"Completed {len(fileList)} stores in {end_time - start_time} seconds")
         self.ui.outputbox.append(f"Completed {len(fileList)} stores in {end_time - start_time} seconds")
+        sleep(.01)
     except:
         self.ui.outputbox.append("ENCOUNTERED ERROR")
         self.ui.outputbox.append("Please send the contents of this box to Justin")

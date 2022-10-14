@@ -4,7 +4,7 @@ import openpyxl
 from xlsxwriter.workbook import Workbook
 import traceback
 import os
-
+from time import sleep
 def run(self, downloadsfolder, database, output):
     try:
         ######### USER CONFIG SECTION ############
