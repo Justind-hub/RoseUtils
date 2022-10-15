@@ -1,3 +1,4 @@
+# type: ignore
 #from striprtf.striprtf import rtf_to_text
 from RoseUtils.rtf_reader import read_rtf as openrtf
 import os
@@ -9,11 +10,15 @@ from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, Border, Side, PatternFill
 from datetime import datetime
 import traceback
-from time import sleep
+from time import sleep, perf_counter
 
-def run(self, zocdownload, output, fran):
+
+def run(self):
     try:
-        self.ui.outputbox.setText("Running Weekly Comp")
+        start = perf_counter()
+        zocdownload = self.zocdownloadfolder
+        output = self.outputfolder
+        self.append_text.emit("Running Weekly Comp")
         sleep(.01)
         #print('Enter lowercase 3 letter day of the week, leave blank to run previous day')
         #print('Examples: "mon", "tue", "wed", "thu","fri","sat","sun"')
@@ -174,7 +179,7 @@ def run(self, zocdownload, output, fran):
             date = date.strip()
             col = STORECOL[store]
             #print(f"Loading store {store} from file {file}....")
-            self.ui.outputbox.append(f"Loading store {store} from file {file}....")
+            self.append_text.emit(f"Weekly Comp: Loading store {store}")
             sleep(.01)
             #clean up the file
             del textlist[50:]
@@ -309,15 +314,16 @@ def run(self, zocdownload, output, fran):
         ws.cell(row=86, column = 1,value = "Saturday").font = Font(bold=True, size = 30)
         ws.cell(row=103, column = 1,value = "Sunday").font = Font(bold=True, size = 30)
 
-
+        end_time = perf_counter()
         if self.rcp:
             wb.save(output+"Weekly Comp "+datetime.now().strftime("%m.%d.%y")+".xlsx")
         else:
             wb.save(output+"CCDWeekly Comp "+datetime.now().strftime("%m.%d.%y")+".xlsx")
+        self.append_text.emit(f"Weekly Comp: Completed in {round(end_time - start,2)} seconds")    
     except:
-        self.ui.outputbox.append("ENCOUNTERED ERROR")
-        self.ui.outputbox.append("Please send the contents of this box to Justin")
-        self.ui.outputbox.append(traceback.format_exc())
+        self.append_text.emit("ENCOUNTERED ERROR")
+        self.append_text.emit("Please send the contents of this box to Justin")
+        self.append_text.emit(traceback.format_exc())
 
 if __name__ == '__main__':
     run()

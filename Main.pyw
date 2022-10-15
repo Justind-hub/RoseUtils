@@ -39,6 +39,8 @@ log.debug("Finished imports")
 
 
 class RoseUtils(qtw.QMainWindow):
+    set_text = qtc.pyqtSignal(str)
+    append_text = qtc.pyqtSignal(str)
     def __init__(self, *args, **kwargs):                                       # __init__ - calls all other methods
         super().__init__(*args, **kwargs)
         self.b = Buttons()
@@ -51,6 +53,7 @@ class RoseUtils(qtw.QMainWindow):
         self.show()
         self.buttons()
         self.menubars()
+        self.signals()
         try:
             if not updater.run():
                 self.update()
@@ -89,8 +92,22 @@ class RoseUtils(qtw.QMainWindow):
             self.close()
         log.debug("Update function ran")
 
+    @qtc.pyqtSlot(str)
+    def set_Text(self, value):
+        self.ui.outputbox.setText(value)
+
+    @qtc.pyqtSlot(str)
+    def append_Text(self, value):
+        self.ui.outputbox.append(value)
+
+    def signals(self):
+        self.set_text.connect(self.set_Text) # type: ignore
+        self.append_text.connect(self.append_Text) # type: ignore
+        
+
     def initvars(self):                                                        # Class Attributes and program settings initialized
         log.debug("initvars function called")
+        
         self.check_delete = False
         self.rcp = True
         filelist = []
@@ -177,11 +194,11 @@ class RoseUtils(qtw.QMainWindow):
         log.debug("buttons function called")
 
         #Buttons
-        self.ui.btn_targetrcp.clicked.connect(lambda: Target_Inventory.run(self, "RCP"))    
-        self.ui.btn_breaksrcp.clicked.connect(lambda: Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.rcpdatabase, "RCP")) 
+        self.ui.btn_targetrcp.clicked.connect(lambda: threading.Thread(target=Target_Inventory.run,args=(self,)).start())    
+        self.ui.btn_breaksrcp.clicked.connect(lambda: threading.Thread(target=Daily_DOR_Breaks.run,args=(self,)).start()) 
         self.ui.btn_new_hirercp.clicked.connect(lambda: New_Hire.run(self, self.zocdownloadfolder, self.rcpdatabase, self.outputfolder)) 
         self.ui.btn_drivosity.clicked.connect(lambda: Daily_Drivosity.run(self, self.downloadfolder, self.rcpdatabase, self.outputfolder)) 
-        self.ui.btn_weekly_comprcp.clicked.connect(lambda: Weeklycompfull.run(self, self.zocdownloadfolder, self.outputfolder, "RCP")) 
+        self.ui.btn_weekly_comprcp.clicked.connect(lambda: threading.Thread(target=Weeklycompfull.run,args=(self,)).start()) 
         self.ui.btn_weekly_dor.clicked.connect(lambda: Weekly_DOR_CSC.run(self, self.zocdownloadfolder, self.outputfolder)) 
         self.ui.btn_all3rcp.clicked.connect(self.all3rcp) 
         #self.ui.btn_all3ccd.clicked.connect(self.all3ccd)
@@ -206,7 +223,7 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.btn_reexport.clicked.connect(lambda: export_SQL.run(self))
         self.ui.check_delete.stateChanged.connect(self.deletecheck)
         self.ui.check_delete_2.stateChanged.connect(self.deletecheck)
-        self.ui.btn_DDD.clicked.connect(self.DDD) 
+        self.ui.btn_DDD.clicked.connect(lambda: threading.Thread(target=DDD_Dispatch_Times.run,args=(self,)).start()) 
         self.ui.radio_CCD.clicked.connect(lambda: self.setfran(False))
         self.ui.radio_RCP.clicked.connect(lambda: self.setfran(True))
         
@@ -226,7 +243,7 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.btn_gm_schedule_help.clicked.connect(self.gm_schedule_help)
         log.debug("buttons function ran")
 
-
+        
         # PDF Buttons
         self.ui.btn_pdf_browse.clicked.connect(self.pdfpicker)
         self.ui.btn_pdf_clear.clicked.connect(self.pdfClearButton)
@@ -246,6 +263,8 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.btn_clear_3.clicked.connect(self.costreportclear)
         self.ui.btn_runcostreport.clicked.connect(lambda: costreport.run(self))
     
+
+
     def setfran(self, x):
         self.rcp = x
     
@@ -283,6 +302,10 @@ class RoseUtils(qtw.QMainWindow):
         winsound.Beep(timer_freq,int(timer_length))
         
     def timer_start(self):                                                     # Starts the timer
+        self.timerthread = threading.Thread(target=self.timer_start_thread)
+        self.timerthread.start()
+
+    def timer_start_thread(self):
         if self.ui.timer_repeat_time.text() == "":
             self.popup("Enter the number of seconds between each beep",
                         QMessageBox.Warning,"Error")  # type: ignore
@@ -563,20 +586,10 @@ class RoseUtils(qtw.QMainWindow):
     def all3rcp(self):                                                         # All 3 RCP Daily reports
         log.debug("all3rcp function called")
         self.ui.outputbox.setText("Running Reports...")
-        if self.rcp:
-            a = "RCP"
-        else:
-            a = "CCD"
-        Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.rcpdatabase, a)
-        Target_Inventory.run(self, a)
-        Weeklycompfull.run(self, self.zocdownloadfolder, self.outputfolder, a)
+        threading.Thread(target=Daily_DOR_Breaks.run,args=(self,)).start()
+        threading.Thread(target=Target_Inventory.run,args=(self,)).start()
+        threading.Thread(target=Weeklycompfull.run,args=(self,)).start()
         log.debug("all3rcp function ran")
-
-    def all3ccd(self):                                                         # All 3 CCD Daily reports
-        self.ui.outputbox.setText("Running Reports...")
-        Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.ccddatabase, "CCD")
-        Target_Inventory.run(self, "CCD")
-        Weeklycompfull.run(self, self.zocdownloadfolder, self.outputfolder, "CCD")
 
     def savefolders(self):                                                     # Dialog box to delect folder for settings
         log.debug("savefolder function called")

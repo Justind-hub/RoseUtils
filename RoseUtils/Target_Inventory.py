@@ -1,21 +1,23 @@
 #from striprtf.striprtf import rtf_to_text
+# type: ignore
 from RoseUtils.rtf_reader import read_rtf as openrtf
 import os
 from os.path import exists
 from PyQt5.QtWidgets import QApplication
 import pandas as pd
 from time import sleep
-from openpyxl import Workbook
+from openpyxl import Workbook 
 from openpyxl.styles import Alignment, Font
 from datetime import datetime
+from time import perf_counter
 import traceback
 
-def run(self, fran):
+def run(self):
     try:
-        
-        self.ui.outputbox.setText("Running Target Inventory")
+        start = perf_counter()
+        self.append_text.emit("Running Target Inventory")
         wb= Workbook()
-        ws = wb.create_sheet('Sheet', 0)
+        ws = wb.create_sheet('Sheet', 0)  # type: ignore
         if self.rcp:
             STORECOL = {"1740":1,"1743":2,"2172":3,"2174":4,"2236":5,"2272":6,"2457":7,"2549":8,"2603":9,"2953":10,"3498":11,"4778":12}
         else:
@@ -69,6 +71,7 @@ def run(self, fran):
             store = textlist[0]
             store = store[82:90].strip()
             store = store[-4:]
+            self.append_text.emit(f"Target Inventory: Running store {store}")
             #store = int(store)
             date = textlist[2]
             date = date.strip()
@@ -120,15 +123,17 @@ def run(self, fran):
 
         ws.cell(row = 1, column = 1, value = date).alignment = Alignment(horizontal="center")
         ws.merge_cells("A1:L1")
+        end_time = perf_counter()
         if self.rcp:
             wb.save(self.outputfolder+"Inventory Target "+datetime.now().strftime("%m.%d.%y")+".xlsx")
         else:
             wb.save(self.outputfolder+"CCDInventory Target "+datetime.now().strftime("%m.%d.%y")+".xlsx")
-        self.ui.outputbox.append("Done!")
+        self.append_text.emit("Done!")
+        self.append_text.emit(f"Target Inventory: Completed in {round(end_time - start,2)} seconds")    
     except:
-        self.ui.outputbox.append("ENCOUNTERED ERROR")
-        self.ui.outputbox.append("Please send the contents of this box to Justin")
-        self.ui.outputbox.append(traceback.format_exc())
+        self.append_text.emit("ENCOUNTERED ERROR")
+        self.append_text.emit("Please send the contents of this box to Justin")
+        self.append_text.emit(traceback.format_exc())
 
 
 if __name__ == '__main__':

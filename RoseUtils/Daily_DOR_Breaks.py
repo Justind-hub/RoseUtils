@@ -4,15 +4,17 @@ import os #To search the folder
 from RoseUtils.rtf_reader import read_rtf as openrtf
 import sqlite3 #Save to database
 from xlsxwriter.workbook import Workbook #to export the database into an excel file
-
+from datetime import datetime
 import time #just for timing the script
 import traceback
-from time import sleep
+from time import sleep, perf_counter
 
-def run(self, zocdownload, databasefile, franchise):
+def run(self):
     try:
+        start = perf_counter()
         ####### Change the 3 variables below. Inlude double "\\"s, including 2 at the end of paths
-        self.ui.outputbox.setText("Running Breaks Report")
+        self.append_text.emit("Running Breaks Report")
+        
         sleep(.01)
         if self.rcp:
             CCD = False
@@ -32,7 +34,7 @@ def run(self, zocdownload, databasefile, franchise):
             databasefile = self.ccddatabase
         MAXSHIFTWA = 5.15
         MAXSHIFTOR = 6.15
-        ZOCDOWNLOAD_FOLDER = zocdownload   
+        ZOCDOWNLOAD_FOLDER = self.zocdownloadfolder   
         DATABASE_FILE = databasefile
         EXPORT_EXCEL_FILE = databasefile[:databasefile.rfind("/")]+"/Breaks.xlsx"
         WASHINGTON_STORES = ["2236","3498","2953"]
@@ -181,7 +183,8 @@ def run(self, zocdownload, databasefile, franchise):
             ##Store, Date and CSC. All simple
             store = dor[0][83:87]
             #print(f"Opening store #{store} from file {file}")
-            self.ui.outputbox.append(f"Opening store #{store} from file {file}")
+            self.append_text.emit(f"Breaks Report: Opening store #{store}")
+            
             sleep(.01)
             date = dor[3].strip()
             csc = f'{dor[findline("Void Unmade Orders",0)][126:].strip()}%'
@@ -189,7 +192,7 @@ def run(self, zocdownload, databasefile, franchise):
             void = dor[findline("Void",0)][30:38].strip()
             
             cashvar = dor[findline("Total Cash",0)][80:].strip()
-            if dor[findline("Total Cash",0)][73:78] == "Short": cashvar = -cashvar
+            if dor[findline("Total Cash",0)][73:78] == "Short": cashvar = -cashvar # type: ignore
 
             '''
             ordersumline = findline("Order Summary",0)
@@ -228,7 +231,7 @@ def run(self, zocdownload, databasefile, franchise):
                     dor.remove(line)
 
 
-                    
+
             ###Dayparts
             dayPartLine = findline("DayPart",0)
             lunch = dayPart(dayPartLine, "Lunch")
@@ -272,8 +275,8 @@ def run(self, zocdownload, databasefile, franchise):
 
             ### Find short and missing breaks 
             ################# DATABASE CALLs ARE IN THE "noBreak" and "shortBreak" FUNCTIONS
-            if driverline != 0: breakscount = breaks(drivers,False,breakscount)
-            if instoreline != 0: breakscount = breaks(instores,False,breakscount)
+            if driverline != 0: breakscount = breaks(drivers,False,breakscount) # type: ignore
+            if instoreline != 0: breakscount = breaks(instores,False,breakscount) # type: ignore
             if RCP: breakscount = breaks(managers,True,breakscount)
             if breakscount == 0:
                 cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks","None Missed!"))
@@ -342,9 +345,10 @@ def run(self, zocdownload, databasefile, franchise):
         con.close()
         end_time = time.perf_counter()
         #print(f"Completed {len(fileList)} stores in {end_time - start_time} seconds")
-        self.ui.outputbox.append(f"Completed {len(fileList)} stores in {end_time - start_time} seconds")
+        self.append_text.emit(f"Breaks Report: Completed {len(fileList)} stores in {round(end_time - start_time,2)} seconds")
         sleep(.01)
     except:
-        self.ui.outputbox.append("ENCOUNTERED ERROR")
-        self.ui.outputbox.append("Please send the contents of this box to Justin")
-        self.ui.outputbox.append(traceback.format_exc())
+        self.append_text.emit("ENCOUNTERED ERROR")
+        self.append_text.emit("Please send the contents of this box to Justin")
+        self.append_text.emit(traceback.format_exc())
+        pass

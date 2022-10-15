@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'lib/Main_UI_TEST.ui'
+# Form implementation generated from reading ui file 'lib/Main_UI.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.7
 #
@@ -16,7 +16,7 @@ class Ui_RoseUtils(object):
         RoseUtils.setObjectName("RoseUtils")
         RoseUtils.setWindowModality(QtCore.Qt.WindowModal)
         RoseUtils.setEnabled(True)
-        RoseUtils.resize(1036, 393)
+        RoseUtils.resize(1036, 403)
         font = QtGui.QFont()
         font.setPointSize(12)
         RoseUtils.setFont(font)
@@ -924,9 +924,6 @@ class Ui_RoseUtils(object):
         self.label_27 = QtWidgets.QLabel(self.tab_3)
         self.label_27.setGeometry(QtCore.QRect(150, 30, 291, 16))
         self.label_27.setObjectName("label_27")
-        self.label_28 = QtWidgets.QLabel(self.tab_3)
-        self.label_28.setGeometry(QtCore.QRect(100, 50, 451, 16))
-        self.label_28.setObjectName("label_28")
         self.tabWidget.addTab(self.tab_3, "")
         self.tab_4 = QtWidgets.QWidget()
         self.tab_4.setObjectName("tab_4")
@@ -1118,12 +1115,12 @@ class Ui_RoseUtils(object):
         self.menubar.addAction(self.menuRelease_Notes.menuAction())
 
         self.retranslateUi(RoseUtils)
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(RoseUtils)
 
     def retranslateUi(self, RoseUtils):
         _translate = QtCore.QCoreApplication.translate
-        RoseUtils.setWindowTitle(_translate("RoseUtils", "RoseUtils 2.0.1"))
+        RoseUtils.setWindowTitle(_translate("RoseUtils", "RoseUtils 2.1"))
         self.label_5.setText(_translate("RoseUtils", "Daily Reports:"))
         self.btn_targetrcp.setToolTip(_translate("RoseUtils", "Run the Inventory Variances Report"))
         self.btn_targetrcp.setText(_translate("RoseUtils", "Inv Variances"))
@@ -1235,7 +1232,6 @@ class Ui_RoseUtils(object):
         self.btn_timer_start.setText(_translate("RoseUtils", "Start"))
         self.label_26.setText(_translate("RoseUtils", "PUT TOGETHER VERY QUICKLY AND NOT TESTED THOROUGHLY"))
         self.label_27.setText(_translate("RoseUtils", "USE AT YOUR OWN RISK"))
-        self.label_28.setText(_translate("RoseUtils", "THIS WINDOW WILL FREEZE WHILE THE TIMER IS RUNNING"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("RoseUtils", "Timer"))
         self.pwd_lbl.setText(_translate("RoseUtils", "Unlock DM Mode:"))
         self.btn_clear_3.setToolTip(_translate("RoseUtils", "Clear Selection"))
@@ -1251,8 +1247,6 @@ class Ui_RoseUtils(object):
         self.label_3.setText(_translate("RoseUtils", "© Justin Druet 2022"))
         self.label_2.setToolTip(_translate("RoseUtils", "This took me an embarissingly long time to make...."))
         self.label.setText(_translate("RoseUtils", "Output:"))
-        self.outputbox.setToolTip(_translate("RoseUtils", "Output box.... for outputting things. \n"
-"Why are you mousing here? Stop it!"))
         self.menuRelease_Notes.setTitle(_translate("RoseUtils", "Release Notes"))
         self.actionOutput_Folder.setText(_translate("RoseUtils", "Report Output Folder"))
         self.actionZocDownload_Folder.setText(_translate("RoseUtils", "ZocDownload Folder"))

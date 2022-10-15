@@ -24,7 +24,7 @@ class Buttons():
         import pandas as pd
         from openpyxl import Workbook
         import numpy as np
-
+        PATH = ""
         
         costlist, check = QFileDialog.getOpenFileNames(None, "QFileDialog.getOpenFileName()",
                         self.downloadfolder,"Excel Files (*.xlsx)")
