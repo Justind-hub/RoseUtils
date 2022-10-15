@@ -82,5 +82,3 @@ def run(self, zocdownload, database, export):
         self.ui.outputbox.append("ENCOUNTERED ERROR")
         self.ui.outputbox.append("Please send the contents of this box to Justin")
         self.ui.outputbox.append(traceback.format_exc())
-if __name__ == '__main__':
-    run()

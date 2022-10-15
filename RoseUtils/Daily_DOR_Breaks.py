@@ -223,7 +223,12 @@ def run(self, zocdownload, databasefile, franchise):
                     if 'PAPA JOHNS PIZZA - RESTAURANT' in line: dor.remove(line)
                 except:
                     pass
+            for line in dor:
+                if "PAPA JOHNS PIZZA - RESTAURANT" in line:
+                    dor.remove(line)
 
+
+                    
             ###Dayparts
             dayPartLine = findline("DayPart",0)
             lunch = dayPart(dayPartLine, "Lunch")
