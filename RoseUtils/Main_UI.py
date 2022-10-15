@@ -1123,7 +1123,7 @@ class Ui_RoseUtils(object):
 
     def retranslateUi(self, RoseUtils):
         _translate = QtCore.QCoreApplication.translate
-        RoseUtils.setWindowTitle(_translate("RoseUtils", "RoseUtils 2.0"))
+        RoseUtils.setWindowTitle(_translate("RoseUtils", "RoseUtils 2.0.1"))
         self.label_5.setText(_translate("RoseUtils", "Daily Reports:"))
         self.btn_targetrcp.setToolTip(_translate("RoseUtils", "Run the Inventory Variances Report"))
         self.btn_targetrcp.setText(_translate("RoseUtils", "Inv Variances"))

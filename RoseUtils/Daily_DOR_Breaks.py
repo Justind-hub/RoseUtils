@@ -204,10 +204,10 @@ def run(self, zocdownload, databasefile, franchise):
 
 
             ###Delete Headers from DOR
-            header1 = dor[1]
-            header2 = dor[2]
-            header3 = dor[3]
-            header4 = dor[4]
+            header1 = dor[0]
+            header2 = dor[1]
+            header3 = dor[2]
+            header4 = dor[3]
             while header1 in dor:
                 dor.remove(header1)
             while header2 in dor:
@@ -219,6 +219,10 @@ def run(self, zocdownload, databasefile, franchise):
             for line in dor:
                 if len(line) == len(header1): dor.remove(line)
                 if len(line) == 0: dor.remove(line)
+                try: 
+                    if 'PAPA JOHNS PIZZA - RESTAURANT' in line: dor.remove(line)
+                except:
+                    pass
 
             ###Dayparts
             dayPartLine = findline("DayPart",0)
@@ -272,6 +276,11 @@ def run(self, zocdownload, databasefile, franchise):
             outtimes = []
             intimes = []
             for tm in managers: #loop through the managers, building 3 lists, names, in times, out times. Times are stored as X.XX hours
+                if "PAPA JOHNS PIZZA - RESTAURANT" in tm:
+                    managers.remove(tm)
+                    continue
+                if len(tm) < 10:
+                    continue
                 name = tm[8:30].strip()
                 name = name.split(' ')
                 name = name[0][0]+name[1][0]
