@@ -23,7 +23,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>RoseUtils 2.1</string>
+   <string>RoseUtils 2.2</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -79,223 +79,6 @@
         <string>Reports</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_5">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>Daily Reports:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QPushButton" name="btn_targetrcp">
-          <property name="minimumSize">
-           <size>
-            <width>15</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Run the Inventory Variances Report</string>
-          </property>
-          <property name="text">
-           <string>Inv Variances</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="btn_all3rcp">
-          <property name="minimumSize">
-           <size>
-            <width>15</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Run all 3 reports</string>
-          </property>
-          <property name="text">
-           <string>All 3 Reports</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QPushButton" name="btn_weekly_comprcp">
-          <property name="minimumSize">
-           <size>
-            <width>15</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="mouseTracking">
-           <bool>false</bool>
-          </property>
-          <property name="toolTip">
-           <string>Run the Daily Weekly Comps Report</string>
-          </property>
-          <property name="text">
-           <string>Weekly Comp</string>
-          </property>
-          <property name="checkable">
-           <bool>false</bool>
-          </property>
-          <property name="autoDefault">
-           <bool>false</bool>
-          </property>
-          <property name="default">
-           <bool>false</bool>
-          </property>
-          <property name="flat">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QPushButton" name="btn_breaksrcp">
-          <property name="minimumSize">
-           <size>
-            <width>15</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-           </font>
-          </property>
-          <property name="toolTip">
-           <string>Run the Daily Breaks Report</string>
-          </property>
-          <property name="whatsThis">
-           <string/>
-          </property>
-          <property name="text">
-           <string>Breaks Report</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="label_12">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>Misc:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="btn_new_hirercp">
-          <property name="minimumSize">
-           <size>
-            <width>15</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Run the New Hire Report</string>
-          </property>
-          <property name="text">
-           <string>NewHire Report</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QPushButton" name="btn_drivosity">
-          <property name="minimumSize">
-           <size>
-            <width>15</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Run the Daily Drivosity Report</string>
-          </property>
-          <property name="text">
-           <string>Drivosity Report</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QPushButton" name="btn_weekly_dor">
-          <property name="minimumSize">
-           <size>
-            <width>15</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Run the Weekly &quot;Breaks&quot; type report</string>
-          </property>
-          <property name="text">
-           <string>Wkly DOR CSC</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <widget class="QPushButton" name="btn_epp">
-          <property name="minimumSize">
-           <size>
-            <width>15</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Run the EPP Report</string>
-          </property>
-          <property name="text">
-           <string>EPP</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QPushButton" name="btn_DDD">
-          <property name="minimumSize">
-           <size>
-            <width>15</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Runs the DDD Dispatch Time report</string>
-          </property>
-          <property name="text">
-           <string>DDD Dispatch Time</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="2">
-         <widget class="QPushButton" name="btn_PA_Promo">
-          <property name="minimumSize">
-           <size>
-            <width>15</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Will Prompt you to open the report downloaded from PA</string>
-          </property>
-          <property name="text">
-           <string>PA Period Promo</string>
-          </property>
-         </widget>
-        </item>
         <item row="5" column="0">
          <widget class="QPushButton" name="btn_reexport">
           <property name="minimumSize">
@@ -355,6 +138,236 @@
             </widget>
            </item>
           </layout>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="btn_targetrcp">
+          <property name="minimumSize">
+           <size>
+            <width>15</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Run the Inventory Variances Report</string>
+          </property>
+          <property name="text">
+           <string>Inv Variances</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="btn_all3rcp">
+          <property name="minimumSize">
+           <size>
+            <width>15</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Run all 3 reports</string>
+          </property>
+          <property name="text">
+           <string>All 3 Reports</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_5">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Daily Reports:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QPushButton" name="btn_breaksrcp">
+          <property name="minimumSize">
+           <size>
+            <width>15</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Run the Daily Breaks Report</string>
+          </property>
+          <property name="whatsThis">
+           <string/>
+          </property>
+          <property name="text">
+           <string>Breaks Report</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QPushButton" name="btn_weekly_comprcp">
+          <property name="minimumSize">
+           <size>
+            <width>15</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="mouseTracking">
+           <bool>false</bool>
+          </property>
+          <property name="toolTip">
+           <string>Run the Daily Weekly Comps Report</string>
+          </property>
+          <property name="text">
+           <string>Weekly Comp</string>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
+          <property name="default">
+           <bool>false</bool>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_12">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Misc:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="btn_new_hirercp">
+          <property name="minimumSize">
+           <size>
+            <width>15</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Run the New Hire Report</string>
+          </property>
+          <property name="text">
+           <string>NewHire Report</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="btn_drivosity">
+          <property name="minimumSize">
+           <size>
+            <width>15</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Run the Daily Drivosity Report</string>
+          </property>
+          <property name="text">
+           <string>Drivosity Report</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QPushButton" name="btn_PA_Promo">
+          <property name="minimumSize">
+           <size>
+            <width>15</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Will Prompt you to open the report downloaded from PA</string>
+          </property>
+          <property name="text">
+           <string>PA Period Promo</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QPushButton" name="btn_weekly_dor">
+          <property name="minimumSize">
+           <size>
+            <width>15</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Run the Weekly &quot;Breaks&quot; type report</string>
+          </property>
+          <property name="text">
+           <string>Wkly DOR CSC</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QPushButton" name="btn_epp">
+          <property name="minimumSize">
+           <size>
+            <width>15</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Run the EPP Report</string>
+          </property>
+          <property name="text">
+           <string>EPP</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QPushButton" name="btn_DDD">
+          <property name="minimumSize">
+           <size>
+            <width>15</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Runs the DDD Dispatch Time report</string>
+          </property>
+          <property name="text">
+           <string>DDD Dispatch Time</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QPushButton" name="btn_last_week_variances">
+          <property name="minimumSize">
+           <size>
+            <width>15</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Last Weeks Variances</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -2815,7 +2828,14 @@
     <addaction name="actionBETA_V1_2"/>
     <addaction name="actionBETA_V1_1"/>
    </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="actionAbout_Me"/>
+   </widget>
    <addaction name="menuRelease_Notes"/>
+   <addaction name="menuAbout"/>
   </widget>
   <action name="actionOutput_Folder">
    <property name="text">
@@ -2923,6 +2943,11 @@
   <action name="actionVersion_2_0">
    <property name="text">
     <string>Version 2.0</string>
+   </property>
+  </action>
+  <action name="actionAbout_Me">
+   <property name="text">
+    <string>About Me</string>
    </property>
   </action>
  </widget>

@@ -1,3 +1,6 @@
+def aboutme(gui) -> None:
+    gui.ui.outputbox.setText('''Coming soon!''')
+
 def r12(gui,x):
     text = '''Release Version 1.2
     Added the Comments Functionality.

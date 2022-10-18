@@ -24,7 +24,7 @@ from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory
 from RoseUtils import Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
 from RoseUtils import Epp, Comments, Release, gm_Target_inv, gm_weeklycomp
 from RoseUtils import export_SQL,gm_on_hands, updater, costreport
-from RoseUtils import Schedule_reviewer, DDD_Dispatch_Times
+from RoseUtils import Schedule_reviewer, DDD_Dispatch_Times, Last_Weeks_Variances
 from RoseUtils.Buttons import Buttons #Buttons class init as "b"
 
 #Downloaded
@@ -80,6 +80,7 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.actionVersion_1_10.triggered.connect(lambda: Release.r110(self, True)) 
         self.ui.actionVersion_1_13.triggered.connect(lambda: Release.r113(self, True)) 
         self.ui.actionVersion_2_0.triggered.connect(lambda: Release.r20(self, True)) 
+        self.ui.actionAbout_Me.triggered.connect(lambda: Release.aboutme(self))
         
     def update(self):                                                          # Checks to see if update is available and downloads it
         log.debug("Update function called")
@@ -104,7 +105,6 @@ class RoseUtils(qtw.QMainWindow):
         self.set_text.connect(self.set_Text) # type: ignore
         self.append_text.connect(self.append_Text) # type: ignore
         
-
     def initvars(self):                                                        # Class Attributes and program settings initialized
         log.debug("initvars function called")
         
@@ -226,6 +226,7 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.btn_DDD.clicked.connect(lambda: threading.Thread(target=DDD_Dispatch_Times.run,args=(self,)).start()) 
         self.ui.radio_CCD.clicked.connect(lambda: self.setfran(False))
         self.ui.radio_RCP.clicked.connect(lambda: self.setfran(True))
+        self.ui.btn_last_week_variances.clicked.connect(lambda: threading.Thread(target=Last_Weeks_Variances.run,args=(self,)).start())
         
 
         # GM tab buttons
@@ -263,8 +264,6 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.btn_clear_3.clicked.connect(self.costreportclear)
         self.ui.btn_runcostreport.clicked.connect(lambda: costreport.run(self))
     
-
-
     def setfran(self, x):
         self.rcp = x
     
