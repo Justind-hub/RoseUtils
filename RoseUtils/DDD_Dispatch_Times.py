@@ -95,7 +95,7 @@ def run(self):
         os.startfile(os.path.join(self.outputfolder,"DDD_Dispatch_Times.csv"))
         #pd.pivot_table(data=odf,index=['store'], columns=['week'], values='difference',
             #aggfunc=['mean','median','count']).stack(level=0).unstack(level=0).stack().to_csv(self.outputfolder+"Entire_Report.csv")
-        os.startfile(self.outputfolder+"Entire_Report.csv")
+        #os.startfile(self.outputfolder+"Entire_Report.csv")
 
     except:
         self.ui.outputbox.append("ENCOUNTERED ERROR")
