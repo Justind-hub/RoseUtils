@@ -16,8 +16,6 @@ from PyQt5 import QtCore as qtc
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import  QMessageBox, QFileDialog # Change to * if you get an error
 
-
-
 # RoseUtils package functions
 from RoseUtils.Main_UI import Ui_RoseUtils
 from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory
