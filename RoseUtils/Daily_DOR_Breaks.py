@@ -17,23 +17,23 @@ def run(self):
         
         sleep(.01)
         if self.rcp:
+            MAXSHIFTWA = 5.15
+            MAXSHIFTOR = 6.15
             CCD = False
             RCP = True
             GM_NAMES = ("Mel",'tyler','kim','kristina','cara','nicole','jordan','sean',
                         'forrest','yerey','dan','jordan P','kim','maranda')
             GM_ID_LIST = ("10131868","10039186","10039195","10039300","10039462","10039205","10039288",
-                        "10039248","10006085","10039389","10039191","10124254","10039195","10002623")
+                          "10039248","10006085","10039389","10039191","10124254","10039195","10002623")
             databasefile = self.rcpdatabase
         else:
             CCD = True
             RCP = False
-            MAXSHIFTWA = 5.15
-            MAXSHIFTOR = 5.15
+            MAXSHIFTWA = 4.1
+            MAXSHIFTOR = 4.1
             GM_ID_LIST = ("10165861","10039358","10162686","10162376","10177223","10161583","10165345","10039345",
-                        "10162343","10039243","10039305","10039312","10161595","10171661","10173335")
+                          "10162343","10039243","10039305","10039312","10161595","10171661","10173335")
             databasefile = self.ccddatabase
-        MAXSHIFTWA = 5.15
-        MAXSHIFTOR = 6.15
         ZOCDOWNLOAD_FOLDER = self.zocdownloadfolder   
         DATABASE_FILE = databasefile
         EXPORT_EXCEL_FILE = databasefile[:databasefile.rfind("/")]+"/Breaks.xlsx"
