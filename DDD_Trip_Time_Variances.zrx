@@ -1,0 +1,138 @@
+/* REXX (RECORDED BY ZOC V8.04.4 10/11/2022 6:30:47 PM) */
+
+START = "10102022"
+END = "10162022"
+
+CALL ZocTimeout 60
+CALL ZocWaitForSeq "on"
+
+CALL ZocSend "^[[B"
+
+CALL ZocWait "]^[[5;24H"
+CALL ZocSend "^M"
+
+CALL ZocWait "]^[[3;11H"
+CALL ZocSend "^[[A"
+
+CALL ZocWait "6)^[[17;11H"
+CALL ZocSend "^[[A"
+
+CALL ZocWait "6)^[[15;11H"
+CALL ZocSend "^M"
+
+CALL ZocWait ";1H^[[5;39H"
+CALL ZocSend "^[[[B"
+
+CALL ZocWait ";1H^[[7;39H"
+CALL ZocSend "^[[B"
+
+CALL ZocWait "39H^[[8;39H"
+CALL ZocSend "^M"
+
+CALL ZocWait ";1H^[[7;39H"
+CALL ZocSend "^[[[B"
+
+CALL ZocWait "1H^[[19;39H"
+CALL ZocSend "^[[A"
+
+CALL ZocWait "9H^[[18;39H"
+CALL ZocSend "^M"
+
+CALL ZocWait ";1H^[[9;39H"
+CALL ZocSend "^[[[B"
+
+CALL ZocWait "1H^[[11;39H"
+CALL ZocSend "^M"
+
+CALL ZocWait "1H^[[11;39H"
+CALL ZocSend START
+
+CALL ZocWait "2^[[11;48H"
+CALL ZocSend "^M"
+
+CALL ZocWait "1H^[[13;39H"
+CALL ZocSend END
+
+CALL ZocWait "22^[[13;48H"
+CALL ZocSend "^M"
+
+CALL ZocWait "1H^[[15;39H"
+CALL ZocSend "^[[[B"
+
+CALL ZocWait "1H^[[11;39H"
+CALL ZocSend "^M"
+
+CALL ZocWait "1H^[[17;39H"
+CALL ZocSend "^[[[B"
+
+CALL ZocWait "1H^[[15;39H"
+CALL ZocSend "^M"
+
+CALL ZocWait ";1H^[[5;39H"
+CALL ZocSend "^[[21~"
+
+CALL ZocWait ";1H^[[5;39H"
+CALL ZocSend "^[[24~"
+
+CALL ZocWait "^[[15;11H"
+CALL ZocSend "^[[A"
+
+CALL ZocWait "6)^[[13;11H"
+CALL ZocSend "^[[A^[[A"
+
+CALL ZocWait "6)^[[11;11H"
+CALL ZocSend "^[[A"
+
+CALL ZocWait "V6)^[[9;11H"
+CALL ZocSend "^[[A"
+
+CALL ZocWait "]^[[5;11H"
+CALL ZocSend "^[[A"
+
+CALL ZocWait "]^[[3;11H"
+CALL ZocSend "^M"
+
+CALL ZocWait "V6)^[[3;24H"
+CALL ZocSend "^[[B^[[B"
+
+CALL ZocWait "V6)^[[7;24H"
+CALL ZocSend "^M"
+
+CALL ZocWait "ist^[[4;21H"
+CALL ZocSend "^[[[B"
+
+CALL ZocWait ";1H^[[6;21H"
+CALL ZocSend "^[[B"
+
+CALL ZocWait "21H^[[7;21H"
+CALL ZocSend "^M"
+
+CALL ZocWait "ist^[[6;21H"
+CALL ZocSend "^[[B"
+
+CALL ZocWait "^[[8;21H"
+CALL ZocSend "^[[B"
+
+CALL ZocWait "st^[[10;21H"
+CALL ZocSend "^[[[B"
+
+CALL ZocWait "1H^[[16;21H"
+CALL ZocSend "^[[B"
+
+CALL ZocWait "1H^[[17;21H"
+CALL ZocSend "^[[B"
+
+CALL ZocWait "1H^[[12;21H"
+CALL ZocSend "^M"
+
+CALL ZocWait "t.^[[12;21H"
+CALL ZocSend START
+
+CALL ZocWait "22^[[12;30H"
+CALL ZocSend "^M"
+
+CALL ZocWait "t.^[[14;21H"
+CALL ZocSend END
+
+CALL ZocWait "22^[[14;30H"
+CALL ZocSend "^[[21~"
