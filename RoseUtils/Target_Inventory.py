@@ -50,7 +50,7 @@ def run(self):
             i = 10
             while i < len(textlist):
                 if left(textlist[i],10) == headerstart:
-                    del textlist[i-2:i+4]
+                    del textlist[i-2:i+3]
                     i += 4
                 else:
                     i += 1
