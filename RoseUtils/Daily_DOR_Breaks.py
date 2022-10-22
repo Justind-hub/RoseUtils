@@ -34,6 +34,12 @@ def run(self):
             GM_ID_LIST = ("10165861","10039358","10162686","10162376","10177223","10161583","10165345","10039345",
                           "10162343","10039243","10039305","10039312","10161595","10171661","10173335")
             databasefile = self.ccddatabase
+        CCDMINORS = ['10218343', '10180958', '10220538', '10190883', '10229576', 
+                     '10218511', '10184965', '10220775', '10220694', '10208525', 
+                     '10217298', '10182782', '10231447', '10202405', '10217795', 
+                     '10217507', '10177406', '10223898', '10213678', '10221878', 
+                     '10177606', '10233457', '10233456', '10131294', '10230110', 
+                     '10207907']
         ZOCDOWNLOAD_FOLDER = self.zocdownloadfolder   
         DATABASE_FILE = databasefile
         EXPORT_EXCEL_FILE = databasefile[:databasefile.rfind("/")]+"/Breaks.xlsx"
@@ -152,16 +158,17 @@ def run(self):
             while i <len(list):
                 if list[i][0:8] in GM_ID_LIST: pass #skip if it's a GM
                 else:
-                    if float(list[i][58:66].strip()) > max: ##Check for missed breaks
-                        if i < len(list)-1:  
-                            if list[i][0:7] == list[i+1][0:7]:
-                                i+=1
-                                continue
-                        if i > 0:
-                            if list[i][0:7] == list[i-1][0:7]:
+                    if RCP or list[i][0:8] in CCDMINORS:
+                        if float(list[i][58:66].strip()) > max: ##Check for missed breaks
+                            if i < len(list)-1:  
+                                if list[i][0:7] == list[i+1][0:7]:
                                     i+=1
-                                    continue 
-                        breakscount = noBreak(list[i], breakscount)
+                                    continue
+                            if i > 0:
+                                if list[i][0:7] == list[i-1][0:7]:
+                                        i+=1
+                                        continue 
+                            breakscount = noBreak(list[i], breakscount)
                     if i < len(list)-1: #Check for short breaks
                         if list[i][0:8] == list[i+1][0:8]:
                             clockout = truetime(list[i][49:56])
