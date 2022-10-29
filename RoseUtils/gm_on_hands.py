@@ -1,10 +1,9 @@
-import string
 from striprtf.striprtf import rtf_to_text
 from openpyxl import Workbook
-import os
+from os import startfile, remove
 import traceback
 
-def run(self: object,file: string) -> None:
+def run(self,file) -> None:
     try:
         def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
                             #Will return a list of strings for each line of the file
@@ -24,10 +23,10 @@ def run(self: object,file: string) -> None:
         EXCLUDELIST = [1163,1075,1077,1080,1082,1086,1095,1098,1099,1040,1049,1056,1063,1065,1066,1167,1198,1313,1406,1407,1501,1505]
 
         wb = Workbook()
-        ws = wb.create_sheet("Export",index = 0)
+        ws = wb.create_sheet("Export",index = 0) # type: ignore
         textlist = openrtf(file)
         if self.check_delete:
-            os.remove(file)
+            remove(file)
         textlist = [row for row in textlist if len(row) == 83]
         topop = str(textlist[0])
         while topop in textlist:
@@ -46,17 +45,17 @@ def run(self: object,file: string) -> None:
         for i, num in enumerate(ITEMNUMLIST):
             index = itemnums.index(num)
 
-            ws.cell(row = i+1, column = 1, value = num)
-            ws.cell(row = i+1, column = 2, value = items[index])
+            ws.cell(row = i+1, column = 1, value = num) # type: ignore
+            ws.cell(row = i+1, column = 2, value = items[index]) # type: ignore
             if num not in EXCLUDELIST:
-                ws.cell(row = i+1, column = 3, value = onhands[index])
+                ws.cell(row = i+1, column = 3, value = onhands[index]) # type: ignore
         if self.gm_filename_checked:
             wb.save(self.outputfolder+self.ui.gm_filename.text()+".xlsx")
             self.ui.outputbox.setText("On Hand Report ran successfully, saved to "+self.outputfolder+self.ui.gm_filename.text()+".xlsx")
-            os.startfile(self.outputfolder+self.ui.gm_filename.text()+".xlsx")
+            startfile(self.outputfolder+self.ui.gm_filename.text()+".xlsx")
         else:
             wb.save(self.outputfolder+"On Hands.xlsx")
-            os.startfile(self.outputfolder+"On Hands.xlsx")
+            startfile(self.outputfolder+"On Hands.xlsx")
             self.ui.outputbox.setText("On Hand Report Successful, opening output file now")
     except:
         self.ui.outputbox.append("ENCOUNTERED ERROR")
@@ -65,5 +64,3 @@ def run(self: object,file: string) -> None:
 
 
 
-if __name__ == '__main__':
-    run("C:\\ZocDownload\\INVVAL_4.rtf")

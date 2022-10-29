@@ -3,10 +3,16 @@ from RoseUtils.Main_UI import Ui_RoseUtils
 from PyQt5 import QtWidgets as qtw
 from PyQt5 import QtCore as qtc
 from PyQt5 import QtGui
+
+#PyQt
+from PyQt5.QtWidgets import QMainWindow, QLineEdit, QFileDialog, QApplication
+from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import  QMessageBox, QFileDialog # Change to * if you get an error
+
 from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory
 from RoseUtils import Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
-from RoseUtils import Epp, Comments, Release, gm_Target_inv, gm_weeklycomp
+from RoseUtils import Epp, Release, gm_Target_inv, gm_weeklycomp
 from RoseUtils import export_SQL,gm_on_hands, updater, costreport
 import winsound
 import time
@@ -20,7 +26,7 @@ import logging
 
 
 class Buttons():
-    def pa_promo(_, self):
+    def pa_promo(_, self): # type: ignore
         import pandas as pd
         from openpyxl import Workbook
         import numpy as np
@@ -33,7 +39,7 @@ class Buttons():
                 PATH = costlist[0]
             else:
                 self.popup("Select exactly 1 report1",
-                              QMessageBox.Warning,"Error")
+                              QMessageBox.Warning,"Error")  # type: ignore
                 return
 
 

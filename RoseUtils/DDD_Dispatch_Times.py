@@ -1,4 +1,5 @@
-import os
+from os import remove, startfile, listdir
+from os.path import join
 import pandas as pd
 from datetime import datetime
 from datetime import date as Date
@@ -47,14 +48,14 @@ def run(self):
         odf = pd.DataFrame(columns=['store','date','order','time_in'])
         edf = pd.DataFrame(columns=['store','date','order','time_dispatch'])
         start = datetime.now()
-        for file in os.listdir(path):
-            if "ORD" in file: odlist.append(os.path.join(path,file))
-            elif "SEC" in file: elist.append(os.path.join(path,file))
+        for file in listdir(path):
+            if "ORD" in file: odlist.append(join(path,file))
+            elif "SEC" in file: elist.append(join(path,file))
 
         i = 1
         for file in odlist:
             detail = read_rtf(file)
-            if self.check_delete: os.remove(file)
+            if self.check_delete: remove(file)
             date = ""
             store = detail[0][83:87]       
             
@@ -71,7 +72,7 @@ def run(self):
         i = 1
         for file in elist:
             ex = read_rtf(file)
-            if self.check_delete: os.remove(file)
+            if self.check_delete: remove(file)
             store = ex[0][83:87]
 
             date = ""
@@ -91,8 +92,8 @@ def run(self):
 
         self.ui.outputbox.append(f"Done! finished in {datetime.now() - start}")
         self.ui.outputbox.append(f"Opening file {self.outputfolder}DDD_Dispatch_Times.csv ")
-        odf.to_csv(os.path.join(self.outputfolder,"DDD_Dispatch_Times.csv"),index=False)
-        os.startfile(os.path.join(self.outputfolder,"DDD_Dispatch_Times.csv"))
+        odf.to_csv(join(self.outputfolder,"DDD_Dispatch_Times.csv"),index=False)
+        startfile(join(self.outputfolder,"DDD_Dispatch_Times.csv"))
         #pd.pivot_table(data=odf,index=['store'], columns=['week'], values='difference',
             #aggfunc=['mean','median','count']).stack(level=0).unstack(level=0).stack().to_csv(self.outputfolder+"Entire_Report.csv")
         #os.startfile(self.outputfolder+"Entire_Report.csv")

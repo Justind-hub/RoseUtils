@@ -1,12 +1,13 @@
 from striprtf.striprtf import rtf_to_text
 from openpyxl import Workbook
-import os
+
+from os import startfile, remove
 import traceback
 
 
 
 
-def run(self, file: str) -> None:
+def run(self, file) -> None:
     try:
 
 
@@ -29,10 +30,10 @@ def run(self, file: str) -> None:
 
 
         wb = Workbook()
-        ws = wb.create_sheet("Export",index = 0)
+        ws = wb.create_sheet("Export",index = 0) # type: ignore
         textlist = openrtf(file)
         if self.check_delete:
-            os.remove(file)
+            remove(file)
         textlist = [row for row in textlist if len(row) == 136]
         textlist.pop(0)
         textlist.pop(0)
@@ -47,21 +48,18 @@ def run(self, file: str) -> None:
 
         for i, num in enumerate(ITEMNUMLIST):
             index = itemnums.index(num)
-            ws.cell(row = i+1, column = 1, value = num)
-            ws.cell(row = i+1, column = 2, value = items[index])
-            ws.cell(row = i+1, column = 3, value = yields[index])
+            ws.cell(row = i+1, column = 1, value = num) # type: ignore
+            ws.cell(row = i+1, column = 2, value = items[index]) # type: ignore
+            ws.cell(row = i+1, column = 3, value = yields[index]) # type: ignore
         if self.gm_filename_checked:
             wb.save(self.outputfolder+self.ui.gm_filename.text()+".xlsx")
             self.ui.outputbox.setText("Yields Report ran successfully, saved to "+self.outputfolder+self.ui.gm_filename.text()+".xlsx")
-            os.startfile(self.outputfolder+self.ui.gm_filename.text()+".xlsx")
+            startfile(self.outputfolder+self.ui.gm_filename.text()+".xlsx")
         else:
             wb.save(self.outputfolder+"yields.xlsx")
-            os.startfile(self.outputfolder+"yields.xlsx")
+            startfile(self.outputfolder+"yields.xlsx")
             self.ui.outputbox.setText("Yields report Successful, opening output file now")
     except:
         self.ui.outputbox.append("ENCOUNTERED ERROR")
         self.ui.outputbox.append("Please send the contents of this box to Justin")
         self.ui.outputbox.append(traceback.format_exc())
-if __name__ == '__main__':
-    run("C:\\ZocDownload\\INVTAR.rtf")
-

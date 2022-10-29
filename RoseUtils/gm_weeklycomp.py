@@ -1,10 +1,12 @@
+# type: ignore
 from logging import exception
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, Border, Side, PatternFill, Color
-import os
+
+from os import remove, startfile, listdir
 import traceback
 from striprtf.striprtf import rtf_to_text
-import math
+
 
 def openrtf(self, file: str) -> list[str]: #Call this to open an rtf file with the filepath in the thing.
                     #Will return a list of strings for each line of the file
@@ -12,7 +14,7 @@ def openrtf(self, file: str) -> list[str]: #Call this to open an rtf file with t
         text = file2.read()
     text = rtf_to_text(text)
     if self.check_delete:
-        os.remove(file)
+        remove(file)
     textlist = text.splitlines()
     return textlist #returns a list containing entire RTF file
 
@@ -207,10 +209,10 @@ def run(self, filelist):
         if self.gm_filename_checked:
             wb.save(self.outputfolder+self.ui.gm_filename.text()+".xlsx")
             self.ui.outputbox.setText("History Report ran successfully, saved to "+self.outputfolder+self.ui.gm_filename.text()+".xlsx")
-            os.startfile(self.outputfolder+self.ui.gm_filename.text()+".xlsx")
+            startfile(self.outputfolder+self.ui.gm_filename.text()+".xlsx")
         else:
             wb.save(self.outputfolder+"Schedule History.xlsx")
-            os.startfile(self.outputfolder+"Schedule History.xlsx")
+            startfile(self.outputfolder+"Schedule History.xlsx")
             self.ui.outputbox.setText("History Report ran successfully, opening output file now")
     except:
         self.ui.outputbox.append("ENCOUNTERED ERROR")
@@ -221,7 +223,7 @@ def run(self, filelist):
 
 if __name__ == '__main__':
     filelist = []
-    for file in os.listdir("c:/zocdownload/"):
+    for file in listdir("c:/zocdownload/"):
         if file.startswith("DSHWKC"):
             filelist.append(file)
     filelist = ["c:/zocdownload/"+file for file in filelist]

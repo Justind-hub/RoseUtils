@@ -1,5 +1,5 @@
 
-import os #To search the folder
+from os import listdir, remove
 #from striprtf.striprtf import rtf_to_text
 from RoseUtils.rtf_reader import read_rtf as openrtf
 import sqlite3 #Save to database
@@ -64,7 +64,7 @@ def run(self):
             )
         ''')
 
-
+        #### OLD CODE BELOW
         '''def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
                             #Will return a list of strings for each line of the file
             with open(file, 'r', errors="ignore") as file:
@@ -72,17 +72,19 @@ def run(self):
             text = rtf_to_text(text)
             textlist = text.splitlines()
             return textlist #returns a list containing entire RTF file'''
+        ####### END OLD CODE
 
-        def truetime(time): 
+        def truetime(time:str) ->float: 
             '''Pass in a string 12:30pm -> 12.50'''
             h = float(time[0:2])
             m = float(time[3:5])
             if time[5:7] == "pm": h +=12
             if h == 12: h = 0
             m = (m/60)
+            if h+m > 24: h -=12
             return h+m
-
-        def ampm(time):
+        
+        def ampm(time:float) ->str:
             '''Pass in time in decimals of hours 12.50 -> 12:30pm'''
             if time > 24: time = time - 24
             if time > 12:
@@ -98,7 +100,7 @@ def run(self):
 
 
 
-        def findline(text,start): #Returns the number of the first line containing the text supplied
+        def findline(text:str,start:int) -> int: #Returns the number of the first line containing the text supplied
             i = start
             while i < len(dor):
                 if dor[i].find(text) == -1:
@@ -107,9 +109,9 @@ def run(self):
                     return i
             return 0
 
-        def dayPart(dayPartLine, part): #Returns the OTD and CSC concatenated for the daypart
+        def dayPart(dayPartLine:int, part:str) ->str: #Returns the OTD and CSC concatenated for the daypart
             if (findline(part,dayPartLine) - dayPartLine) > 20:
-                return
+                return ""
             OTD = dor[findline(part,dayPartLine)][53:58].strip()
             CSC = str(int(round(float(dor[findline(part,dayPartLine)][122:128].strip()),0)))
             return f"{OTD} {CSC}%"
@@ -120,7 +122,7 @@ def run(self):
             else:
                 return dor[findline(agg,0)][76:83].strip()
 
-        def noBreak(emp, breakscount): #Database entry for no break
+        def noBreak(emp:str, breakscount:int)->int: #Database entry for no break
             fname = emp[9:35].strip().split(" ")[0]
             lname = emp[9:35].strip().split(" ")[1][0]
             nobreak = f"{fname} {lname} NB"
@@ -133,7 +135,7 @@ def run(self):
                 breakscount +=1
             return breakscount
 
-        def shortBreak(emp): #Database entry for short break
+        def shortBreak(emp:str)->None: #Database entry for short break
             fname = emp[9:35].strip().split(" ")[0]
             lname = emp[9:35].strip().split(" ")[1][0]
             nobreak = f"{fname} {lname} SB"
@@ -143,7 +145,7 @@ def run(self):
                 cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks",nobreak))
             return
 
-        def breaks(list,skip,breakscount): ###Searches for missed and short breaks
+        def breaks(list:list,skip:bool,breakscount:int)->int: ###Searches for missed and short breaks
             i=0
 
             if store in WASHINGTON_STORES:
@@ -171,6 +173,7 @@ def run(self):
                             breakscount = noBreak(list[i], breakscount)
                     if i < len(list)-1: #Check for short breaks
                         if list[i][0:8] == list[i+1][0:8]:
+                            name = list[i][9:35]
                             clockout = truetime(list[i][49:56])
                             clockin = truetime(list[i+1][41:48])
                             if clockin - clockout < 0.5: shortBreak(list[i])
@@ -182,7 +185,7 @@ def run(self):
 
 
 
-        fileList = [file for file in os.listdir(ZOCDOWNLOAD_FOLDER) if file.startswith("ODMDOR")] #create list of files to loop through -> filelist
+        fileList = [file for file in listdir(ZOCDOWNLOAD_FOLDER) if file.startswith("ODMDOR")] #create list of files to loop through -> filelist
         for file in fileList:
             file = ZOCDOWNLOAD_FOLDER + file
             dor = openrtf(file)
@@ -330,7 +333,7 @@ def run(self):
 
             cursor.executemany("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", database)
             if self.check_delete:
-                os.remove(file)
+                remove(file)
 
             
         con.commit()

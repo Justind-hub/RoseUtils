@@ -1,3 +1,4 @@
+# type: ignore
 import os
 from openpyxl import Workbook
 from openpyxl.styles import Alignment

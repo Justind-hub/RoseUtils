@@ -1,9 +1,9 @@
 from striprtf.striprtf import rtf_to_text
 from openpyxl import Workbook
 from datetime import datetime
-from os import startfile
+from os import startfile, remove
 import traceback
-import os
+
 
 def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
                         #Will return a list of strings for each line of the file
@@ -17,7 +17,7 @@ def run(self):
     try:
         textlist = openrtf(self.cost_report_list[0])
         if self.check_delete:
-            os.remove(self.cost_report_list[0])
+            remove(self.cost_report_list[0])
         date1 = textlist[3].strip()
         textlist = [line for line in textlist if len(line) == 119]
 
@@ -34,7 +34,7 @@ def run(self):
 
         textlist = openrtf(self.cost_report_list[1])
         if self.check_delete:
-            os.remove(self.cost_report_list[1])
+            remove(self.cost_report_list[1])
         date2 = textlist[3].strip()
         textlist = [line for line in textlist if len(line) == 119]
 
@@ -76,11 +76,11 @@ def run(self):
             except:
                 pass
             ws.cell(row=i+2,column=6,value=round(float(used1[i]) * float(cost1[i]),2))
-            ws.cell(row=i+2,column=7,value=round(float(used1[i]) * float(costa2),2))
+            ws.cell(row=i+2,column=7,value=round(float(used1[i]) * float(costa2),2)) # type: ignore
             if ws.cell(row=i+2,column=6).value == 0 or ws.cell(row=i+2,column=7).value == 0:
                 pass
             else:
-                ws.cell(row=i+2,column=8,value =round((float(used1[i]) * float(costa2)) - (float(used1[i]) * float(cost1[i])),2))
+                ws.cell(row=i+2,column=8,value =round((float(used1[i]) * float(costa2)) - (float(used1[i]) * float(cost1[i])),2)) # type: ignore
 
         ws.cell(column=10,row=2,value="Date Range 1:")
         ws.cell(column=10,row=3,value="Date Range 2:")

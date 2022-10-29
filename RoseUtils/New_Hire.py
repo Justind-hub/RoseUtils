@@ -1,4 +1,4 @@
-import os #To search the folder
+from os import remove, listdir
 from striprtf.striprtf import rtf_to_text #RTF Reader
 import sqlite3 #Save to database
 from xlsxwriter.workbook import Workbook #to export the database into an excel file
@@ -41,7 +41,7 @@ def run(self, zocdownload, database, export):
             text = rtf_to_text(text)
             textlist = text.splitlines()
             if self.check_delete:
-                os.remove(file)
+                remove(file)
             return textlist #returns a list containing entire RTF file
 
 
@@ -54,7 +54,7 @@ def run(self, zocdownload, database, export):
                     return i
             return 0
 
-        fileList = [file for file in os.listdir(ZOCDOWNLOAD_FOLDER) if file.startswith(FILENAME)] #create list of files to loop through -> filelist
+        fileList = [file for file in listdir(ZOCDOWNLOAD_FOLDER) if file.startswith(FILENAME)] #create list of files to loop through -> filelist
         for file in fileList:
             file = openrtf(ZOCDOWNLOAD_FOLDER + file)
             if file[6] == 'No records found': continue

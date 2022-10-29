@@ -131,7 +131,7 @@ def run(self):
         writer = pd.ExcelWriter(self.outputfolder+'Schedule_By_Hour.xlsx')                                      # Export Excel file
         pd.DataFrame(drivernp).to_excel(writer,sheet_name="Drivers", engine='xlsxwriter',index=False)
         pd.DataFrame(instorenp).to_excel(writer,sheet_name="Instores", engine='xlsxwriter',index=False)
-        writer.save()
+        writer.save()  # type: ignore
         
         self.ui.outputbox.append(f"Completed")
     except:

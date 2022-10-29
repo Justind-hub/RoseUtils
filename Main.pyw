@@ -2,32 +2,31 @@ from datetime import datetime
 start = datetime.now()
 
 # Globals
-import os
+from os import remove, mkdir, startfile
 from os.path import exists
 from subprocess import Popen, PIPE
 import logging
-import winsound
-import time
+from winsound import Beep
+from time import sleep
 import threading
 
 #PyQt
-from PyQt5 import QtWidgets as qtw
-from PyQt5 import QtCore as qtc
-from PyQt5 import QtGui
+from PyQt5.QtWidgets import QMainWindow, QLineEdit, QFileDialog, QApplication
+from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import  QMessageBox, QFileDialog # Change to * if you get an error
 
 # RoseUtils package functions
 from RoseUtils.Main_UI import Ui_RoseUtils
 from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory
 from RoseUtils import Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
-from RoseUtils import Epp, Comments, Release, gm_Target_inv, gm_weeklycomp
+from RoseUtils import Epp, Release, gm_Target_inv, gm_weeklycomp
 from RoseUtils import export_SQL,gm_on_hands, updater, costreport
 from RoseUtils import Schedule_reviewer, DDD_Dispatch_Times, Last_Weeks_Variances
 from RoseUtils.Buttons import Buttons #Buttons class init as "b"
 
 #Downloaded
-import PyPDF2
-from PyPDF2 import PdfFileReader, PdfFileWriter
+from PyPDF2 import PdfFileReader, PdfFileWriter, PdfFileMerger
 
 log = logging.getLogger("Justin")
 logging.basicConfig(level=logging.INFO, 
@@ -36,9 +35,9 @@ logging.basicConfig(level=logging.INFO,
 log.debug("Finished imports")
 
 
-class RoseUtils(qtw.QMainWindow):
-    set_text = qtc.pyqtSignal(str)
-    append_text = qtc.pyqtSignal(str)
+class RoseUtils(QMainWindow):
+    set_text = pyqtSignal(str)
+    append_text = pyqtSignal(str)
     def __init__(self, *args, **kwargs):                                       # __init__ - calls all other methods
         super().__init__(*args, **kwargs)
         self.b = Buttons()
@@ -91,11 +90,11 @@ class RoseUtils(qtw.QMainWindow):
             self.close()
         log.debug("Update function ran")
 
-    @qtc.pyqtSlot(str)
+    @pyqtSlot(str)
     def set_Text(self, value):
         self.ui.outputbox.setText(value)
 
-    @qtc.pyqtSlot(str)
+    @pyqtSlot(str)
     def append_Text(self, value):
         self.ui.outputbox.append(value)
 
@@ -113,7 +112,7 @@ class RoseUtils(qtw.QMainWindow):
         cost_report_list = []
         self.gm_filename_checked = False
         if not exists("Settings\\"):
-            os.mkdir("Settings")
+            mkdir("Settings")
             self.popup("Please set your folders and files on the Configuration tab",
                         QMessageBox.Information,"First time set-up")# type: ignore
             self.ui.tabWidget.setCurrentIndex(1)
@@ -183,8 +182,8 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.gm_yields_label.show()
         self.ui.gm_onhand_label.show()
 
-        self.ui.pwd_box.setEchoMode(qtw.QLineEdit.Password)# type: ignore
-        self.setWindowIcon(QtGui.QIcon("lib/Logo.ico"))
+        self.ui.pwd_box.setEchoMode(QLineEdit.Password)# type: ignore
+        self.setWindowIcon(QIcon("lib/Logo.ico"))
 
         log.debug("initui function ran")
 
@@ -296,7 +295,7 @@ class RoseUtils(qtw.QMainWindow):
         timer_freq = int(self.ui.timer_freq.text())
         timer_length = float(self.ui.timer_length.text()) * 1000
         
-        winsound.Beep(timer_freq,int(timer_length))
+        Beep(timer_freq,int(timer_length))
         
     def timer_start(self):                                                     # Starts the timer
         self.timerthread = threading.Thread(target=self.timer_start_thread)
@@ -318,8 +317,8 @@ class RoseUtils(qtw.QMainWindow):
         for i in range(timer_num):
             if not self.timer:
                 return
-            winsound.Beep(timer_freq,int(timer_length))
-            time.sleep(timer_wait)
+            Beep(timer_freq,int(timer_length))
+            sleep(timer_wait)
 
     def pdfboxchanged(self, i):                                                # Updates the 'enabled' of the up/down/remove buttons
         if i == 0:
@@ -358,20 +357,20 @@ class RoseUtils(qtw.QMainWindow):
         
     def pdf_combine(self):                                                     # Merges PDFs
         pdflist = [self.ui.pdf_listbox.item(i).text() for i in range(self.ui.pdf_listbox.count())]
-        merger = PyPDF2.PdfFileMerger()
+        merger = PdfFileMerger()
         for file in pdflist:
             merger.append(file)
         merger.write(self.outputfolder + self.ui.pdf_name.text() + ".pdf")
         self.ui.outputbox.setText(f"Combined file saved as {self.outputfolder}{self.ui.pdf_name.text()}.pdf")
         self.ui.outputbox.append("Opening file now....")
-        os.startfile(self.outputfolder + self.ui.pdf_name.text() + ".pdf")
+        startfile(self.outputfolder + self.ui.pdf_name.text() + ".pdf")
         
     def debug(self,state):                                                     # Enables or disables debug mode
         log.debug("debug function called")
-        if state == qtc.Qt.Checked: # type: ignore
+        if state == Qt.Checked: # type: ignore
             log.setLevel(logging.DEBUG)
             log.debug("debug mode turned on")
-        if state != qtc.Qt.Checked: # type: ignore
+        if state != Qt.Checked: # type: ignore
             log.debug("debug mode turned off")
             log.setLevel(logging.INFO)
         log.debug("Debug mode turned on")
@@ -385,7 +384,7 @@ class RoseUtils(qtw.QMainWindow):
             self.ui.checkbox_GM.setEnabled(True)
  
     def gm_filename(self, state):                                              # runs the logic for the custom filename checkbox
-        if state == qtc.Qt.Checked:# type: ignore
+        if state == Qt.Checked:# type: ignore
             self.ui.gm_filename.setEnabled(True)
             self.gm_filename_checked = True
         else:
@@ -419,7 +418,7 @@ class RoseUtils(qtw.QMainWindow):
         pass
 
     def deletecheck(self, state):                                              # Logic for the "Delete after report" checkbox
-        if state == qtc.Qt.Checked:# type: ignore
+        if state == Qt.Checked:# type: ignore
             self.check_delete = True
             self.ui.outputbox.setText(" - - - - - - WARNING - - - - - - ")
             self.ui.outputbox.append("  Report files will be deleted after you run the report")
@@ -433,7 +432,7 @@ class RoseUtils(qtw.QMainWindow):
 
     def gmbox(self, state):                                                    # Logic for the GM Mode checkbox
         log.debug("gmbox function called")
-        if state == qtc.Qt.Checked:# type: ignore
+        if state == Qt.Checked:# type: ignore
             with open("Settings\\GM", "w") as f:
                 f.write("Hello")
             self.ui.tabWidget.setTabVisible(0, False)
@@ -442,8 +441,8 @@ class RoseUtils(qtw.QMainWindow):
             self.ui.pwd_box.show()
             self.ui.pwd_lbl.show()
             self.ui.checkbox_GM.setEnabled(False)
-        if state != qtc.Qt.Checked:# type: ignore
-            os.remove("Settings\\GM")
+        if state != Qt.Checked:# type: ignore
+            remove("Settings\\GM")
             self.ui.hider.hide()
             self.ui.pwd_submit.hide()
             self.ui.pwd_box.hide()
@@ -555,13 +554,6 @@ class RoseUtils(qtw.QMainWindow):
         self.ui.numitems_label_2.setText("0")
         log.debug("pdfclearbutton function ran")
 
-    def comments(self):                                                        ############# NO LONGER USED # Runs the Comments Report
-        log.debug("comments function called")
-        self.commentsfile = qtw.QFileDialog.getOpenFileName(self, 'Select the Comments File')
-        self.commentsfile = self.commentsfile[0]
-        Comments.run(self, self.outputfolder, self.commentsfile)
-        log.debug("comments function ran")
-
     def refreshfolders(self):                                                  # refreshes the folders displayed on the ui settings tab
         log.debug("refreshfolders function ran")
         self.ui.output_edit.setText(self.outputfolder)
@@ -609,11 +601,11 @@ class RoseUtils(qtw.QMainWindow):
 
     def select_setting(self, a:str, b:str, file: bool)-> str:                  # Opens folder picker and sets variable
         if file:
-            a = qtw.QFileDialog.getOpenFileName(self, f'Select the {b}') # type: ignore
+            a = QFileDialog.getOpenFileName(self, f'Select the {b}') # type: ignore
             if "CCD" in b: self.ccddatabase = a[0]
             elif "RCP" in b: self.rcpdatabase = a[0]
         else:
-            a = qtw.QFileDialog.getExistingDirectory(self, f'Select {b}') + "/"
+            a = QFileDialog.getExistingDirectory(self, f'Select {b}') + "/"
             if "Output Folder" in b: self.outputfolder = a               
             elif "Zoc " in b: self.zocdownloadfolder = a
             elif "Downloads Folder" in b: self.downloadfolder = a
@@ -631,7 +623,7 @@ TODO:
 '''
 
 if __name__ == '__main__':
-    app = qtw.QApplication([])
+    app = QApplication([])
 
     with open('lib/style.qss', 'r') as f:
         style = f.read()

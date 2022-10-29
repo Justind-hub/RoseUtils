@@ -1,5 +1,6 @@
+# type: ignore
 from striprtf.striprtf import rtf_to_text
-import os
+from os import listdir, remove
 from openpyxl import Workbook
 from openpyxl.styles import Alignment
 import traceback
@@ -10,7 +11,7 @@ def run(self):
         self.ui.outputbox.setText("Running EPP")
         sleep(.01)
         filelist = [] #create list of files to loop through -> filelist
-        for file in os.listdir(self.zocdownloadfolder):
+        for file in listdir(self.zocdownloadfolder):
             filelist.append(file)
         filelist = [self.zocdownloadfolder + file for file in filelist]
 
@@ -28,7 +29,7 @@ def run(self):
                     "Chicken":"1095",}
         
         wb = Workbook()
-        ws = wb.create_sheet('Sheet', 0)
+        ws = wb.create_sheet('Sheet', 0) # type: ignore
         def dictindex(search_key, dict):
             return list(dict.values()).index(search_key) + 3
 
@@ -51,7 +52,7 @@ def run(self):
             for line in file:
                 if line[4:8] in PRODUCTS.values():
                     rownum = dictindex(line[4:8],PRODUCTS)
-                    ws.cell(row = rownum, column = columnnum, value = float(line[116:125].strip()))
+                    ws.cell(row = rownum, column = columnnum, value = float(line[116:125].strip())) 
                 
             
 
@@ -100,9 +101,9 @@ def run(self):
         sleep(.01)
         if self.check_delete:
             for file in targets:
-                os.remove(file)
+                remove(file)
             for file in values:
-                os.remove(file)
+                remove(file)
 
     except:
         self.ui.outputbox.append("ENCOUNTERED ERROR")
