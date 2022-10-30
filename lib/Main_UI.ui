@@ -23,7 +23,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>RoseUtils 2.2</string>
+   <string>RoseUtils 2.3</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -342,7 +342,7 @@
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QPushButton" name="btn_DDD">
+         <widget class="QPushButton" name="btn_evening_sales">
           <property name="minimumSize">
            <size>
             <width>15</width>
@@ -353,7 +353,7 @@
            <string>Runs the DDD Dispatch Time report</string>
           </property>
           <property name="text">
-           <string>DDD Dispatch Time</string>
+           <string>Incr Evening Sales</string>
           </property>
          </widget>
         </item>
@@ -2550,8 +2550,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>600</width>
-             <height>69</height>
+             <width>100</width>
+             <height>30</height>
             </rect>
            </property>
           </widget>

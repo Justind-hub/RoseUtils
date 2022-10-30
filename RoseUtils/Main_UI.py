@@ -1,4 +1,3 @@
-# type: ignore
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'lib/Main_UI.ui'
@@ -126,10 +125,10 @@ class Ui_RoseUtils(object):
         self.btn_epp.setMinimumSize(QtCore.QSize(15, 40))
         self.btn_epp.setObjectName("btn_epp")
         self.gridLayout.addWidget(self.btn_epp, 2, 2, 1, 1)
-        self.btn_DDD = QtWidgets.QPushButton(self.rcp)
-        self.btn_DDD.setMinimumSize(QtCore.QSize(15, 40))
-        self.btn_DDD.setObjectName("btn_DDD")
-        self.gridLayout.addWidget(self.btn_DDD, 3, 1, 1, 1)
+        self.btn_evening_sales = QtWidgets.QPushButton(self.rcp)
+        self.btn_evening_sales.setMinimumSize(QtCore.QSize(15, 40))
+        self.btn_evening_sales.setObjectName("btn_evening_sales")
+        self.gridLayout.addWidget(self.btn_evening_sales, 3, 1, 1, 1)
         self.btn_last_week_variances = QtWidgets.QPushButton(self.rcp)
         self.btn_last_week_variances.setMinimumSize(QtCore.QSize(15, 40))
         self.btn_last_week_variances.setObjectName("btn_last_week_variances")
@@ -487,7 +486,7 @@ class Ui_RoseUtils(object):
         self.btn_browse.setSizePolicy(sizePolicy)
         self.btn_browse.setObjectName("btn_browse")
         self.gridLayout_3.addWidget(self.btn_browse, 4, 7, 1, 2)
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)  
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout_3.addItem(spacerItem, 4, 9, 1, 1)
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QtWidgets.QWidget()
@@ -945,7 +944,7 @@ class Ui_RoseUtils(object):
         self.hider.setWidgetResizable(True)
         self.hider.setObjectName("hider")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 600, 69))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 100, 30))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.hider.setWidget(self.scrollAreaWidgetContents)
         self.gridLayout_5.addWidget(self.hider, 5, 0, 1, 3)
@@ -1131,7 +1130,7 @@ class Ui_RoseUtils(object):
 
     def retranslateUi(self, RoseUtils):
         _translate = QtCore.QCoreApplication.translate
-        RoseUtils.setWindowTitle(_translate("RoseUtils", "RoseUtils 2.2"))
+        RoseUtils.setWindowTitle(_translate("RoseUtils", "RoseUtils 2.3"))
         self.btn_reexport.setToolTip(_translate("RoseUtils", "Re-export both the RCP and CCD Database files for Drivosity and Breaks"))
         self.btn_reexport.setText(_translate("RoseUtils", "Re-Export Database"))
         self.groupBox.setTitle(_translate("RoseUtils", "Options:"))
@@ -1158,8 +1157,8 @@ class Ui_RoseUtils(object):
         self.btn_weekly_dor.setText(_translate("RoseUtils", "Wkly DOR CSC"))
         self.btn_epp.setToolTip(_translate("RoseUtils", "Run the EPP Report"))
         self.btn_epp.setText(_translate("RoseUtils", "EPP"))
-        self.btn_DDD.setToolTip(_translate("RoseUtils", "Runs the DDD Dispatch Time report"))
-        self.btn_DDD.setText(_translate("RoseUtils", "DDD Dispatch Time"))
+        self.btn_evening_sales.setToolTip(_translate("RoseUtils", "Runs the DDD Dispatch Time report"))
+        self.btn_evening_sales.setText(_translate("RoseUtils", "Incr Evening Sales"))
         self.btn_last_week_variances.setText(_translate("RoseUtils", "Last Weeks Variances"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.rcp), _translate("RoseUtils", "Reports"))
         self.btn_zocdownload_set.setText(_translate("RoseUtils", "Set"))
