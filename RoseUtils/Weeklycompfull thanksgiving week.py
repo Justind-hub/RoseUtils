@@ -53,17 +53,9 @@ def run(self):
 
         
 
-        #openrtf file
-        '''def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
-                            #Will return a list of strings for each line of the file
-            with open(file, 'r') as file:
-                text = file.read()
-            text = rtf_to_text(text)
-            textlist = text.splitlines()
-            return textlist #returns a list containing entire RTF file'''
+        
 
-        def left(s, amount): #litterally just the "left" function from excel
-            return s[:amount]
+
 
         filelist = [] #create list of files to loop through -> filelist
         for file in os.listdir(zocdownload):
@@ -108,14 +100,10 @@ def run(self):
             df['endtime'] = end
             df['Time'] = df['Time'].map(str)+"-"+df['endtime']
 
-            #delete these 4 rows to export entire day
-            #df['export'].replace('', np.nan, inplace=True)
-            #df.dropna(subset=['export'], inplace=True)
-            #df.reset_index(inplace=True)
-            #df.drop(['Time','Deliveries','Drivers','Products','Instores','delpdr','prodpin','index'], axis=1, inplace=True)
+            
             df.drop(['delpdr','prodpin','endtime'], axis=1, inplace=True)
             df = df[['Time','Deliveries','Drivers','Instores','Products','export']]
-            list1 = df.values.tolist()    
+            
             return(df)
             ############# color = EEECE1
         def printall(wday, df):
@@ -200,13 +188,13 @@ def run(self):
                     stoppoint = i
                     break
 
-            text1 = textlist[:stoppoint]
+            text1 = textlist[3:stoppoint]
             del textlist[:stoppoint+1]
             for i, x in enumerate(textlist):
                 if len(x) == 0:
                     stoppoint = i
                     break
-            text2 = textlist[:stoppoint]
+            text2 = textlist[3:stoppoint]
             del textlist[:]
             #get each day as a df
 
@@ -217,12 +205,12 @@ def run(self):
             friday = getday(text2, 22)
             saturday = getday(text2, 22+29)
             sunday = getday(text2, 22+29+29)
-            days = [monday, tuesday, wednesday, thursday, friday, saturday, sunday]
-            worksheets = [ws]
-            for i,df in enumerate(days):
+
+            
+            for i,df in enumerate([monday, tuesday, wednesday, thursday, friday, saturday, sunday]):
                 df = getshort(df)
 
-            for i,day in enumerate(days):
+            for i,day in enumerate([monday, tuesday, wednesday, thursday, friday, saturday, sunday]):
                 printall(weekday[i],day)
 
 
