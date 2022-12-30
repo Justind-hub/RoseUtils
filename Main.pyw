@@ -60,6 +60,7 @@ class RoseUtils(QMainWindow):
         self.third = datetime.now() - start
         self.ui.outputbox.append(f"Finished start in {datetime.now() - start}")
         
+        
     def menubars(self):                                                        # links the menubar buttons
         # Actions
         self.ui.actionBETA_V1_2.triggered.connect(lambda: Release.r12(self, True)) 
