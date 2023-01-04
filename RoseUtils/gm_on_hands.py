@@ -43,6 +43,8 @@ def run(self,file) -> None:
             onhands.append(float(row[48:54].strip()))
 
         for i, num in enumerate(ITEMNUMLIST):
+            if num not in itemnums:
+                continue
             index = itemnums.index(num)
 
             ws.cell(row = i+1, column = 1, value = num) # type: ignore

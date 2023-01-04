@@ -47,6 +47,8 @@ def run(self, file) -> None:
             yields.append(float(row[116:127].strip()))
 
         for i, num in enumerate(ITEMNUMLIST):
+            if num not in itemnums:
+                continue
             index = itemnums.index(num)
             ws.cell(row = i+1, column = 1, value = num) # type: ignore
             ws.cell(row = i+1, column = 2, value = items[index]) # type: ignore
