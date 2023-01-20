@@ -22,7 +22,7 @@ from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory
 from RoseUtils import Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
 from RoseUtils import Epp, Release, gm_Target_inv, gm_weeklycomp
 from RoseUtils import export_SQL,gm_on_hands, updater, costreport
-from RoseUtils import Schedule_reviewer, Incremental_Evening_Sales, Last_Weeks_Variances
+from RoseUtils import Schedule_reviewer, in_sales, Last_Weeks_Variances
 from RoseUtils.Buttons import Buttons #Buttons class init as "b"
 
 #Downloaded
@@ -221,7 +221,7 @@ class RoseUtils(QMainWindow):
         self.ui.btn_reexport.clicked.connect(lambda: export_SQL.run(self))
         self.ui.check_delete.stateChanged.connect(self.deletecheck)
         self.ui.check_delete_2.stateChanged.connect(self.deletecheck)
-        self.ui.btn_evening_sales.clicked.connect(lambda: threading.Thread(target=Incremental_Evening_Sales.run,args=(self,)).start()) 
+        self.ui.btn_evening_sales.clicked.connect(lambda: threading.Thread(target=in_sales.run,args=(self,)).start()) 
         self.ui.radio_CCD.clicked.connect(lambda: self.setfran(False))
         self.ui.radio_RCP.clicked.connect(lambda: self.setfran(True))
         self.ui.btn_last_week_variances.clicked.connect(lambda: threading.Thread(target=Last_Weeks_Variances.run,args=(self,)).start())

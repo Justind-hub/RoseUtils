@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+# type:ignore
 # Form implementation generated from reading ui file 'lib/Main_UI.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.7
@@ -1130,7 +1130,7 @@ class Ui_RoseUtils(object):
 
     def retranslateUi(self, RoseUtils):
         _translate = QtCore.QCoreApplication.translate
-        RoseUtils.setWindowTitle(_translate("RoseUtils", "RoseUtils 2.5.2"))
+        RoseUtils.setWindowTitle(_translate("RoseUtils", "RoseUtils 2.6"))
         self.btn_reexport.setToolTip(_translate("RoseUtils", "Re-export both the RCP and CCD Database files for Drivosity and Breaks"))
         self.btn_reexport.setText(_translate("RoseUtils", "Re-Export Database"))
         self.groupBox.setTitle(_translate("RoseUtils", "Options:"))

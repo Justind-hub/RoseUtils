@@ -1,5 +1,7 @@
+#type:ignore
 from os import listdir, remove, startfile
 from openpyxl import Workbook
+
 from RoseUtils.rtf_reader import read_rtf
 import traceback
 
@@ -40,6 +42,8 @@ def run(self):
                             ws.cell(row = r, column = 3, value = line[87:94])
                             ws.cell(row = r, column = 4, value = line[2:6]) 
                             ws.cell(row = r, column = 5, value = float(line[140:146].strip())) 
+                            ws
+
                             r+=1                
         wb.save(self.outputfolder+"eveningsales.xlsx")
         startfile(self.outputfolder+"eveningsales.xlsx")
