@@ -64,10 +64,10 @@ def run(self):
             columnnum = STORECOL[store]
             for line in file:
                 try: 
-                    if float(line[48:54].strip()) in zeroes:
+                    if line[2:6] in zeroes:
+                        amount = float(line[48:54].strip())
                         if amount > 0:
                             itemname = line[8:34].strip()
-                            amount = float(line[48:54].strip())
                             self.ui.outputbox.append(f"Store: {store}, Item: {itemname}, {amount}")
                 except:
                     pass
