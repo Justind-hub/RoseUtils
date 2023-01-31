@@ -14,6 +14,7 @@ import traceback
 
 def run(self):
     try:
+        
         start = perf_counter()
         self.append_text.emit("Running Target Inventory")
         wb= Workbook()
@@ -81,9 +82,12 @@ def run(self):
 
             item = []
             dvariance = []
+            
             for i, line in enumerate(textlist):
                 item.append(line[11:34].strip())
                 dvariance.append(float(line[105:115].strip()))
+
+
             df = pd.DataFrame(data={'Item':item,'$ Variance':dvariance})
             #df.sort_values('$ Variance', inplace=True)
             df.drop(df[(df['$ Variance'] > -VARIANCEAMOUNT) & (df['$ Variance'] < VARIANCEAMOUNT)].index, inplace = True)

@@ -38,7 +38,7 @@ def run(self):
                     '10217298', '10217507', '10217795', '10218511', '10220538', 
                     '10220694', '10220775', '10223219', '10223898', '10229576', 
                     '10230110', '10231447', '10232090', '10233456', '10233457', 
-                    '10235741', '10237288', '10239955', '10241787']
+                    '10235741', '10237288', '10239955']
         ZOCDOWNLOAD_FOLDER = self.zocdownloadfolder   
         DATABASE_FILE = databasefile
         EXPORT_EXCEL_FILE = databasefile[:databasefile.rfind("/")]+"/Breaks.xlsx"

@@ -8,6 +8,7 @@ from time import sleep
 
 def run(self):
     try:
+        zeroes = ['4045','4052','4104','4113','4120','4121','4250','3064']
         self.ui.outputbox.setText("Running EPP")
         sleep(.01)
         filelist = [] #create list of files to loop through -> filelist
@@ -21,7 +22,7 @@ def run(self):
             STORECOL = {"2208":2,"2306":4,"2325":6,"2478":8,"2612":10,"2618":12,"2687":14,"2921":16,"3015":18,"3130":20,"3479":22,"4405":24}
                     #  
         PRODUCTS = {"10\" Dough":"1075",
-                    "12\" Dough":"1077",
+                    "12\" Dough":"1076",
                     "14\" Dough":"1080",
                     "16\" Dough":"1082",
                     "Wings":"1098",
@@ -62,6 +63,14 @@ def run(self):
             store = file[1][83:87]
             columnnum = STORECOL[store]
             for line in file:
+                try: 
+                    if float(line[48:54].strip()) in zeroes:
+                        if amount > 0:
+                            itemname = line[8:34].strip()
+                            amount = float(line[48:54].strip())
+                            self.ui.outputbox.append(f"Store: {store}, Item: {itemname}, {amount}")
+                except:
+                    pass
                 if line[2:6] in PRODUCTS.values():
                     rownum = dictindex(line[2:6],PRODUCTS)
                     ws.cell(row = rownum, column = columnnum, value = float(line[48:54].strip()))
