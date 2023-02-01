@@ -23,7 +23,7 @@ from RoseUtils import Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
 from RoseUtils import Epp, Release, gm_Target_inv, gm_weeklycomp
 from RoseUtils import export_SQL,gm_on_hands, updater, costreport
 from RoseUtils import Schedule_reviewer, in_sales, Last_Weeks_Variances
-from RoseUtils import pa_period_promo
+from RoseUtils import pa_period_promo, On_Hand
 from RoseUtils.Buttons import Buttons #Buttons class init as "b"
 
 #Downloaded
@@ -218,6 +218,7 @@ class RoseUtils(QMainWindow):
         self.ui.btn_output_set.clicked.connect(self.savefolders)
         self.ui.btn_downloads_set.clicked.connect(self.savefolders)
         self.ui.btn_PA_Promo.clicked.connect(lambda: pa_period_promo.run(self)) 
+        self.ui.btn_On_Hands.clicked.connect(lambda: On_Hand.run(self)) 
         self.ui.btn_wizzard.clicked.connect(self.wizzard)
         self.ui.btn_reexport.clicked.connect(lambda: export_SQL.run(self))
         self.ui.check_delete.stateChanged.connect(self.deletecheck)

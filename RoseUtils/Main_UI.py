@@ -116,7 +116,11 @@ class Ui_RoseUtils(object):
         self.btn_PA_Promo = QtWidgets.QPushButton(self.rcp)
         self.btn_PA_Promo.setMinimumSize(QtCore.QSize(15, 40))
         self.btn_PA_Promo.setObjectName("btn_PA_Promo")
-        self.gridLayout.addWidget(self.btn_PA_Promo, 3, 2, 1, 1)
+        self.gridLayout.addWidget(self.btn_PA_Promo, 4, 2, 1, 1)
+        self.btn_On_Hands = QtWidgets.QPushButton(self.rcp)
+        self.btn_On_Hands.setMinimumSize(QtCore.QSize(15, 40))
+        self.btn_On_Hands.setObjectName("btn_On_Hands")
+        self.gridLayout.addWidget(self.btn_On_Hands, 3, 2, 1, 1)
         self.btn_weekly_dor = QtWidgets.QPushButton(self.rcp)
         self.btn_weekly_dor.setMinimumSize(QtCore.QSize(15, 40))
         self.btn_weekly_dor.setObjectName("btn_weekly_dor")
@@ -1130,7 +1134,7 @@ class Ui_RoseUtils(object):
 
     def retranslateUi(self, RoseUtils):
         _translate = QtCore.QCoreApplication.translate
-        RoseUtils.setWindowTitle(_translate("RoseUtils", "RoseUtils 2.7.2"))
+        RoseUtils.setWindowTitle(_translate("RoseUtils", "RoseUtils 2.8"))
         self.btn_reexport.setToolTip(_translate("RoseUtils", "Re-export both the RCP and CCD Database files for Drivosity and Breaks"))
         self.btn_reexport.setText(_translate("RoseUtils", "Re-Export Database"))
         self.groupBox.setTitle(_translate("RoseUtils", "Options:"))
@@ -1153,6 +1157,7 @@ class Ui_RoseUtils(object):
         self.btn_drivosity.setText(_translate("RoseUtils", "Drivosity Report"))
         self.btn_PA_Promo.setToolTip(_translate("RoseUtils", "Will Prompt you to open the report downloaded from PA"))
         self.btn_PA_Promo.setText(_translate("RoseUtils", "PA Period Promo"))
+        self.btn_On_Hands.setText(_translate("RoseUtils", "On Hands Report"))
         self.btn_weekly_dor.setToolTip(_translate("RoseUtils", "Run the Weekly \"Breaks\" type report"))
         self.btn_weekly_dor.setText(_translate("RoseUtils", "Wkly DOR CSC"))
         self.btn_epp.setToolTip(_translate("RoseUtils", "Run the EPP Report"))
