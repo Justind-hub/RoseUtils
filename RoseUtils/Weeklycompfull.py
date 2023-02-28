@@ -20,10 +20,7 @@ def run(self):
         output = self.outputfolder
         self.append_text.emit("Running Weekly Comp")
         sleep(.01)
-        #print('Enter lowercase 3 letter day of the week, leave blank to run previous day')
-        #print('Examples: "mon", "tue", "wed", "thu","fri","sat","sun"')
-        #day = input()
-        #print (day)
+
 
         leftborder = Border(left=Side(style='thick'))
         rightborder = Border(right=Side(style='thick'))
@@ -38,8 +35,8 @@ def run(self):
         wb= Workbook()
         ws = wb.create_sheet('Weekly Comp', index = 0)
         if self.rcp:
-            STORECOL = {"1740":0,"1743":28,"2172":4,"2174":32,"2236":8,"2272":12,"2457":36,"2549":16,"2603":40,"3498":44,"4778":24,"2953":20}
-            stores = [1740,2172,2236,2272,2549,2953,4778,1743,2174,2457,2603,3498]
+            STORECOL = {"1740":24,"1743":32,"2172":28,"2174":0,"2236":4,"2272":36,"2457":40,"2549":8,"2603":44,"3498":16,"4778":20,"2953":12}
+            stores = [2174,2236,2549,2953,3498,4778,1740,2172,1743,2272,2457,2603]
         else:
             STORECOL = {"2208":0,"2306":4,"2325":8,"2478":12,"2612":16,"2618":20,"2687":24,"2921":28,"3015":32,"3130":36,"3479":40,"4405":44}
             stores = [2208,2306,2325,2478,2612,2618,2687,2921,3015,3130,3479,4405]
