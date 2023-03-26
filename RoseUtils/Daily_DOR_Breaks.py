@@ -17,8 +17,8 @@ def run(self):
         
         sleep(.01)
         if self.rcp:
-            MAXSHIFTWA = 5.15
-            MAXSHIFTOR = 6.15
+            MAXSHIFTWA = 5.1
+            MAXSHIFTOR = 6.1
             CCD = False
             RCP = True
             #GM_NAMES = ("Mel",'tyler','kim','kristina','cara','nicole','jordan','sean',
@@ -26,14 +26,18 @@ def run(self):
             #GM_ID_LIST = ("10131868","10039186","10039195","10039300","10039462","10039205","10039288",
             #              "10039248","10006085","10039389","10039191","10124254","10039195","10002623")
             databasefile = self.rcpdatabase
+            MINBREAK = 0.5
+            MAXECLUDE = 0.02
         else:
             CCD = True
             RCP = False
-            MAXSHIFTWA = 4.1
-            MAXSHIFTOR = 4.1
+            MAXSHIFTWA = 5.1
+            MAXSHIFTOR = 5.1
             #GM_ID_LIST = ("10165861","10039358","10162686","10162376","10177223","10161583","10165345","10039345",
             #              "10162343","10039243","10039305","10039312","10161595","10171661","10173335")
             databasefile = self.ccddatabase
+            MINBREAK = 0.5
+            MAXECLUDE = 0.02
         CCDMINORS = ['10177606', '10190883', '10207907', '10208525', '10213678', 
                     '10217298', '10217507', '10217795', '10218511', '10220538', 
                     '10220694', '10220775', '10223219', '10223898', '10229576', 
@@ -130,7 +134,9 @@ def run(self):
             if fname == "Till":
                 cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks","Till"))
             else:
-                cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks",nobreak))
+                print(emp[0:8])
+                if emp[0:8] in CCDMINORS: cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaksM",nobreak))
+                else: cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks",nobreak))
                 breakscount +=1
             return breakscount
 
@@ -140,8 +146,9 @@ def run(self):
             nobreak = f"{fname} {lname} SB"
             if fname == "Till":
                 pass
-            else:
-                cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks",nobreak))
+            else: 
+                if emp[0:8] in CCDMINORS: cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaksM",nobreak))
+                else: cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks",nobreak))
             return
 
         def breaks(list:list,skip:bool,breakscount:int)->int: ###Searches for missed and short breaks
@@ -151,31 +158,30 @@ def run(self):
                 if skip: return breakscount
                 max = MAXSHIFTWA
             else:
-                if skip:
+                if RCP and skip:
                     max = MAXSHIFTOR + 2
                 else:
                     max = MAXSHIFTOR
             
             while i <len(list):
-                #if list[i][0:8] in GM_ID_LIST: pass #skip if it's a GM1
-                #else:
-                if RCP or list[i][0:8] in CCDMINORS:
-                    if float(list[i][58:66].strip()) > max: ##Check for missed breaks
-                        if i < len(list)-1:  
-                            if list[i][0:7] == list[i+1][0:7]:
-                                i+=1
-                                continue
-                        if i > 0:
-                            if list[i][0:7] == list[i-1][0:7]:
-                                    i+=1
-                                    continue 
-                        breakscount = noBreak(list[i], breakscount)
                 if i < len(list)-1: #Check for short breaks
                     if list[i][0:8] == list[i+1][0:8]:
                         name = list[i][9:35]
                         clockout = truetime(list[i][49:56])
                         clockin = truetime(list[i+1][41:48])
-                        if clockin - clockout < 0.5: shortBreak(list[i])
+                        if clockin - clockout < MINBREAK and clockin - clockout > MAXECLUDE: shortBreak(list[i])
+                #if RCP or list[i][0:8] in CCDMINORS:
+                if float(list[i][58:66].strip()) > max: ##Check for missed breaks
+                    if i < len(list)-1:  
+                        if list[i][0:7] == list[i+1][0:7]:
+                            i+=1
+                            continue
+                    if i > 0:
+                        if list[i][0:7] == list[i-1][0:7]:
+                                i+=1
+                                continue 
+                    breakscount = noBreak(list[i], breakscount)
+            
                 i+=1
             return breakscount
 
