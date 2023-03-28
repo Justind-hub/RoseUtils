@@ -46,6 +46,7 @@ def run(self):
         ZOCDOWNLOAD_FOLDER = self.zocdownloadfolder   
         DATABASE_FILE = databasefile
         EXPORT_EXCEL_FILE = databasefile[:databasefile.rfind("/")]+"/Breaks.xlsx"
+        EXPORT_EXCEL_FILE2 = databasefile[:databasefile.rfind("/")]+"/timeclock.xlsx"
         WASHINGTON_STORES = ["2236","3498","2953"]
         
         ###### End of user setup section
@@ -66,7 +67,18 @@ def run(self):
                 value TEXT
             )
         ''')
-
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS timeclock(
+                id INTEGER PRIMARY KEY,
+                date TEXT,
+                store TEXT,
+                tm TEXT,
+                intime TEXT,
+                outtime TEXT,
+                hours TEXT,
+                position TEXT
+            )
+        ''')
         #### OLD CODE BELOW
         '''def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
                             #Will return a list of strings for each line of the file
@@ -151,7 +163,7 @@ def run(self):
                 else: cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks",nobreak))
             return
 
-        def breaks(list:list,skip:bool,breakscount:int)->int: ###Searches for missed and short breaks
+        def breaks(list:list,skip:bool,breakscount:int,position:str)->int: ###Searches for missed and short breaks
             i=0
 
             if store in WASHINGTON_STORES:
@@ -164,6 +176,8 @@ def run(self):
                     max = MAXSHIFTOR
             
             while i <len(list):
+                cursor.execute("INSERT INTO timeclock(date,store,tm,intime,outtime,hours,position) VALUES(?,?,?,?,?,?,?)", (date,store,list[i][9:35],list[i][41:48],list[i][49:56],list[i][58:66].strip(),position))
+        
                 if i < len(list)-1: #Check for short breaks
                     if list[i][0:8] == list[i+1][0:8]:
                         name = list[i][9:35]
@@ -181,7 +195,7 @@ def run(self):
                                 i+=1
                                 continue 
                     breakscount = noBreak(list[i], breakscount)
-            
+
                 i+=1
             return breakscount
 
@@ -290,9 +304,9 @@ def run(self):
 
             ### Find short and missing breaks 
             ################# DATABASE CALLs ARE IN THE "noBreak" and "shortBreak" FUNCTIONS
-            if driverline != 0: breakscount = breaks(drivers,False,breakscount) # type: ignore
-            if instoreline != 0: breakscount = breaks(instores,False,breakscount) # type: ignore
-            if RCP: breakscount = breaks(managers,True,breakscount)
+            if driverline != 0: breakscount = breaks(drivers,False,breakscount,'Driver') # type: ignore
+            if instoreline != 0: breakscount = breaks(instores,False,breakscount,'Instore') # type: ignore
+            if RCP: breakscount = breaks(managers,True,breakscount,'Manager')
             if breakscount == 0:
                 cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks","None Missed!"))
             mgrs = []
@@ -350,6 +364,19 @@ def run(self):
         
         cursor.execute("select * from breaks")
         mysel=cursor.execute("select * from breaks")
+        for i, row in enumerate(mysel):
+            for j, value in enumerate(row):
+                worksheet.write(i, j, row[j])
+                
+
+        workbook.close()
+
+        workbook = Workbook(EXPORT_EXCEL_FILE2)
+        worksheet = workbook.add_worksheet()
+        
+        
+        cursor.execute("select * from timeclock")
+        mysel=cursor.execute("select * from timeclock")
         for i, row in enumerate(mysel):
             for j, value in enumerate(row):
                 worksheet.write(i, j, row[j])
