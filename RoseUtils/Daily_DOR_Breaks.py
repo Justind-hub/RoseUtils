@@ -167,7 +167,6 @@ def run(self):
             i=0
 
             if store in WASHINGTON_STORES:
-                if skip: return breakscount
                 max = MAXSHIFTWA
             else:
                 if RCP and skip:
