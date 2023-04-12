@@ -32,7 +32,7 @@ def run(self, downloadsfolder, database, output):
 
         ####Read the date from drivosity report and create list for dataframe, 
                                                         #then add to dataframe
-        date = ws['a1'].value
+        date = ws['a1'].value #type:ignore
         date = date[date.find("-")+1:-1]
         date = date.replace("/",".")
         date = [date] * len(df)

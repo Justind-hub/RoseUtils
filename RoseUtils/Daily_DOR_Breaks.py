@@ -152,10 +152,10 @@ def run(self):
                 breakscount +=1
             return breakscount
 
-        def shortBreak(emp:str)->None: #Database entry for short break
+        def shortBreak(emp:str,length:int)->None: #Database entry for short break
             fname = emp[9:35].strip().split(" ")[0]
             lname = emp[9:35].strip().split(" ")[1][0]
-            nobreak = f"{fname} {lname} SB"
+            nobreak = f"{fname} {lname} {length}" # Dedicated to Tyler
             if fname == "Till":
                 pass
             else: 
@@ -182,7 +182,8 @@ def run(self):
                         name = list[i][9:35]
                         clockout = truetime(list[i][49:56])
                         clockin = truetime(list[i+1][41:48])
-                        if clockin - clockout < MINBREAK and clockin - clockout > MAXECLUDE: shortBreak(list[i])
+                        breaklength = int((clockin - clockout)*60) # Dedicated to Tyler
+                        if clockin - clockout < MINBREAK and clockin - clockout > MAXECLUDE: shortBreak(list[i],breaklength)
                 #if RCP or list[i][0:8] in CCDMINORS:
                 if float(list[i][58:66].strip()) > max: ##Check for missed breaks
                     if i < len(list)-1:  
