@@ -18,7 +18,7 @@ from PyQt5.QtWidgets import  QMessageBox, QFileDialog # Change to * if you get a
 
 # RoseUtils package functions
 from RoseUtils.Main_UI import Ui_RoseUtils
-from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory
+from RoseUtils import Daily_DOR_Breaks_copy, New_Hire, Target_Inventory
 from RoseUtils import Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
 from RoseUtils import Epp, Release, gm_Target_inv, gm_weeklycomp
 from RoseUtils import export_SQL,gm_on_hands, updater, costreport
@@ -83,7 +83,7 @@ class RoseUtils(QMainWindow):
         
     def update(self):                                                          # Checks to see if update is available and downloads it
         log.debug("Update function called")
-        process = Popen(['git', 'pull', str('https://github.com/Justind-hub/RoseUtils')],stdout=PIPE, stderr=PIPE)
+        process = Popen(['git', 'pull', str('https://github.com/Justind-hub/RoseUtils')],stdout=PIPE, stderr=PIPE) #tpye:ignore
         stdout, stderr = process.communicate()
         log.debug(f"stdout = {stdout}")
         log.debug(f"stderr = {stderr}")
@@ -194,7 +194,7 @@ class RoseUtils(QMainWindow):
 
         #Buttons
         self.ui.btn_targetrcp.clicked.connect(lambda: threading.Thread(target=Target_Inventory.run,args=(self,)).start())    
-        self.ui.btn_breaksrcp.clicked.connect(lambda: threading.Thread(target=Daily_DOR_Breaks.run,args=(self,)).start()) 
+        self.ui.btn_breaksrcp.clicked.connect(lambda: threading.Thread(target=Daily_DOR_Breaks_copy.run,args=(self,)).start()) 
         self.ui.btn_new_hirercp.clicked.connect(lambda: New_Hire.run(self, self.zocdownloadfolder, self.rcpdatabase, self.outputfolder)) 
         self.ui.btn_drivosity.clicked.connect(lambda: Daily_Drivosity.run(self, self.downloadfolder, self.rcpdatabase, self.outputfolder)) 
         self.ui.btn_weekly_comprcp.clicked.connect(lambda: threading.Thread(target=Weeklycompfull.run,args=(self,)).start()) 
@@ -351,7 +351,7 @@ class RoseUtils(QMainWindow):
                 pdf_writer.addPage(pdf.getPage(page))
 
                 with open(f"{self.outputfolder}{self.ui.pdf_name.text()}_{page+1}.pdf", 'wb') as out:
-                    pdf_writer.write(out)
+                    pdf_writer.write(out) #type:ignore
                 self.ui.outputbox.append(f"Saved Page {page} of {file} as {self.outputfolder}{self.ui.pdf_name.text()}_{page+1}.pdf")
         
     def pdf_combine(self):                                                     # Merges PDFs
@@ -574,7 +574,7 @@ class RoseUtils(QMainWindow):
     def all3rcp(self):                                                         # All 3 RCP Daily reports
         log.debug("all3rcp function called")
         self.ui.outputbox.setText("Running Reports...")
-        threading.Thread(target=Daily_DOR_Breaks.run,args=(self,)).start()
+        threading.Thread(target=Daily_DOR_Breaks_copy.run,args=(self,)).start()
         threading.Thread(target=Target_Inventory.run,args=(self,)).start()
         threading.Thread(target=Weeklycompfull.run,args=(self,)).start()
         log.debug("all3rcp function ran")
