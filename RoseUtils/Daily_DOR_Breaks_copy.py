@@ -376,7 +376,15 @@ def run(self):
             closer = f"{mgrs[outtimes.index(max(outtimes))]} {ampm(max(outtimes))}"
             opener = f"{mgrs[intimes.index(min(intimes))]} {ampm(min(intimes))}"
 
-
+                       
+            #### EZCater paid outs
+            x = findline("Cash Paid Out",10)
+            for i in range(x,x+30):
+                line = dor[i]
+                if "EzCater" in dor[i]:
+                    cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"ezcater PO",float(dor[i][50:64].strip())))
+                    
+           
             #####Insert everything other than breaks into the database
             database = [(date, store, "CSC",csc),
                         (date, store, "Lunch", lunch),
@@ -393,11 +401,11 @@ def run(self):
                         (date, store, "Travel", travel),
                         (date, store, "Excess Mileage",excess)]
 
-            ezcater = findline("EZCater",0)
+            ezcater = findline("EZCater",0) ### Find EZCAter Payments
             if ezcater != 0 and ezcater < 50:
-                database.append((date, store, "ezcater",dor[ezcater][73:90].strip()))
+                database.append((date, store, "ezcater",float(dor[ezcater][73:90].strip()) + float(dor[ezcater][89:].strip())))
 
-
+         
 
             cursor.executemany("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", database)
             if self.check_delete:
