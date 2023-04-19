@@ -60,7 +60,7 @@ class Buttons():
             r = 3
             tms = 0
             complete = 0
-            ws.cell(row = 1, column = i+1,value = store)
+            ws.cell(row = 1, column = i+1,value = store)#type:ignore
             for row in data:
                 fname = row[0][row[0].find(" ")+1:]
                 lname = row[0][:row[0].find(" ")]
@@ -69,9 +69,9 @@ class Buttons():
                     if row[1] == 100: 
                         complete += 1
                     else:
-                        ws.cell(row = r, column = i+1, value = f"{fname} {lname}")
+                        ws.cell(row = r, column = i+1, value = f"{fname} {lname}") #type:ignore
                         r += 1
-            ws.cell(row = 2, column = i+1, value = str(round((complete/tms) * 100,1)) + "%")
+            ws.cell(row = 2, column = i+1, value = str(round((complete/tms) * 100,1)) + "%")#type:ignore
 
         
 

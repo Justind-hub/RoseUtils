@@ -376,6 +376,7 @@ def run(self):
             closer = f"{mgrs[outtimes.index(max(outtimes))]} {ampm(max(outtimes))}"
             opener = f"{mgrs[intimes.index(min(intimes))]} {ampm(min(intimes))}"
 
+
             #####Insert everything other than breaks into the database
             database = [(date, store, "CSC",csc),
                         (date, store, "Lunch", lunch),
@@ -391,6 +392,12 @@ def run(self):
                         (date, store, "Voids",void),
                         (date, store, "Travel", travel),
                         (date, store, "Excess Mileage",excess)]
+
+            ezcater = findline("EZCater",0)
+            if ezcater != 0 and ezcater < 50:
+                database.append((date, store, "ezcater",dor[ezcater][73:90].strip()))
+
+
 
             cursor.executemany("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", database)
             if self.check_delete:
