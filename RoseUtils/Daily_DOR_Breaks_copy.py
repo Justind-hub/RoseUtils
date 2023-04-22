@@ -402,7 +402,7 @@ def run(self):
                         (date, store, "Excess Mileage",excess)]
 
             ezcater = findline("EZCater",0) ### Find EZCAter Payments
-            if ezcater != 0 and ezcater < 50:
+            if ezcater != 0 and ezcater < 35:
                 database.append((date, store, "ezcater",float(dor[ezcater][73:90].strip()) + float(dor[ezcater][89:].strip())))
 
          
