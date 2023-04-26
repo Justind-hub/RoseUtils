@@ -381,8 +381,8 @@ def run(self):
             x = findline("Cash Paid Out",10)
             for i in range(x,x+30):
                 line = dor[i]
-                if "EzCater" in dor[i]:
-                    cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"ezcater PO",float(dor[i][50:64].strip())))
+                if "EZCATER" in dor[i].upper():
+                    cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"ezcater PO",float(dor[i][50:60].strip())))
                     
            
             #####Insert everything other than breaks into the database
