@@ -153,7 +153,7 @@ def run(self):
         def findline(text:str,start:int) -> int: #Returns the number of the first line containing the text supplied
             i = start
             while i < len(dor):
-                if dor[i].find(text) == -1:
+                if dor[i].upper().find(text.upper()) == -1:
                     i+=1
                 else:
                     return i
@@ -378,6 +378,7 @@ def run(self):
 
                        
             #### EZCater paid outs
+            x = 0
             x = findline("Cash Paid Out",10)
             for i in range(x,x+30):
                 line = dor[i]
@@ -401,8 +402,8 @@ def run(self):
                         (date, store, "Travel", travel),
                         (date, store, "Excess Mileage",excess)]
 
-            ezcater = findline("EZCater",0) ### Find EZCAter Payments
-            if ezcater != 0 and ezcater < 35:
+            ezcater = findline("EZCater",10) ### Find EZCAter Payments
+            if ezcater != 0 and ezcater < x:
                 database.append((date, store, "ezcater",float(dor[ezcater][73:90].strip()) + float(dor[ezcater][89:].strip())))
 
          
