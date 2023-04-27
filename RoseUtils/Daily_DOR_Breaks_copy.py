@@ -379,11 +379,13 @@ def run(self):
                        
             #### EZCater paid outs
             x = 0
-            x = findline("Cash Paid Out",10)
-            for i in range(x,x+30):
-                line = dor[i]
-                if "EZCATER" in dor[i].upper():
-                    cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"ezcater PO",float(dor[i][50:60].strip())))
+            if RCP:
+                
+                x = findline("Cash Paid Out",10)
+                for i in range(x,x+30):
+                    line = dor[i]
+                    if "EZCATER" in dor[i].upper():
+                        cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"ezcater PO",float(dor[i][50:60].strip())))
                     
            
             #####Insert everything other than breaks into the database
@@ -402,9 +404,10 @@ def run(self):
                         (date, store, "Travel", travel),
                         (date, store, "Excess Mileage",excess)]
 
-            ezcater = findline("EZCater",10) ### Find EZCAter Payments
-            if ezcater != 0 and ezcater < x:
-                database.append((date, store, "ezcater",float(dor[ezcater][73:90].strip()) + float(dor[ezcater][89:].strip())))
+            if RCP:
+                ezcater = findline("EZCater",10) ### Find EZCAter Payments
+                if ezcater != 0 and ezcater < x:
+                    database.append((date, store, "ezcater",float(dor[ezcater][73:90].strip()) + float(dor[ezcater][89:].strip())))
 
          
 
