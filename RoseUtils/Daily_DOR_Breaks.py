@@ -144,11 +144,14 @@ def run(self):
             if emp[56] =="*":
                 return breakscount
             if fname == "Till":
-                cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks","Till"))
+                cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,
+                                                                                             "breaks","Till"))
             else:
                 print(emp[0:8])
-                if emp[0:8] in CCDMINORS: cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaksM",nobreak))
-                else: cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks",nobreak))
+                if emp[0:8] in CCDMINORS: cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", 
+                                                         (date,store,"breaksM",nobreak))
+                else: cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,
+                                                                                                   "breaks",nobreak))
                 breakscount +=1
             return breakscount
 
@@ -159,8 +162,10 @@ def run(self):
             if fname == "Till":
                 pass
             else: 
-                if emp[0:8] in CCDMINORS: cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaksM",nobreak))
-                else: cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks",nobreak))
+                if emp[0:8] in CCDMINORS: cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", 
+                                                         (date,store,"breaksM",nobreak))
+                else: cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", 
+                                     (date,store,"breaks",nobreak))
             return
 
         def breaks(list:list,skip:bool,breakscount:int,position:str)->int: ###Searches for missed and short breaks
@@ -175,7 +180,8 @@ def run(self):
                     max = MAXSHIFTOR
             
             while i <len(list):
-                cursor.execute("INSERT INTO timeclock(date,store,tm,intime,outtime,hours,position) VALUES(?,?,?,?,?,?,?)", (date,store,list[i][9:35],list[i][41:48],list[i][49:56],list[i][58:66].strip(),position))
+                cursor.execute("INSERT INTO timeclock(date,store,tm,intime,outtime,hours,position) VALUES(?,?,?,?,?,?,?)", 
+                               (date,store,list[i][9:35],list[i][41:48],list[i][49:56],list[i][58:66].strip(),position))
         
                 if i < len(list)-1: #Check for short breaks
                     if list[i][0:8] == list[i+1][0:8]:
@@ -183,7 +189,8 @@ def run(self):
                         clockout = truetime(list[i][49:56])
                         clockin = truetime(list[i+1][41:48])
                         breaklength = int((clockin - clockout)*60) # Dedicated to Tyler
-                        if clockin - clockout < MINBREAK and clockin - clockout > MAXECLUDE: shortBreak(list[i],breaklength)
+                        if clockin - clockout < MINBREAK and clockin - clockout > MAXECLUDE: shortBreak(list[i],
+                                                                                                        breaklength)
                 #if RCP or list[i][0:8] in CCDMINORS:
                 if float(list[i][58:66].strip()) > max: ##Check for missed breaks
                     if i < len(list)-1:  
@@ -308,7 +315,8 @@ def run(self):
             if instoreline != 0: breakscount = breaks(instores,False,breakscount,'Instore') # type: ignore
             if RCP: breakscount = breaks(managers,True,breakscount,'Manager')
             if breakscount == 0:
-                cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks","None Missed!"))
+                cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", 
+                               (date,store,"breaks","None Missed!"))
             mgrs = []
             outtimes = []
             intimes = []

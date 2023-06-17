@@ -26,7 +26,7 @@ def run(self):
                     "14\" Dough":"1080",
                     "16\" Dough":"1082",
                     "Wings":"1098",
-                    "Poppers":"1099",
+                    "Poppers":"1093",
                     "Chicken":"1095",}
         
         wb = Workbook()
