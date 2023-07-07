@@ -206,11 +206,11 @@ class RoseUtils(QMainWindow):
         #self.ui.btn_breaksccd.clicked.connect(lambda: Daily_DOR_Breaks.run(self, self.zocdownloadfolder, self.ccddatabase, "CCD"))
         self.ui.btn_epp.clicked.connect(lambda: Epp.run(self)) 
         #self.ui.tabWidget.currentChanged.connect(self.tabchange)
-        self.ui.btn_output_browse.clicked.connect(lambda: self.select_setting(self.outputfolder,"Output Folder",False))
-        self.ui.btn_zocdownload_browse.clicked.connect(lambda: self.select_setting(self.zocdownloadfolder, "Zoc Download Folder",False))
-        self.ui.btn_rcpdatabase_browse.clicked.connect(lambda: self.select_setting(self.rcpdatabase, "RCP Database File",True))
-        self.ui.btn_ccddatabase_browse.clicked.connect(lambda: self.select_setting(self.ccddatabase, "CCD Database File",True))
-        self.ui.btn_downloads_browse.clicked.connect(lambda: self.select_setting(self.downloadfolder, "Downloads Folder",False))
+        self.ui.btn_output_browse.clicked.connect(lambda: self.select_setting(self.outputfolder,"Output Folder",False))  # type: ignore
+        self.ui.btn_zocdownload_browse.clicked.connect(lambda: self.select_setting(self.zocdownloadfolder, "Zoc Download Folder",False))# type: ignore
+        self.ui.btn_rcpdatabase_browse.clicked.connect(lambda: self.select_setting(self.rcpdatabase, "RCP Database File",True))# type: ignore
+        self.ui.btn_ccddatabase_browse.clicked.connect(lambda: self.select_setting(self.ccddatabase, "CCD Database File",True))# type: ignore
+        self.ui.btn_downloads_browse.clicked.connect(lambda: self.select_setting(self.downloadfolder, "Downloads Folder",False))# type: ignore
         self.ui.btn_output_set.clicked.connect(self.savefolders)
         self.ui.btn_zocdownload_set.clicked.connect(self.savefolders)
         self.ui.btn_rcpdatabase_set.clicked.connect(self.savefolders)
@@ -253,7 +253,7 @@ class RoseUtils(QMainWindow):
         self.ui.btn_pdf_split.clicked.connect(self.pdf_split)
         self.ui.btn_pdf_combine.clicked.connect(self.pdf_combine)
         self.ui.pdf_listbox.currentRowChanged.connect(self.pdfboxchanged)
-        self.ui.btn_pdf_remove.clicked.connect(lambda: self.ui.pdf_listbox.takeItem(self.ui.pdf_listbox.currentRow()))
+        self.ui.btn_pdf_remove.clicked.connect(lambda: self.ui.pdf_listbox.takeItem(self.ui.pdf_listbox.currentRow()))# type: ignore
 
         # timer buttons
         self.ui.btn_timer_start.clicked.connect(self.timer_start)
