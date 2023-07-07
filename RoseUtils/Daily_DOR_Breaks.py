@@ -302,6 +302,8 @@ def run(self):
             else:
                 deposit = dor[ccDepLine-1][64:71]
             
+            
+ 
             ##### Travel Payouts
             travel = 0
             for i in range(33,50):

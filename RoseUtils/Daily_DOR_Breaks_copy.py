@@ -336,7 +336,14 @@ def run(self):
                 deposit = "No CC Deposit"
             else:
                 deposit = dor[ccDepLine-1][64:71]
-            
+            totalccline = findline("Total CC",0)+2
+            totalcc = dor[totalccline][100:114].strip()
+            ccdep = dor[ccDepLine][57:].strip()
+            cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"ccdep",ccdep))
+            cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"totalcc",totalcc))
+
+
+
             ##### Travel Payouts
             travel = 0
             for i in range(33,50):
