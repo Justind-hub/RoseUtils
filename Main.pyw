@@ -55,9 +55,13 @@ class RoseUtils(QMainWindow):
         self.signals()
         try:
             if not updater.run():
+                print("running update")
                 self.update()
+            else:
+                print("not running update")
         except Exception:
             log.error(traceback.format_exc())
+            print(traceback.format_exc())
         log.debug("Finished __init__")
         self.third = datetime.now() - start
         self.ui.outputbox.append(f"Finished start in {datetime.now() - start}")
