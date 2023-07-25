@@ -414,7 +414,7 @@ def run(self):
                 remove(file)
 
             
-        #con.commit()
+        con.commit()
 
         #### Export database to excel file
         workbook = Workbook(EXPORT_EXCEL_FILE)
