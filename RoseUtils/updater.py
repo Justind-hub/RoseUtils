@@ -14,7 +14,7 @@ def run():
 
     for line in entire_div: # type: ignore
         if "Version" in str(line):
-            for line2 in line:
+            for line2 in line: # type: ignore
                 if "Version" in str(line2):
                     curver = str(line2)
     curver = curver[14:-4] # type: ignore

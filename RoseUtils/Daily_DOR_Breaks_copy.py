@@ -384,16 +384,11 @@ def run(self):
             opener = f"{mgrs[intimes.index(min(intimes))]} {ampm(min(intimes))}"
 
                        
-            #### EZCater paid outs
-            x = 0
-            if RCP:
-                
-                x = findline("Cash Paid Out",10)
-                for i in range(x,x+30):
-                    line = dor[i]
-                    if "EZCATER" in dor[i].upper():
-                        cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"ezcater PO",float(dor[i][50:60].strip())))
-                    
+            
+            
+            x = findline("GARLIC ESC",200)
+            ges = self.append_text.emit(dor[x][45:55])
+            cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"GES",ges))
            
             #####Insert everything other than breaks into the database
             database = [(date, store, "CSC",csc),
@@ -411,11 +406,7 @@ def run(self):
                         (date, store, "Travel", travel),
                         (date, store, "Excess Mileage",excess)]
 
-            if RCP:
-                ezcater = findline("EZCater",10) ### Find EZCAter Payments
-                if ezcater != 0 and ezcater < x:
-                    database.append((date, store, "ezcater",float(dor[ezcater][73:90].strip()) + float(dor[ezcater][89:].strip())))
-
+         
          
 
             cursor.executemany("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", database)
@@ -423,7 +414,7 @@ def run(self):
                 remove(file)
 
             
-        con.commit()
+        #con.commit()
 
         #### Export database to excel file
         workbook = Workbook(EXPORT_EXCEL_FILE)

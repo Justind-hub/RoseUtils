@@ -85,8 +85,8 @@ class RoseUtils(QMainWindow):
         log.debug("Update function called")
         process = Popen(['git', 'pull', str('https://github.com/Justind-hub/RoseUtils')],stdout=PIPE, stderr=PIPE) #tpye:ignore
         stdout, stderr = process.communicate()
-        log.debug(f"stdout = {stdout}")
-        log.debug(f"stderr = {stderr}")
+        log.info(f"stdout = {stdout}")
+        log.info(f"stderr = {stderr}")
         if "Already up to date" not in str(stdout):
             self.popup("Update Downloaded!\nPlease re-open the program.",QMessageBox.Information,"New Update Downloaded!")# type: ignore
             self.close()
