@@ -9,6 +9,7 @@ import logging
 from winsound import Beep
 from time import sleep
 import threading
+import traceback
 
 #PyQt
 from PyQt5.QtWidgets import QMainWindow, QLineEdit, QFileDialog, QApplication
@@ -56,7 +57,7 @@ class RoseUtils(QMainWindow):
             if not updater.run():
                 self.update()
         except Exception:
-            log.error("UNABLE TO RUN UPDATER")
+            log.error(traceback.format_exc())
         log.debug("Finished __init__")
         self.third = datetime.now() - start
         self.ui.outputbox.append(f"Finished start in {datetime.now() - start}")
