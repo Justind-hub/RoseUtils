@@ -387,7 +387,7 @@ def run(self):
             
             
             x = findline("GARLIC ESC",200)
-            ges = self.append_text.emit(dor[x][45:55])
+            ges = dor[x][45:55].strip()
             cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"GES",ges))
            
             #####Insert everything other than breaks into the database
