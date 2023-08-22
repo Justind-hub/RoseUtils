@@ -29,7 +29,9 @@ def run(self) -> None:
         output = self.outputfolder
         delete = self.check_delete                                                                         
         rcp = self.rcp   
-
+        storelist = ["1740","1743","2172","2174","2236","2272","2457","2549","2603","2953","3498","4778"] if rcp else \
+                    ["2208","2306","2325","2478","2612","2618","2921","3015","3130","3479","4405"]
+        
         storecols = {'1740': 2, '2172': 4,  '2236': 6,  '2272': 8,  '2549': 10, '2953': 12, 
                     '04778': 14, '1743': 16, '2174': 18, '2457': 20, '2603': 22, '3498': 24} if rcp else \
                     {'2208': 2, '2306': 4,  '2325': 6,  '2478': 8,  '2612': 10, '2618': 12, 
@@ -72,6 +74,10 @@ def run(self) -> None:
             store = textlist[0][83:89].strip()
             self.append_text.emit("Running store "+store+"...")                                                ######################################################
             col = storecols[store]
+            try:
+                storelist.remove(store.strip())
+            except:
+                pass
             textlist = [line for line in textlist if len(line) == 136]
             textlist.pop(0)
             textlist.pop(0)
@@ -120,6 +126,7 @@ def run(self) -> None:
         wb.save(output+"Last Weeks Variances.xlsx")   
         startfile(f"{output}Last Weeks Variances.xlsx")
         self.append_text.emit(f"Finished {len(filelist)} stores in {round(perf_counter() - start,2)} seconds")
+        self.append_text.emit(f"Missing stores {storelist}")
         self.append_text.emit(f"File saved to {output}Last Weeks Variances.xlsx, opening now...")
     except:
         self.append_text.emit("ENCOUNTERED ERROR")

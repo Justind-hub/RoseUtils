@@ -24,7 +24,8 @@ def run(self):
         else:
             STORECOL = {"2208":1,"2306":2,"2325":3,"2478":4,"2612":5,"2618":6,"2687":7,"2921":8,"3015":9,"3130":10,"3479":11,"4405":12}
         VARIANCEAMOUNT = 10
-
+        storelist = ["1740","1743","2172","2174","2236","2272","2457","2549","2603","2953","3498","4778"] if self.rcp else \
+                    ["2208","2306","2325","2478","2612","2618","2921","3015","3130","3479","4405"]
 
         #openrtf file
         '''def openrtf(file): #Call this to open an rtf file with the filepath in the thing.
@@ -72,6 +73,10 @@ def run(self):
             store = textlist[0]
             store = store[82:90].strip()
             store = store[-4:]
+            try:
+                storelist.remove(store.strip())
+            except:
+                pass
             self.append_text.emit(f"Target Inventory: Running store {store}")
             #store = int(store)
             date = textlist[2]
@@ -134,6 +139,7 @@ def run(self):
             wb.save(self.outputfolder+"CCDInventory Target "+datetime.now().strftime("%m.%d.%y")+".xlsx")
         self.append_text.emit("Done!")
         self.append_text.emit(f"Target Inventory: Completed in {round(end_time - start,2)} seconds")    
+        self.append_text.emit(f"Missing stores {storelist}")
     except:
         self.append_text.emit("ENCOUNTERED ERROR")
         self.append_text.emit("Please send the contents of this box to Justin")

@@ -49,7 +49,7 @@ def run(self):
         start = perf_counter()
         ####### Change the 3 variables below. Inlude double "\\"s, including 2 at the end of paths
         self.append_text.emit("Running Breaks Report")
-        
+        storelist = []
         sleep(.01)
         if self.rcp:
             MAXSHIFTWA = 5.1
@@ -63,6 +63,7 @@ def run(self):
             databasefile = self.rcpdatabase
             MINBREAK = 0.5
             MAXECLUDE = 0.02
+            storelist = ["1740","1743","2172","2174","2236","2272","2457","2549","2603","2953","3498","4778"]
         else:
             CCD = True
             RCP = False
@@ -73,6 +74,7 @@ def run(self):
             databasefile = self.ccddatabase
             MINBREAK = 0.5
             MAXECLUDE = 0.02
+            storelist = ["2208","2306","2325","2478","2612","2618","2921","3015","3130","3479","4405"]
         CCDMINORS = ['10177606', '10190883', '10207907', '10208525', '10213678', 
                     '10217298', '10217507', '10217795', '10218511', '10220538', 
                     '10220694', '10220775', '10223219', '10223898', '10229576', 
@@ -253,6 +255,10 @@ def run(self):
             breakscount = 0
             ##Store, Date and CSC. All simple
             store = dor[0][83:87]
+            try:
+                storelist.remove(store.strip())
+            except:
+                pass
             #print(f"Opening store #{store} from file {file}")
             self.append_text.emit(f"Breaks Report: Opening store #{store}")
             
@@ -447,6 +453,7 @@ def run(self):
         end_time = time.perf_counter()
         #print(f"Completed {len(fileList)} stores in {end_time - start_time} seconds")
         self.append_text.emit(f"Breaks Report: Completed {len(fileList)} stores in {round(end_time - start_time,2)} seconds")
+        self.append_text.emit(f"Missing stores {storelist}")
         sleep(.01)
     except:
         self.append_text.emit("ENCOUNTERED ERROR")

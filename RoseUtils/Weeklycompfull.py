@@ -40,7 +40,8 @@ def run(self):
         else:
             STORECOL = {"2208":0,"2306":4,"2325":8,"2478":12,"2612":16,"2618":20,"2687":24,"2921":28,"3015":32,"3130":36,"3479":40,"4405":44}
             stores = [2208,2306,2325,2478,2612,2618,2687,2921,3015,3130,3479,4405]
-
+        storelist = ["1740","1743","2172","2174","2236","2272","2457","2549","2603","2953","3498","4778"] if self.rcp else \
+                    ["2208","2306","2325","2478","2612","2618","2921","3015","3130","3479","4405"]
         weekday = [0,17,34,51,68,85,102]
 
         #set headers at each store
@@ -172,6 +173,10 @@ def run(self):
             store = textlist[1]
             store = store[82:90].strip()
             store = store[-4:]
+            try:
+                storelist.remove(store.strip())
+            except:
+                pass
             date = textlist[3]
             date = date.strip()
             col = STORECOL[store]
@@ -317,6 +322,7 @@ def run(self):
         else:
             wb.save(output+"CCDWeekly Comp "+datetime.now().strftime("%m.%d.%y")+".xlsx")
         self.append_text.emit(f"Weekly Comp: Completed in {round(end_time - start,2)} seconds")    
+        self.append_text.emit(f"Missing stores {storelist}")
     except:
         self.append_text.emit("ENCOUNTERED ERROR")
         self.append_text.emit("Please send the contents of this box to Justin")
