@@ -38,10 +38,10 @@ def run(self):
             STORECOL = {"1740":24,"1743":32,"2172":28,"2174":0,"2236":4,"2272":36,"2457":40,"2549":8,"2603":44,"3498":16,"4778":20,"2953":12}
             stores = [2174,2236,2549,2953,3498,4778,1740,2172,1743,2272,2457,2603]
         else:
-            STORECOL = {"2208":0,"2306":4,"2325":8,"2478":12,"2612":16,"2618":20,"2687":24,"2921":28,"3015":32,"3130":36,"3479":40,"4405":44}
-            stores = [2208,2306,2325,2478,2612,2618,2687,2921,3015,3130,3479,4405]
+            STORECOL = {"2208":0,"2306":4,"2325":8,"2478":12,"2612":16,"2618":20,"2687":24,"2921":28,"3015":32,"3130":36,"3479":40,"4405":44,"5293":48}
+            stores = [2208,2306,2325,2478,2612,2618,2687,2921,3015,3130,3479,4405,5293]
         storelist = ["1740","1743","2172","2174","2236","2272","2457","2549","2603","2953","3498","4778"] if self.rcp else \
-                    ["2208","2306","2325","2478","2612","2618","2921","3015","3130","3479","4405"]
+                    ["2208","2306","2325","2478","2612","2618","2687","2921","3015","3130","3479","4405","5293"]
         weekday = [0,17,34,51,68,85,102]
 
         #set headers at each store
@@ -258,6 +258,9 @@ def run(self):
             ws.cell(row = 1+i, column = 42).alignment = Alignment(horizontal="center")
             ws.cell(row = 1+i, column = 46, value = stores[12-1]).border = allborder
             ws.cell(row = 1+i, column = 46).alignment = Alignment(horizontal="center")
+            if not self.rcp:
+                ws.cell(row = 1+i, column = 50, value = stores[13-1]).border = allborder
+                ws.cell(row = 1+i, column = 50).alignment = Alignment(horizontal="center")
 
             ws.cell(row=3+i, column = 1, value ="10-11")
             ws.cell(row=4+i, column = 1, value ="11-12")
@@ -274,7 +277,9 @@ def run(self):
             ws.cell(row=15+i, column = 1, value ="10-11")
             ws.cell(row=16+i, column = 1, value ="11-12")
             ii = 1
-            while ii < 50:
+            lastcolnum = 54
+            if self.rcp: lastcolnum = 50
+            while ii < lastcolnum:
                 ws.cell(row=8+i, column = ii).fill = fill3
                 ws.cell(row=5+i, column = ii).fill = fill12
                 ws.cell(row=12+i, column = ii).fill = fill7
@@ -297,14 +302,19 @@ def run(self):
             ws.merge_cells(f"AL{i}:AO{i}")
             ws.merge_cells(f"AP{i}:AS{i}")
             ws.merge_cells(f"AT{i}:AW{i}")
+            if not self.rcp:
+                ws.merge_cells(f"AX{i}:BA{i}")
+        
+        lastcol = "ba"
+        if self.rcp: lastcol = "aw"
 
-        ws.merge_cells("a1:aw1")
-        ws.merge_cells("a18:aw18")
-        ws.merge_cells("a35:aw35")
-        ws.merge_cells("a52:aw52")
-        ws.merge_cells("a69:aw69")
-        ws.merge_cells("a86:aw86")
-        ws.merge_cells("a103:aw103")
+        ws.merge_cells(f"a1:{lastcol}1")
+        ws.merge_cells(f"a18:{lastcol}18")
+        ws.merge_cells(f"a35:{lastcol}35")
+        ws.merge_cells(f"a52:{lastcol}52")
+        ws.merge_cells(f"a69:{lastcol}69")
+        ws.merge_cells(f"a86:{lastcol}86")
+        ws.merge_cells(f"a103:{lastcol}103")
 
 
         ws.cell(row=1, column = 1).font = Font(bold=True, size = 30)

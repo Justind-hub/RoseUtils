@@ -30,7 +30,7 @@ def run(self) -> None:
         delete = self.check_delete                                                                         
         rcp = self.rcp   
         storelist = ["1740","1743","2172","2174","2236","2272","2457","2549","2603","2953","3498","4778"] if rcp else \
-                    ["2208","2306","2325","2478","2612","2618","2921","3015","3130","3479","4405"]
+                    ["2208","2306","2325","2478","2612","2618","2687","2921","3015","3130","3479","4405","5293"]
         
         storecols = {'1740': 2, '2172': 4,  '2236': 6,  '2272': 8,  '2549': 10, '2953': 12, 
                     '04778': 14, '1743': 16, '2174': 18, '2457': 20, '2603': 22, '3498': 24} if rcp else \
@@ -64,7 +64,8 @@ def run(self) -> None:
                     '2065': 'Bstick Tray', '2071': 'Knot Tray', '2305': 'Forks', '2306': 'Bowls', 
                     '2307': 'Sleeves', '3020': '2.0 cups', '3021': '2.0 Cups', '3022': 'Lids', 
                     '3040': '14" Parch', '3041': '6.5" Parch', '3042': '10" Parch', '3044': 'Dbag', 
-                    '3064': 'Napkins'}
+                    '3064': 'Napkins','1014':'Cool Ranch','1002':'Spicy Garlic','1126':'CR Seasoning',
+                    '1120':'Lemon Pepper','1506':'Twix','1507':'Caramel','1509':'Oreo','1519':'Cheesecake'}
 
         filelist = [zocdownload + file for file in listdir(zocdownload) if "INVTAR" in file]
         for file in filelist:

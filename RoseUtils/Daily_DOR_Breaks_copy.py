@@ -74,7 +74,7 @@ def run(self):
             databasefile = self.ccddatabase
             MINBREAK = 0.5
             MAXECLUDE = 0.02
-            storelist = ["2208","2306","2325","2478","2612","2618","2921","3015","3130","3479","4405"]
+            storelist = ["2208","2306","2325","2478","2612","2618","2687","2921","3015","3130","3479","4405","5293"]
         CCDMINORS = ['10177606', '10190883', '10207907', '10208525', '10213678', 
                     '10217298', '10217507', '10217795', '10218511', '10220538', 
                     '10220694', '10220775', '10223219', '10223898', '10229576', 
@@ -254,7 +254,7 @@ def run(self):
             dor = openrtf(file)
             breakscount = 0
             ##Store, Date and CSC. All simple
-            store = dor[0][83:87]
+            store = dor[0][84:88]
             try:
                 storelist.remove(store.strip())
             except:
