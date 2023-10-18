@@ -254,9 +254,10 @@ def run(self):
             dor = openrtf(file)
             breakscount = 0
             ##Store, Date and CSC. All simple
-            store = dor[0][84:88]
+            store = dor[0][83:88].strip()
+            store = store[-4:]
             try:
-                storelist.remove(store.strip())
+                storelist.remove(store)
             except:
                 pass
             #print(f"Opening store #{store} from file {file}")
