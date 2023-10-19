@@ -14,7 +14,7 @@ def run(self):
     try:
 
         class Shift():
-            def __init__(self, line, next):
+            def __init__(self, line, next, position):
                 self.id = line[0:9].strip()
                 self.name = line[9:35].strip()
                 self.name = self.name.split(" ")[0][0:7].strip() + " " + self.name.split(" ")[-1][0]
@@ -26,6 +26,7 @@ def run(self):
                 self.second_start = 0.0
                 self.break_length = 0.5
                 self.skip = False
+                self.position = position
                 if "*" in line[49:58]: 
                     self.br = True
                     self.break_length = 0.5
@@ -39,7 +40,12 @@ def run(self):
                         self.second_end = truetime(next[49:58].strip())
                         self.break_length = self.second_start - self.end
                         self.total_length = float(line[60:65].strip()) + float(next[60:65].strip()) + self.break_length
-
+            
+            def add(self):
+                if self.br:
+                    return (self.position,self.name,ampm(self.start),ampm(self.second_end),self.length,ampm(self.end),ampm(self.second_start),round(self.break_length,2))
+                else:
+                    return (self.position,self.name,ampm(self.start),ampm(self.end),self.length,0,0,0)
                         
             
 
@@ -47,6 +53,7 @@ def run(self):
 
 
         start = perf_counter()
+        timeclockdict = {}
         ####### Change the 3 variables below. Inlude double "\\"s, including 2 at the end of paths
         self.append_text.emit("Running Breaks Report")
         storelist = []
@@ -83,8 +90,15 @@ def run(self):
         ZOCDOWNLOAD_FOLDER = self.zocdownloadfolder   
         DATABASE_FILE = databasefile
         EXPORT_EXCEL_FILE = databasefile[:databasefile.rfind("/")]+"/Breaks.xlsx"
-        EXPORT_EXCEL_FILE2 = databasefile[:databasefile.rfind("/")]+"/timeclock.xlsx"
+        output = self.outputfolder
+        storelist2 = storelist.copy()
+
+        if RCP:
+            EXPORT_EXCEL_FILE2 = self.outputfolder+"Timeclock "+datetime.now().strftime("%m.%d.%y")+".xlsx"
+        else:
+            EXPORT_EXCEL_FILE2 = self.outputfolder+"CCD Timeclock "+datetime.now().strftime("%m.%d.%y")+".xlsx"
         WASHINGTON_STORES = ["2236","3498","2953"]
+        
         
         ###### End of user setup section
 
@@ -179,11 +193,12 @@ def run(self):
         def breaks(list:list,skip:bool,breakscount:int,position:str)->int: ###Searches for missed and short breaks
             shiftslist = [i[0:70].strip() for i in list]       
             shifts = []
+            
             shiftslist.append('                                                                  ')
             
             i = 0
             while i < len(shiftslist)-1:
-                shifts.append(Shift(shiftslist[i], shiftslist[i+1]))
+                shifts.append(Shift(shiftslist[i], shiftslist[i+1],position))
                 if shiftslist[i][0:8] == shiftslist[i+1][0:8]: i+=1
                 i +=1
 
@@ -201,6 +216,7 @@ def run(self):
 
             for shift in shifts:
                 dbentry = []
+                TIMECLOCK.append(shift.add())
                 if "Till " in shift.name:
                     if shift.length > 1:
                         cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks","Till"))
@@ -234,7 +250,7 @@ def run(self):
                     else:
                         cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks",entry))
                     
-
+                
                     
                         
                 
@@ -253,6 +269,7 @@ def run(self):
             file = ZOCDOWNLOAD_FOLDER + file
             dor = openrtf(file)
             breakscount = 0
+            TIMECLOCK = []
             ##Store, Date and CSC. All simple
             store = dor[0][83:88].strip()
             store = store[-4:]
@@ -417,6 +434,9 @@ def run(self):
          
 
             cursor.executemany("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", database)
+            
+            
+            timeclockdict[store] = TIMECLOCK
             if self.check_delete:
                 remove(file)
 
@@ -437,18 +457,31 @@ def run(self):
 
         workbook.close()
 
+
         workbook = Workbook(EXPORT_EXCEL_FILE2)
         worksheet = workbook.add_worksheet()
-        
-        
-        cursor.execute("select * from timeclock")
-        mysel=cursor.execute("select * from timeclock")
-        for i, row in enumerate(mysel):
-            for j, value in enumerate(row):
-                worksheet.write(i, j, row[j])
+        for store in storelist2:
+            try:
                 
+                col = storelist2.index(store) * 2
+                timeclock = timeclockdict[str(store)]
+                worksheet.write(0,col,store)
+                for i, s in enumerate(timeclock):
+                    worksheet.write(i+1,col,f"{s[0]}: {s[1]}")
+                    worksheet.write(i+1,col+1,f"{s[2]} - {s[3]}, {s[4]},  {s[5]} - {s[6]}, {s[7]}")
+
+                #(self.position,self.name,ampm(self.start),ampm(self.second_end),self.length,ampm(self.end),ampm(self.second_start),round(self.break_length,2))
+
+                
+            except:
+                pass
+        
+    
+            
 
         workbook.close()
+
+        #print(timeclockdict)
         
         con.close()
         end_time = time.perf_counter()
