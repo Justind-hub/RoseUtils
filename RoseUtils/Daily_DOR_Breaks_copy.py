@@ -21,12 +21,12 @@ def run(self):
                 self.start = truetime(line[41:49])
                 self.end = truetime(line[49:58])
                 self.length = float(line[59:65].strip())
-<<<<<<< HEAD
-=======
+
+
                 print(self.name)
                 print(self.length)
                 print(line[60:65])
->>>>>>> d0a7466b5f1c7d68fa32d94b6aeb350147cafa6e
+
                 self.second_end = 0.0
                 self.total_length = 0.0
                 self.second_start = 0.0
