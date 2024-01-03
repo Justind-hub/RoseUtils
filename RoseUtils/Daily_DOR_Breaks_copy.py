@@ -140,7 +140,7 @@ def run(self):
             if h == 12: h = 0
             m = (m/60)
             if h+m > 24: h -=12
-            return h+m
+            return round(h+m,2)
         
         def ampm(time:float) ->str:
             '''Pass in time in decimals of hours 12.50 -> 12:30pm'''
