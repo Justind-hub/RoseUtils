@@ -44,7 +44,7 @@ def run(self):
                         self.second_start = truetime(next[41:49].strip())
                         self.second_length = float(next[59:65].strip())
                         self.second_end = truetime(next[49:58].strip())
-                        self.break_length = self.second_start - self.end
+                        self.break_length = round(self.second_start - self.end,2)
                         self.total_length = float(line[59:65].strip()) + float(next[59:65].strip()) + self.break_length
             
             def add(self):
