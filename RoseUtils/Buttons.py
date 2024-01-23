@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import  QMessageBox, QFileDialog # Change to * if you get a
 from RoseUtils import Daily_DOR_Breaks, New_Hire, Target_Inventory
 from RoseUtils import Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
 from RoseUtils import Epp, Release, gm_Target_inv, gm_weeklycomp
-from RoseUtils import export_SQL,gm_on_hands, updater, costreport
+from RoseUtils import export_SQL,gm_on_hands, costreport
 import winsound
 import time
 

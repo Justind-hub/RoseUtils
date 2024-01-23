@@ -22,7 +22,7 @@ from RoseUtils.Main_UI import Ui_RoseUtils
 from RoseUtils import Daily_DOR_Breaks_copy, New_Hire, Target_Inventory
 from RoseUtils import Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
 from RoseUtils import Epp, Release, gm_Target_inv, gm_weeklycomp
-from RoseUtils import export_SQL,gm_on_hands, updater, costreport
+from RoseUtils import export_SQL,gm_on_hands, costreport
 from RoseUtils import Schedule_reviewer, in_sales, Last_Weeks_Variances
 from RoseUtils import pa_period_promo, On_Hand
 from RoseUtils.Buttons import Buttons #Buttons class init as "b"
@@ -53,15 +53,7 @@ class RoseUtils(QMainWindow):
         self.buttons()
         self.menubars()
         self.signals()
-        try:
-            if not updater.run():
-                print("running update")
-                self.update()
-            else:
-                print("not running update")
-        except Exception:
-            log.error(traceback.format_exc())
-            print(traceback.format_exc())
+       
         log.debug("Finished __init__")
         self.third = datetime.now() - start
         self.ui.outputbox.append(f"Finished start in {datetime.now() - start}")
@@ -86,16 +78,7 @@ class RoseUtils(QMainWindow):
         self.ui.actionVersion_2_0.triggered.connect(lambda: Release.r20(self, True)) 
         self.ui.actionAbout_Me.triggered.connect(lambda: Release.aboutme(self))
         
-    def update(self):                                                          # Checks to see if update is available and downloads it
-        log.debug("Update function called")
-        process = Popen(['git', 'pull', str('https://github.com/Justind-hub/RoseUtils')],stdout=PIPE, stderr=PIPE) #tpye:ignore
-        stdout, stderr = process.communicate()
-        log.info(f"stdout = {stdout}")
-        log.info(f"stderr = {stderr}")
-        if "Already up to date" not in str(stdout):
-            self.popup("Update Downloaded!\nPlease re-open the program.",QMessageBox.Information,"New Update Downloaded!")# type: ignore
-            self.close()
-        log.debug("Update function ran")
+
 
     @pyqtSlot(str)
     def set_Text(self, value):

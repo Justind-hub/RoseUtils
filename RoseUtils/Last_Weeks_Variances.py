@@ -43,7 +43,7 @@ def run(self) -> None:
                     '6006': '20oz Aquifina', '6007': '20oz Dr P', '6009': '20oz Mug', 
                     '6012': '20oz Orange', '6109': '20oz Lifewater', '6200': '2L Pepsi', 
                     '6201': '2L Diet', '6203': '2L Mt Dew', '6205': '2L Mist', '6207': 
-                    '2L Dr P', '6209': '2L Mug', '6212': '2L Orange', '1056': 'Ch', 
+                    '2L Dr P', '6209': '2L Mug', '6212': '2L Orange', '1057': 'Ch', 
                     '1121': 'Cream Ch', '1159': '2Ch', '1257': '3Ch', '1313': 'String Ch', 
                     '1074': 'Thin Cr', '1075': '10"', '1077': '12"', '1080': '14"', 
                     '1082': '16"', '1086': 'GF', '1406': 'Cookie', '1407': 'Brownie', 
@@ -92,7 +92,7 @@ def run(self) -> None:
                     items.append(line[11:35].strip())
                 dollars.append(float(line[105:116].strip()))
                 units.append(float(line[65:79].strip()))
-                if line[11:35].strip() == "Cheese": cheese = float(line[105:116].strip())
+                if line[11:35].strip() == "20lb PIZZA CHEESE": cheese = float(line[105:116].strip())
                 elif "20oz" in line[11:35].strip(): sodas.append(float(line[65:79].strip()))
             
             df = pd.DataFrame()
