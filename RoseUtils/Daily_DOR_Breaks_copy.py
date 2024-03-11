@@ -363,7 +363,7 @@ def run(self):
             travel = 0
             for i in range(33,50):
                 if dor[i][15:34].strip() == "Travel":
-                    travel = travel + float(dor[i][50:63].strip())
+                    travel = travel + float(dor[i][50:62].strip())
 
 
             ### Find short and missing breaks 
