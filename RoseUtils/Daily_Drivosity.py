@@ -19,7 +19,7 @@ def run(self, downloadsfolder, database, output):
         ######Setup for pandas, SQLite and openpyxl
         conn = sqlite3.connect(DATABASE_FILE)
         cursor = conn.cursor()
-        df = pd.read_excel(DOWNLOADS_FOLDER+"report.xlsx",usecols="D,F,G,U",skiprows = 1,header=0)
+        df = pd.read_excel(DOWNLOADS_FOLDER+"report.xlsx",usecols="D,F,G,S",skiprows = 1,header=0)
         wb = openpyxl.load_workbook(DOWNLOADS_FOLDER+"report.xlsx")
         ws = wb.active
 
@@ -27,7 +27,7 @@ def run(self, downloadsfolder, database, output):
         ##### Create pandas DataFrame
         df["Name"] = df["First Name"] +" " + df["Last Name"]
         df = df.drop(["First Name","Last Name"], axis=1 )
-        df = df.rename(columns={"Store #":"store","DriveScore":"score","Name":"name"})
+        df = df.rename(columns={"Store #":"store","Incidents Per Mile":"score","Name":"name"})
 
 
         ####Read the date from drivosity report and create list for dataframe, 
