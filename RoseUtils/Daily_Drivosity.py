@@ -27,7 +27,7 @@ def run(self, downloadsfolder, database, output):
         ##### Create pandas DataFrame
         df["Name"] = df["First Name"] +" " + df["Last Name"]
         df = df.drop(["First Name","Last Name"], axis=1 )
-        df = df.rename(columns={"Store #":"store","Incidents Per Mile":"score","Name":"name","DriveScore":"ds"})
+        df = df.rename(columns={"Store #":"store","Incidents Per Mile":"score","Name":"name","DriveScore®":"ds"})
 
 
         ####Read the date from drivosity report and create list for dataframe, 
