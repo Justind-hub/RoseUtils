@@ -209,9 +209,9 @@ def run(self):
             for shift in shifts:
                 dbentry = []
             
-                if "Till " in shift.name:
+                if "Till " in shift.name or "Ghost" in shift.name:
                     if shift.length > 1:
-                        cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks","Till"))
+                        cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks",f"##{shift.name}"))
                     continue
                 if shift.br == False and float(shift.length) > max:
                     dbentry.append(f"{shift.name} NB {shift.length}")
