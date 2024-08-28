@@ -17,7 +17,8 @@ def run(self):
             def __init__(self, line, next, position):
                 self.id = line[0:9].strip()
                 self.name = line[9:35].strip()
-                self.name = self.name.split(" ")[0][0:7].strip() + " " + self.name.split(" ")[-1][0]
+                if "Ghost" not in self.name:
+                    self.name = self.name.split(" ")[0][0:7].strip() + " " + self.name.split(" ")[-1][0]
                 self.start = truetime(line[41:49])
                 self.end = truetime(line[49:58])
                 self.length = float(line[59:65].strip())
