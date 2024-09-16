@@ -19,7 +19,7 @@ def run(self, zocdownload, output):
         #get desktop folder to save to
         
         if self.rcp:
-            storecol = {"1740":2,"1743":3,"2172":4,"2174":5,"0223":6,"2272":7,"2457":8,"2549":9,"2603":10,"2953":11,"3498":12,"0477":13}
+            storecol = {"1740":2,"1743":3,"2172":4,"2174":5,"02236":6,"2272":7,"02457":8,"2549":9,"2603":10,"2953":11,"3498":12,"04778":13}
         else:
             storecol = {"2208":2,"2306":3,"2325":4,"2478":5,"2612":6,"2618":7,"2687":8,"2921":9,"3015":10,"3130":11,"3479":12,"4405":13}
 
@@ -70,7 +70,7 @@ def run(self, zocdownload, output):
             ##########################################################################
             #Get store number and date
             store = textlist[1]
-            store = store[store.find("RESTAURANT")+11:store.find("RESTAURANT")+15]
+            store = store[store.find("RESTAURANT")+11:store.find("RESTAURANT")+16].strip()
             col = storecol[store]
             date = textlist[4].strip()
             #create new worksheet with name {date}

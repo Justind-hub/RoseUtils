@@ -17,7 +17,7 @@ def run(self):
         filelist = [self.zocdownloadfolder + file for file in filelist]
 
         if self.rcp:
-            STORECOL = {"1740":2,"1743":4,"2172":6,"2174":8,"0223":10,"2272":12,"2457":14,"2549":16,"2603":18,"2953":20,"3498":22,"0477":24}
+            STORECOL = {"1740":2,"1743":4,"2172":6,"2174":8,"02236":10,"2272":12,"02457":14,"2549":16,"2603":18,"2953":20,"3498":22,"04778":24}
         else:
             STORECOL = {"2208":2,"2306":4,"2325":6,"2478":8,"2612":10,"2618":12,"2687":14,"2921":16,"3015":18,"3130":20,"3479":22,"4405":24}
                     #  
@@ -48,7 +48,7 @@ def run(self):
         
         for file in targets:
             file = openrtf(file)
-            store = file[1][83:87]
+            store = file[1][83:88].strip()
             columnnum = STORECOL[store] +1
             for line in file:
                 if line[4:8] in PRODUCTS.values():
@@ -60,7 +60,7 @@ def run(self):
 
         for file in values:
             file = openrtf(file)
-            store = file[1][83:87]
+            store = file[1][83:88].strip()
             columnnum = STORECOL[store]
             for line in file:
                 try: 
