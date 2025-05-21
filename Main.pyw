@@ -20,12 +20,13 @@ from PyQt5.QtWidgets import  QMessageBox, QFileDialog # Change to * if you get a
 # RoseUtils package functions
 from RoseUtils.Main_UI import Ui_RoseUtils
 from RoseUtils import Daily_DOR_Breaks_copy, New_Hire, Target_Inventory
-from RoseUtils import Weekly_DOR_CSC, Weeklycompfull, Daily_Drivosity
+from RoseUtils import Weekly_DOR_CSC, Weeklycompfull2am, Daily_Drivosity, Weeklycompfull
 from RoseUtils import Epp, Release, gm_Target_inv, gm_weeklycomp
 from RoseUtils import export_SQL,gm_on_hands, costreport
 from RoseUtils import Schedule_reviewer, in_sales, Last_Weeks_Variances
 from RoseUtils import pa_period_promo, On_Hand
 from RoseUtils.Buttons import Buttons #Buttons class init as "b"
+
 
 #Downloaded
 from PyPDF2 import PdfFileReader, PdfFileWriter, PdfFileMerger
@@ -184,7 +185,7 @@ class RoseUtils(QMainWindow):
         self.ui.btn_targetrcp.clicked.connect(lambda: threading.Thread(target=Target_Inventory.run,args=(self,)).start())    
         self.ui.btn_breaksrcp.clicked.connect(lambda: threading.Thread(target=Daily_DOR_Breaks_copy.run,args=(self,)).start()) 
         self.ui.btn_new_hirercp.clicked.connect(lambda: New_Hire.run(self, self.zocdownloadfolder, self.rcpdatabase, self.outputfolder)) 
-        self.ui.btn_drivosity.clicked.connect(lambda: Daily_Drivosity.run(self, self.downloadfolder, self.rcpdatabase, self.outputfolder)) 
+        self.ui.btn_drivosity.clicked.connect(lambda: threading.Thread(target=Weeklycompfull2am.run,args=(self,)).start())
         self.ui.btn_weekly_comprcp.clicked.connect(lambda: threading.Thread(target=Weeklycompfull.run,args=(self,)).start()) 
         self.ui.btn_weekly_dor.clicked.connect(lambda: Weekly_DOR_CSC.run(self, self.zocdownloadfolder, self.outputfolder)) 
         self.ui.btn_all3rcp.clicked.connect(self.all3rcp) 
@@ -564,7 +565,7 @@ class RoseUtils(QMainWindow):
         self.ui.outputbox.setText("Running Reports...")
         threading.Thread(target=Daily_DOR_Breaks_copy.run,args=(self,)).start()
         threading.Thread(target=Target_Inventory.run,args=(self,)).start()
-        threading.Thread(target=Weeklycompfull.run,args=(self,)).start()
+        threading.Thread(target=Weeklycompfull2am.run,args=(self,)).start()
         log.debug("all3rcp function ran")
 
     def savefolders(self):                                                     # Dialog box to delect folder for settings

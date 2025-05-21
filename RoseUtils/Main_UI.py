@@ -1134,7 +1134,7 @@ class Ui_RoseUtils(object):
 
     def retranslateUi(self, RoseUtils):
         _translate = QtCore.QCoreApplication.translate
-        RoseUtils.setWindowTitle(_translate("RoseUtils", "RoseUtils 2.14"))
+        RoseUtils.setWindowTitle(_translate("RoseUtils", "RoseUtils 3.0 (2am)"))
         self.btn_reexport.setToolTip(_translate("RoseUtils", "Re-export both the RCP and CCD Database files for Drivosity and Breaks"))
         self.btn_reexport.setText(_translate("RoseUtils", "Re-Export Database"))
         self.groupBox.setTitle(_translate("RoseUtils", "Options:"))
@@ -1154,7 +1154,7 @@ class Ui_RoseUtils(object):
         self.btn_new_hirercp.setToolTip(_translate("RoseUtils", "Run the New Hire Report"))
         self.btn_new_hirercp.setText(_translate("RoseUtils", "NewHire Report"))
         self.btn_drivosity.setToolTip(_translate("RoseUtils", "Run the Daily Drivosity Report"))
-        self.btn_drivosity.setText(_translate("RoseUtils", "Drivosity Report"))
+        self.btn_drivosity.setText(_translate("RoseUtils", "2am Weekly Comp"))
         self.btn_PA_Promo.setToolTip(_translate("RoseUtils", "Will Prompt you to open the report downloaded from PA"))
         self.btn_PA_Promo.setText(_translate("RoseUtils", "PA Period Promo"))
         self.btn_On_Hands.setText(_translate("RoseUtils", "On Hands Report"))

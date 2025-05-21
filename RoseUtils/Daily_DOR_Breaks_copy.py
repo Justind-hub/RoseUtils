@@ -17,6 +17,7 @@ def run(self):
             def __init__(self, line, next, position):
                 self.id = line[0:9].strip()
                 self.name = line[9:35].strip()
+                if id == '': return
                 if "Ghost" not in self.name:
                     self.name = self.name.split(" ")[0][0:7].strip() + " " + self.name.split(" ")[-1][0]
                 self.start = truetime(line[41:49])
@@ -191,6 +192,7 @@ def run(self):
             
             i = 0
             while i < len(shiftslist)-1:
+                debug = shiftslist[i]
                 shifts.append(Shift(shiftslist[i], shiftslist[i+1],position))
                 if shiftslist[i][0:8] == shiftslist[i+1][0:8]: i+=1
                 i +=1
@@ -355,8 +357,16 @@ def run(self):
             totalccline = findline("Total CC",0)+2
             totalcc = dor[totalccline][100:114].strip()
             ccdep = dor[ccDepLine][57:].strip()
+
             cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"ccdep",ccdep))
             cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"totalcc",totalcc))
+
+
+
+            ###### Actual hours worked
+            actualhours = dor[findline("Actual Hours Total :",1)]
+            actualhours = float(actualhours[37:].strip())
+            cursor.execute("INSERT INTO breaks(date,store,item,value) VALUES(?,?,?,?)", (date,store,"breaks",f"H - {actualhours}"))
 
 
 
